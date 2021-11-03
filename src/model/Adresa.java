@@ -1,4 +1,4 @@
-package oisisi_projekat;
+package model;
 
 public class Adresa {
 	String ulica;

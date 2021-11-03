@@ -1,4 +1,4 @@
-package oisisi_projekat;
+package model;
 
 public abstract class Osoba {
 	public String prezime;

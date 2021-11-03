@@ -1,4 +1,4 @@
-package oisisi_projekat;
+package model;
 
 import java.util.ArrayList;
 
