@@ -3,22 +3,101 @@ package model;
 import java.util.ArrayList;
 
 public class Predmet {
-	enum VrstaSemestra {L, Z};
+	public enum VrstaSemestra {L, Z};
 	
-	int sifra;
-	String naziv;
-	VrstaSemestra semestar;
-	int godina_studija;
-	Profesor predmetni_profesor;
-	int ESPB_bodovi;
+	protected int sifra;
+	protected String naziv;
+	protected VrstaSemestra semestar;
+	protected int godinaStudija;
+	protected Profesor predmetniProfesor;
+	protected int ESPB;
 	
-	ArrayList<Student> studenti_polozeno;
-	ArrayList<Student> studenti_nepolozeno;
+	protected ArrayList<Student> studentiPolozeno;
+	protected ArrayList<Student> studentiNepolozeno;
 	
-	
-	Predmet()
+	public Predmet()
 	{
-		studenti_polozeno = new ArrayList<Student>();
-		studenti_nepolozeno = new ArrayList<Student>();
+		studentiPolozeno = new ArrayList<Student>();
+		studentiNepolozeno = new ArrayList<Student>();
+	}
+	
+	
+	public int getSifra() {
+		return sifra;
+	}
+
+
+	public void setSifra(int sifra) {
+		this.sifra = sifra;
+	}
+
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+
+	public VrstaSemestra getSemestar() {
+		return semestar;
+	}
+
+
+	public void setSemestar(VrstaSemestra semestar) {
+		this.semestar = semestar;
+	}
+
+
+	public int getGodinaStudija() {
+		return godinaStudija;
+	}
+
+
+	public void setGodinaStudija(int godinaStudija) {
+		this.godinaStudija = godinaStudija;
+	}
+
+
+	public Profesor getPredmetniProfesor() {
+		return predmetniProfesor;
+	}
+
+
+	public void setPredmetniProfesor(Profesor predmetniProfesor) {
+		this.predmetniProfesor = predmetniProfesor;
+	}
+
+
+	public int getESPB() {
+		return ESPB;
+	}
+
+
+	public void setESPB(int eSPB) {
+		ESPB = eSPB;
+	}
+
+
+	public ArrayList<Student> getStudentiPolozeno() {
+		return studentiPolozeno;
+	}
+
+
+	public void setStudentiPolozeno(ArrayList<Student> studentiPolozeno) {
+		this.studentiPolozeno = studentiPolozeno;
+	}
+
+
+	public ArrayList<Student> getStudentiNepolozeno() {
+		return studentiNepolozeno;
+	}
+
+
+	public void setStudentiNepolozeno(ArrayList<Student> studentiNepolozeno) {
+		this.studentiNepolozeno = studentiNepolozeno;
 	}
 }

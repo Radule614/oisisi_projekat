@@ -8,6 +8,11 @@ public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 2740437090361841747L;
 	public int width;
 	public int height;
+	
+	protected MenuBar menuBar = new MenuBar();
+	protected ToolBar toolBar = new ToolBar();
+	protected Content content = new Content();
+	protected StatusBar statusBar = new StatusBar();
 
 	public MainWindow()
 	{
@@ -22,14 +27,19 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		MenuBar menu_bar = new MenuBar();
-        JToolBar tool_bar = new ToolBar();
-        JPanel content = new Content();
-        StatusBar status_bar = new StatusBar();
+		menuBar = new MenuBar();
+        toolBar = new ToolBar();
+        content = new Content();
+        statusBar = new StatusBar();
         
-        this.setJMenuBar(menu_bar);
-        this.getContentPane().add(BorderLayout.NORTH, tool_bar);
+        this.setJMenuBar(menuBar);
+        this.getContentPane().add(BorderLayout.NORTH, toolBar);
         this.getContentPane().add(BorderLayout.CENTER, content);
-        this.getContentPane().add(BorderLayout.SOUTH, status_bar);
+        this.getContentPane().add(BorderLayout.SOUTH, statusBar);
+	}
+	
+	public void addToTable(Object obj)
+	{
+		this.content.addToTable(obj);
 	}
 }
