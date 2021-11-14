@@ -23,7 +23,7 @@ public class MainWindow extends JFrame {
 		height = 3 * screenSize.height / 4;
 		width = 3 * screenSize.width / 4;
 		setSize(width, height);
-		setTitle("Studentska Sluûba");
+		setTitle("Studentska Slu≈æba");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
