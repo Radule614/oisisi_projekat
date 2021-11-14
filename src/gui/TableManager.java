@@ -48,6 +48,13 @@ public class TableManager {
 			Object[] data = {pr.getSifra(), pr.getNaziv(), pr.getESPB(), pr.getGodinaStudija(), pr.getSemestar()};
 			predmetiTable.addRow(data);
 		}
+		else if(obj instanceof ArrayList)
+		{
+			for(Object item: (ArrayList<?>)obj)
+			{
+				this.add(item);
+			}
+		}
 	}
 	
 	ArrayList<Table> getTables()

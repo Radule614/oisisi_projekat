@@ -32,7 +32,17 @@ public class Content extends JPanel {
 		this.setTabbedPane();
 	}
 	
-	void setTabbedPane()
+	public void addToTable(Object obj)
+	{	
+		tableManager.add(obj);		
+	}
+	
+	public int getActivePane()
+	{
+		return this.tabbedPane.getSelectedIndex();
+	}
+	
+	protected void setTabbedPane()
 	{
 		int i = 0;
 		for(JPanel p: panels)
@@ -53,11 +63,6 @@ public class Content extends JPanel {
 		}
 		tabbedPane.setBorder(new EmptyBorder(0, 30, 0, 30));
 		this.add(tabbedPane, BorderLayout.CENTER);
-	}
-	
-	public void addToTable(Object obj)
-	{	
-		tableManager.add(obj);				
 	}
 }
 

@@ -7,9 +7,9 @@ public class Adresa {
 	protected String drzava;
 	
 	
-	public Adresa()
+	public Adresa(String ulica)
 	{
-		
+		this.ulica = ulica;
 	}
 
 

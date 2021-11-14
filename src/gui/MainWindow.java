@@ -9,10 +9,12 @@ public class MainWindow extends JFrame {
 	public int width;
 	public int height;
 	
-	protected MenuBar menuBar = new MenuBar();
-	protected ToolBar toolBar = new ToolBar();
-	protected Content content = new Content();
-	protected StatusBar statusBar = new StatusBar();
+	protected MenuBar menuBar;
+	protected ToolBar toolBar;
+	protected Content content;
+	protected StatusBar statusBar;
+	
+	DialogManager dialogManager;
 
 	public MainWindow()
 	{
@@ -27,7 +29,9 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		menuBar = new MenuBar();
+		this.setFont(new Font("Monaco", Font.PLAIN, 15));
+		
+		menuBar = new MenuBar(this);
         toolBar = new ToolBar();
         content = new Content();
         statusBar = new StatusBar();
@@ -36,10 +40,27 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(BorderLayout.NORTH, toolBar);
         this.getContentPane().add(BorderLayout.CENTER, content);
         this.getContentPane().add(BorderLayout.SOUTH, statusBar);
+        
+        this.dialogManager = new DialogManager(this);
 	}
 	
 	public void addToTable(Object obj)
 	{
-		this.content.addToTable(obj);
+		this.content.addToTable(obj);				
+	}
+	
+	public int getActivePane()
+	{
+		return this.content.getActivePane();
 	}
 }
+
+
+
+
+
+
+
+
+
+

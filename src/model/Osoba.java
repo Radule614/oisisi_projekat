@@ -1,9 +1,11 @@
 package model;
 
+import java.time.LocalDate;
+
 public abstract class Osoba {
-	protected String prezime;
 	protected String ime;
-	protected String datumRodjenja;
+	protected String prezime;
+	protected LocalDate datumRodjenja;
 	protected Adresa adresaStanovanja;
 	protected int telefon;
 	protected String email;
@@ -35,12 +37,12 @@ public abstract class Osoba {
 	}
 
 
-	public String getDatumRodjenja() {
+	public LocalDate getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
 
-	public void setDatumRodjenja(String datumRodjenja) {
+	public void setDatumRodjenja(LocalDate datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 

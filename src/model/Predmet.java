@@ -77,8 +77,8 @@ public class Predmet {
 	}
 
 
-	public void setESPB(int eSPB) {
-		ESPB = eSPB;
+	public void setESPB(int ESPB) {
+		this.ESPB = ESPB;
 	}
 
 
