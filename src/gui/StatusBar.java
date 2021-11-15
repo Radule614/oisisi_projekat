@@ -26,6 +26,8 @@ public class StatusBar extends JPanel {
         
         this.add(leftPanel);
         this.add(rightPanel);
+        
+        RefreshStatusBar(0);
 	}
 	
 	

@@ -110,6 +110,10 @@ public class MenuBar extends JMenuBar {
 					default:;
 					}
 				}
+				else if(temp == "Close")
+				{
+					System.exit(0);
+				}
 			}
 		}
 	}
