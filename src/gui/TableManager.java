@@ -15,7 +15,7 @@ public class TableManager {
 	
 	protected final String[] studentiLabels = { "Indeks", "Ime", "Prezime", "Godina studija", "Status", "Prosek" };
 	protected final String[] profesoriLabels = { "Ime", "Prezime", "Titula", "Zvanje"};
-	protected final String[] predmetiLabels = { "Šifra predmeta", "Naziv Predmeta", "Broj ESPB bodova", "Godina izvodjenja", "Semestar izvodjenja"};
+	protected final String[] predmetiLabels = { "Å ifra predmeta", "Naziv predmeta", "Broj ESPB bodova", "Godina izvodjenja", "Semestar izvodjenja"};
 	
 	public TableManager()
 	{

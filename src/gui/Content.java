@@ -2,6 +2,9 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,9 +16,11 @@ public class Content extends JPanel {
 	TableManager tableManager;
 	ArrayList<JPanel> panels;
 	JTabbedPane tabbedPane;
+	MainWindow window;
 	
-	public Content() {
+	public Content(MainWindow window) {
 		super();
+		this.window = window;
 		panels = new ArrayList<JPanel>();
 		tableManager = new TableManager();
 		tabbedPane = new JTabbedPane();
@@ -30,6 +35,14 @@ public class Content extends JPanel {
 		this.setBorder(new CompoundBorder(new EmptyBorder(30, 0, 10, 0), this.getBorder()));
 		
 		this.setTabbedPane();
+		
+		tabbedPane.addChangeListener(new ChangeListener() 
+        {
+            public void stateChanged(ChangeEvent e) 
+            {
+                window.setPaneStatus(tabbedPane.getSelectedIndex());
+            }
+        });
 	}
 	
 	public void addToTable(Object obj)
