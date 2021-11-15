@@ -32,9 +32,9 @@ public class MainWindow extends JFrame {
 		this.setFont(new Font("Monaco", Font.PLAIN, 15));
 		
 		menuBar = new MenuBar(this);
-        toolBar = new ToolBar();
-        content = new Content();
-        statusBar = new StatusBar();
+        toolBar = new ToolBar(this);
+        content = new Content(this);
+        statusBar = new StatusBar(this);
         
         this.setJMenuBar(menuBar);
         this.getContentPane().add(BorderLayout.NORTH, toolBar);
@@ -52,6 +52,11 @@ public class MainWindow extends JFrame {
 	public int getActivePane()
 	{
 		return this.content.getActivePane();
+	}
+	
+	protected void setPaneStatus(int activePane)
+	{
+		statusBar.RefreshStatusBar(activePane);
 	}
 }
 
