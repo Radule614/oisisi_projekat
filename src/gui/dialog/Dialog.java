@@ -1,10 +1,7 @@
-package gui;
+package gui.dialog;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
@@ -15,46 +12,27 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-import main.Events;
-
-public class Dialog extends JDialog {
+public abstract class Dialog extends JDialog {
 	private static final long serialVersionUID = -1676308500879210531L;
-	ArrayList<JComponent> fields = new ArrayList<JComponent>();
-	JPanel fieldContainer;
+	protected final JFrame frame;
+	protected final String dateFormat = "dd/MM/yyyy";
+	
+	protected JTabbedPane tabbedPane;
+	protected ArrayList<DialogTab> tabPanels;
 	
 	enum EntityType {STUDENT, PROFESOR, PREDMET};
 	
 	EntityType entityType;
 	
-	public Dialog(JFrame frame, String title, EntityType entityType)
+	public Dialog(JFrame frame, String title, EntityType et)
 	{
 		super(frame, title, true);
-		this.entityType = entityType;
-		this.setContainer();
-        this.setButtons();
-        
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        this.setVisible(false);
-	}
-	
-	
-	//PUBLIC METHODS
-	
-	public void addField(String labelText)
-	{
-		this.addTextField(labelText);
-	}
-	
-	public void addField(String labelText, String dateFormat)
-	{
-		this.addDateField(labelText, dateFormat);
-	}
-	
-	public void addField(String labelText, String[] arr)
-	{
-		this.addComboBox(labelText, arr);
+		this.frame = frame;
+		this.init();	
+		this.entityType = et;
+		
+		
+		this.pack();
 	}
 	
 	public void open()
@@ -68,23 +46,7 @@ public class Dialog extends JDialog {
 		this.setVisible(false);
 	}
 	
-	//PUBLIC END
-	
-	
-	protected void setContainer()
-	{
-		JPanel container = new JPanel();
-		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
-		container.setBorder(new EmptyBorder(10, 15, 10, 15));
-		
-		fieldContainer = new JPanel();
-		fieldContainer.setLayout(new BoxLayout(fieldContainer, BoxLayout.PAGE_AXIS));
-		
-		container.add(fieldContainer);
-		this.setContentPane(container);
-	}
-	
-	protected JPanel createRowPanel()
+	static protected JPanel createRowPanel()
 	{
 		JPanel temp = new JPanel();
 		temp.setLayout(new GridLayout(0, 2, 32, 0));
@@ -93,54 +55,7 @@ public class Dialog extends JDialog {
 		return temp;
 	}
 	
-	protected void addTextField(String labelText)
-	{
-		JPanel panel = this.createRowPanel();
-		fieldContainer.add(panel);
-		JLabel label = new JLabel(labelText);
-		JTextField textField = new JTextField(16);
-		textField.setBorder(new CompoundBorder(textField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
-		
-		panel.add(label);
-		panel.add(textField);
-		
-		this.fields.add(textField);
-		this.pack();
-	}
-	
-	protected void addDateField(String labelText, String format)
-	{
-		JPanel panel = this.createRowPanel();
-		fieldContainer.add(panel);
-		JLabel label = new JLabel(labelText);
-		DateFormat dateFormat = new SimpleDateFormat(format);
-        JFormattedTextField dateTextField = new JFormattedTextField(dateFormat);
-        dateTextField.setBorder(new CompoundBorder(dateTextField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
-        
-        panel.add(label);
-		panel.add(dateTextField);
-		
-		this.fields.add(dateTextField);
-		this.pack();
-	}
-	
-	protected void addComboBox(String labelText, String[] arr)
-	{
-		JPanel panel = this.createRowPanel();
-		fieldContainer.add(panel);
-		JLabel label = new JLabel(labelText);
-		JComboBox<String> comboBox = new JComboBox<String>(arr);
-		JComponent tempComp = (JComponent) comboBox.getComponent(0);
-		tempComp.setBorder(new CompoundBorder(tempComp.getBorder(), new EmptyBorder(1, 1, 1, 1)));
-		
-		panel.add(label);
-		panel.add(comboBox);
-		
-		this.fields.add(comboBox);
-		this.pack();
-	}
-	
-	protected void setButtonHover(JButton btn, String color)
+	static protected void setButtonHover(JButton btn, String color)
 	{
 		btn.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
@@ -153,100 +68,182 @@ public class Dialog extends JDialog {
 		});
 	}
 	
-	protected void setButtons()
+	private void init()
 	{
-		JPanel panel = this.createRowPanel();
-		this.add(panel);
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		
-		FlowLayout leftPanelLayout = new FlowLayout(FlowLayout.RIGHT);
-		leftPanelLayout.setHgap(0);
-		FlowLayout rightPanelLayout = new FlowLayout(FlowLayout.LEFT);
-		rightPanelLayout.setHgap(0);
+		this.tabPanels = new ArrayList<DialogTab>();
+		this.tabbedPane = new JTabbedPane();
+		this.setContentPane(container);
 		
-		JPanel leftPanel = new JPanel(leftPanelLayout);
-		JPanel rightPanel = new JPanel(rightPanelLayout);		
-		
-		JButton submit = new JButton("Potvrdi");
-		JButton cancel = new JButton("Odustani");
-		
-		this.setButtonHover(submit, "#95bcf2");
-		this.setButtonHover(cancel, "#9b5377");
-		
-		leftPanel.add(submit);
-		rightPanel.add(cancel);
-		
-		Dialog dialog = this;
-		
-		submit.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				int r = 0;
-				boolean error = false;
-				String[] arr = new String[fields.size()];
-				
-				for(JComponent field: fields)
-				{
-					if(field instanceof JTextField)
-					{
-						JTextField temp = (JTextField)field;
-						if(temp.getText().isEmpty())
-						{
-							error = true;
-							break;
-						}
-						arr[r] = new String(temp.getText());
-					}
-					else if(field instanceof JFormattedTextField)
-					{
-						JFormattedTextField temp = (JFormattedTextField)field;
-						if(temp.getText().isEmpty())
-						{
-							error = true;
-							break;
-						}
-						arr[r] = new String(temp.getText());
-					}
-					else if(field instanceof JComboBox)
-					{
-						JComboBox<?> temp = (JComboBox<?>)field;
-						arr[r] = new String(Integer.toString(temp.getSelectedIndex()));
-					}
-					++r;
-				}
-				
-				if(!error)
-				{
-					switch(entityType)
-					{
-					case STUDENT:
-						Events.createStudent(arr);
-						break;
-					case PROFESOR:
-						Events.createProfesor(arr);
-						break;
-					case PREDMET:
-						Events.createPredmet(arr);
-						break;
-					}
-					
-					dialog.close();
-				}
-			}
-		});
-		
-		cancel.addActionListener(new ActionListener() 
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				dialog.close();
-			}
-		});
-		
-		panel.add(leftPanel);
-		panel.add(rightPanel);
+		this.pack();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(false);
 	}
+	
+	protected class DialogTab extends JPanel{
+		private static final long serialVersionUID = -1130421378464245296L;
+		
+		Dialog dialog;
+		
+		protected ArrayList<DialogPanel> panels = new ArrayList<DialogPanel>();
+		
+		public DialogTab(Dialog dialog)
+		{
+			super();
+			
+			this.dialog = dialog;
+			
+			this.setBorder(new EmptyBorder(10, 15, 10, 15));
+			this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		}
+		
+		public void createPanel()
+		{
+			DialogPanel panel = new DialogPanel(dialog);
+			
+			this.panels.add(panel);
+			this.add(panel);
+			this.dialog.pack();
+		}
+		
+		public void addTextField(int panelIndex, String labelText)
+		{
+			this.panels.get(panelIndex).addTextField(labelText);
+		}
+		
+		public void addTextField(int panelIndex, String labelText, String value)
+		{
+			this.panels.get(panelIndex).addTextField(labelText, value);
+		}
+		
+		public void addDateField(int panelIndex, String labelText)
+		{
+			this.panels.get(panelIndex).addDateField(labelText);
+		}
+		
+		public void addDateField(int panelIndex, String labelText, String value)
+		{
+			this.panels.get(panelIndex).addDateField(labelText, value);
+		}
+		
+		public void addComboBox(int panelIndex, String labelText, String[] arr)
+		{
+			this.panels.get(panelIndex).addComboBox(labelText, arr);
+		}
+		
+		public void addComboBox(int panelIndex, String labelText, String[] arr, int optionIndex)
+		{
+			this.panels.get(panelIndex).addComboBox(labelText, arr, optionIndex);
+		}
+		
+		protected class DialogPanel extends JPanel{
+			private static final long serialVersionUID = 840831711625149150L;
+			
+			Dialog dialog;
+			
+			protected ArrayList<JComponent> fields = new ArrayList<JComponent>();
+			
+			public DialogPanel(Dialog dialog)
+			{
+				super();
+				
+				this.dialog = dialog;
+				
+				this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+			}
+			
+			private JTextField createTextField(String labelText)
+			{
+				JPanel panel = Dialog.createRowPanel();
+				this.add(panel);
+				JLabel label = new JLabel(labelText);
+				JTextField textField = new JTextField(16);
+				textField.setBorder(new CompoundBorder(textField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
+				
+				panel.add(label);
+				panel.add(textField);
+				
+				this.fields.add(textField);
+				this.dialog.pack();
+				
+				return textField;
+			}
+			
+			private JFormattedTextField createDataField(String labelText)
+			{
+				JPanel panel = Dialog.createRowPanel();
+				this.add(panel);
+				JLabel label = new JLabel(labelText);
+				DateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+		        JFormattedTextField dateTextField = new JFormattedTextField(simpleDateFormat);
+		        dateTextField.setBorder(new CompoundBorder(dateTextField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
+		        
+		        panel.add(label);
+				panel.add(dateTextField);
+				
+				this.fields.add(dateTextField);
+				this.dialog.pack();
+				
+				return dateTextField;
+			}
+			
+			private JComboBox<?> createComboBox(String labelText, String[] arr)
+			{
+				JPanel panel = Dialog.createRowPanel();
+				this.add(panel);
+				JLabel label = new JLabel(labelText);
+				JComboBox<String> comboBox = new JComboBox<String>(arr);
+				JComponent tempComp = (JComponent) comboBox.getComponent(0);
+				tempComp.setBorder(new CompoundBorder(tempComp.getBorder(), new EmptyBorder(1, 1, 1, 1)));
+				
+				panel.add(label);
+				panel.add(comboBox);
+				
+				this.fields.add(comboBox);
+				this.dialog.pack();
+				
+				return comboBox;
+			}
+
+			protected void addTextField(String labelText)
+			{
+				this.createTextField(labelText);
+			}
+			
+			protected void addTextField(String labelText, String value)
+			{
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
+			}
+			
+			protected void addDateField(String labelText)
+			{
+				this.createDataField(labelText);
+			}
+			
+			protected void addDateField(String labelText, String value)
+			{
+				JFormattedTextField dateTextField = this.createDataField(labelText);
+				dateTextField.setText(value);
+			}
+			
+			protected void addComboBox(String labelText, String[] arr)
+			{
+				this.createComboBox(labelText, arr);
+			}
+			
+			protected void addComboBox(String labelText, String[] arr, int optionIndex)
+			{
+				JComboBox<?> comboBox = this.createComboBox(labelText, arr);
+				comboBox.setSelectedIndex(optionIndex);
+			}
+		}
+		
+	}
+	
 }
 
 

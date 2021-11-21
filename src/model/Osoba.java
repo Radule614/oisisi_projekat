@@ -7,7 +7,7 @@ public abstract class Osoba {
 	protected String prezime;
 	protected LocalDate datumRodjenja;
 	protected Adresa adresaStanovanja;
-	protected int telefon;
+	protected String telefon;
 	protected String email;
 	
 	
@@ -57,12 +57,12 @@ public abstract class Osoba {
 	}
 
 
-	public int getTelefon() {
+	public String getTelefon() {
 		return telefon;
 	}
 
 
-	public void setTelefon(int telefon) {
+	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
 

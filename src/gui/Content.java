@@ -77,6 +77,11 @@ public class Content extends JPanel {
 		tabbedPane.setBorder(new EmptyBorder(0, 30, 0, 30));
 		this.add(tabbedPane, BorderLayout.CENTER);
 	}
+	
+	protected int getSelectedTableRow(int activePane)
+	{
+		return this.tableManager.getSelectedTableRow(activePane);
+	}
 }
 
 

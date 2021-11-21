@@ -24,10 +24,10 @@ public class Main {
 	{
 		for(int i = 0; i < 7; ++i)
 		{
-			dm.createStudent(new String[] {	"Rade", 	"Stojanovic", 	"01/01/2000", "0", "0", "0", "RA138/2019", "0" , "9.2", 	"3", "0"});
-			dm.createStudent(new String[] {	"Damjan", 	"Dimitrijevic", "01/01/2000", "0", "0", "0", "RA115/2019", "0" , "8.67", "3", "0"});
-			dm.createStudent(new String[] {	"Uros", 	"Jokovic", 		"01/01/2000", "0", "0", "0", "RA119/2019", "0" , "9.0", 	"3", "0"});
-			dm.createStudent(new String[] {	"Luka", 	"Pikula", 		"01/01/2000", "0", "0", "0", "RA146/2019", "0" , "10.0", "3", "0"});
+			dm.createStudent(new String[] {	"Rade", 	"Stojanovic", 	"01/01/2000", "0", "0", "0", "RA138/2019", "0" , "9.2", 	"2", "0"});
+			dm.createStudent(new String[] {	"Damjan", 	"Dimitrijevic", "01/01/2000", "0", "0", "0", "RA115/2019", "0" , "8.67", "2", "0"});
+			dm.createStudent(new String[] {	"Uros", 	"Jokovic", 		"01/01/2000", "0", "0", "0", "RA119/2019", "0" , "9.0", 	"2", "0"});
+			dm.createStudent(new String[] {	"Luka", 	"Pikula", 		"01/01/2000", "0", "0", "0", "RA146/2019", "0" , "10.0", "2", "0"});
 		}
 		
 		dm.createProfesor(new String[] {"Nebojsa", "Ralevic", "01/01/2000", "0", "0", "0", "0", "0", "Doktor", "Redovni profesor", "0"});

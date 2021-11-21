@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.*;
 
+import gui.dialog.DialogManager;
+
 import java.awt.*;
 
 public class MainWindow extends JFrame {
@@ -57,6 +59,11 @@ public class MainWindow extends JFrame {
 	protected void setPaneStatus(int activePane)
 	{
 		statusBar.RefreshStatusBar(activePane);
+	}
+	
+	protected int getSelectedTableRow(int activePane)
+	{
+		return this.content.getSelectedTableRow(activePane);
 	}
 }
 

@@ -7,6 +7,8 @@ import java.awt.event.InputEvent;
 
 import javax.swing.*;
 
+import main.Events;
+
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
 	
@@ -108,6 +110,31 @@ public class MenuBar extends JMenuBar {
 						window.dialogManager.createAddPredmetDialog();
 						break;
 					default:;
+					}
+				}
+				else if(temp == "Edit")
+				{
+					int active = window.getActivePane();
+					int row = window.getSelectedTableRow(active);
+					if(row != -1)
+					{
+						String[] data;
+						switch(active)
+						{
+						case 0:
+							data = Events.getStudentData(row);
+							window.dialogManager.createEditStudentDialog(row, data);
+							break;
+						case 1:
+							data = Events.getProfesorData(row);
+							window.dialogManager.createEditProfesorDialog(row, data);
+							break;
+						case 2:
+							data = Events.getPredmetData(row);
+							window.dialogManager.createEditPredmetDialog(row, data);
+							break;
+						default:;
+						}
 					}
 				}
 				else if(temp == "Close")

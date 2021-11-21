@@ -29,4 +29,39 @@ public class Events {
 		
 		gui.addToTable(pr);
 	}
+	
+	public static String[] getStudentData(int index)
+	{
+		String[] data = dm.getStudentData(index);
+		
+		return data;
+	}
+	
+	public static String[] getProfesorData(int index)
+	{
+		String[] data = dm.getProfesorData(index);
+		
+		return data;
+	}
+	
+	public static String[] getPredmetData(int index)
+	{
+		String[] data = dm.getPredmetData(index);
+		
+		return data;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

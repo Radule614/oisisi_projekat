@@ -31,6 +31,7 @@ public class Table extends JTable {
 	public void addRow(Object[] data)
 	{
 		this.model.addRow(data);
+		
 	}
 	
 	protected class TableRenderer extends DefaultTableCellRenderer {

@@ -28,7 +28,7 @@ public class TableManager {
 		tables.add(predmetiTable);
 	}
 	
-	void add(Object obj)
+	public void add(Object obj)
 	{
 		if(obj instanceof Student)
 		{
@@ -57,8 +57,39 @@ public class TableManager {
 		}
 	}
 	
-	ArrayList<Table> getTables()
+	public int getSelectedTableRow(int tableIndex)
+	{
+		return this.tables.get(tableIndex).getSelectedRow();
+	}
+	
+	public ArrayList<Table> getTables()
 	{
 		return this.tables;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

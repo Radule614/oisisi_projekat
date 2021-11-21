@@ -14,6 +14,7 @@ public class DataManager {
 	ArrayList<Predmet> predmeti = new ArrayList<Predmet>();
 	
 	public final String dateFormat = "dd/MM/yyyy";
+	public final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 
 	public Student createStudent(String[] arr)
 	{
@@ -26,7 +27,7 @@ public class DataManager {
 		st.setPrezime(arr[1]);
 		st.setDatumRodjenja(date);
 		st.setAdresaStanovanja(new Adresa(arr[3]));
-		st.setTelefon(this.parseInt(arr[4]));
+		st.setTelefon(arr[4]);
 		st.setEmail(arr[5]);
 		st.setBrojIndeksa(arr[6]);
 		st.setGodinaUpisa(this.parseInt(arr[7]));
@@ -46,14 +47,13 @@ public class DataManager {
 	{
 		Profesor pf = new Profesor();
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 		LocalDate date = LocalDate.parse((String)arr[2], formatter);
 		
 		pf.setIme(arr[0]);
 		pf.setPrezime(arr[1]);
 		pf.setDatumRodjenja(date);
 		pf.setAdresaStanovanja(new Adresa(arr[3]));
-		pf.setTelefon(this.parseInt(arr[4]));
+		pf.setTelefon(arr[4]);
 		pf.setEmail(arr[5]);
 		pf.setAdresaKancelarije(new Adresa(arr[6]));
 		pf.setLicnaKarta(this.parseInt(arr[7]));
@@ -82,6 +82,63 @@ public class DataManager {
 		this.predmeti.add(pr);
 		return pr;
 	}
+	
+	public String[] getStudentData(int index)
+	{
+		Student st = this.studenti.get(index);
+		String[] data = new String[11];
+		
+		data[0] = st.getIme();
+		data[1] = st.getPrezime();
+		data[2] = st.getDatumRodjenja().format(formatter);
+		data[3] = st.getAdresaStanovanja().toString();
+		data[4] = st.getTelefon();
+		data[5] = st.getEmail();
+		data[6] = st.getBrojIndeksa();
+		data[7] = Integer.toString(st.getGodinaUpisa());
+		data[8] = Double.toString(st.getProsek());
+		data[9] = Integer.toString(st.getTrenutnaGodina()-1);
+		if(st.getStatus() == VrstaFinansiranja.B) data[10] = "0";
+		else if(st.getStatus() == VrstaFinansiranja.S) data[10] = "1";
+		
+		return data;
+	}
+	
+	public String[] getProfesorData(int index)
+	{
+		Profesor pr = this.profesori.get(index);
+		String[] data = new String[11];
+		
+		data[0] = pr.getIme();
+		data[1] = pr.getPrezime();
+		data[2] = pr.getDatumRodjenja().format(formatter);
+		data[3] = pr.getAdresaStanovanja().toString();
+		data[4] = pr.getTelefon();
+		data[5] = pr.getEmail();
+		data[6] = pr.getAdresaKancelarije().toString();
+		data[7] = Integer.toString(pr.getLicnaKarta());
+		data[8] = pr.getTitula();
+		data[9] = pr.getZvanje();
+		data[10] = Integer.toString(pr.getGodineStaza());
+		
+		return data;
+	}
+	
+	public String[] getPredmetData(int index)
+	{
+		Predmet pr = this.predmeti.get(index);
+		String[] data = new String[11];
+		
+		data[0] = Integer.toString(pr.getSifra());
+		data[1] = pr.getNaziv();
+		if		(pr.getSemestar() == VrstaSemestra.L) data[2] = "0";
+		else if	(pr.getSemestar() == VrstaSemestra.Z) data[2] = "1";
+		data[2] = Integer.toString(pr.getGodinaStudija());
+		data[3] = Integer.toString(pr.getESPB());
+		
+		return data;
+	}
+	
 
 	public ArrayList<Student> getStudenti() {
 		return studenti;

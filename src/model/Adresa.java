@@ -2,7 +2,7 @@ package model;
 
 public class Adresa {
 	protected String ulica;
-	protected int broj;
+	protected String broj;
 	protected String grad;
 	protected String drzava;
 	
@@ -23,12 +23,12 @@ public class Adresa {
 	}
 
 
-	public int getBroj() {
+	public String getBroj() {
 		return broj;
 	}
 
 
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
 	}
 
@@ -52,5 +52,10 @@ public class Adresa {
 		this.drzava = drzava;
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		//return new String(ulica + broj + grad + drzava);
+		return new String(ulica);
+	}
 }
