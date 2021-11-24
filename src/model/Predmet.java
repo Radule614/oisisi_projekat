@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import utility.Utility;
+
 public class Predmet {
 	public enum VrstaSemestra {L, Z};
 	
@@ -21,6 +23,40 @@ public class Predmet {
 		studentiNepolozeno = new ArrayList<Student>();
 	}
 	
+	public Predmet(String[] arr)
+	{
+		setSifra(Utility.parseInt(arr[0]));
+		setNaziv(arr[1]);
+		VrstaSemestra vs = null;
+		if		(Utility.parseInt(arr[2]) == 0) vs = VrstaSemestra.L;
+		else if	(Utility.parseInt(arr[2]) == 1) vs = VrstaSemestra.Z;
+		setSemestar(vs);
+		setGodinaStudija(Utility.parseInt(arr[3])+1);
+		setESPB(Utility.parseInt(arr[4]));
+	}
+	
+	public String[] toStringArray()
+	{
+		String[] data = new String[11];
+		
+		data[0] = Integer.toString(getSifra());
+		data[1] = getNaziv();
+		if		(getSemestar() == VrstaSemestra.L) data[2] = "0";
+		else if	(getSemestar() == VrstaSemestra.Z) data[2] = "1";
+		data[3] = Integer.toString(getGodinaStudija()-1);
+		data[4] = Integer.toString(getESPB());
+		
+		return data;
+	}
+	
+	public static boolean isValidData(String[] arr, ArrayList<String> messages)
+	{
+		boolean isValid = true;
+		
+		//TODO checks
+		
+		return isValid;
+	}
 	
 	public int getSifra() {
 		return sifra;

@@ -25,5 +25,6 @@ public class MultiTabDialog extends Dialog {
 		}
 		
 		this.add(tabbedPane);
+		this.pack();
 	}
 }

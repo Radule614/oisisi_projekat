@@ -7,6 +7,7 @@ import java.awt.event.InputEvent;
 
 import javax.swing.*;
 
+import gui.dialog.DialogManager;
 import main.Events;
 
 public class MenuBar extends JMenuBar {
@@ -101,13 +102,13 @@ public class MenuBar extends JMenuBar {
 					switch(active)
 					{
 					case 0:
-						window.dialogManager.createAddStudentDialog();
+						DialogManager.createAddStudentDialog();
 						break;
 					case 1:
-						window.dialogManager.createAddProfesorDialog();
+						DialogManager.createAddProfesorDialog();
 						break;
 					case 2:
-						window.dialogManager.createAddPredmetDialog();
+						DialogManager.createAddPredmetDialog();
 						break;
 					default:;
 					}
@@ -123,15 +124,15 @@ public class MenuBar extends JMenuBar {
 						{
 						case 0:
 							data = Events.getStudentData(row);
-							window.dialogManager.createEditStudentDialog(row, data);
+							DialogManager.createEditStudentDialog(row, data);
 							break;
 						case 1:
 							data = Events.getProfesorData(row);
-							window.dialogManager.createEditProfesorDialog(row, data);
+							DialogManager.createEditProfesorDialog(row, data);
 							break;
 						case 2:
 							data = Events.getPredmetData(row);
-							window.dialogManager.createEditPredmetDialog(row, data);
+							DialogManager.createEditPredmetDialog(row, data);
 							break;
 						default:;
 						}

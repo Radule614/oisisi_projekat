@@ -15,8 +15,6 @@ public class MainWindow extends JFrame {
 	protected ToolBar toolBar;
 	protected Content content;
 	protected StatusBar statusBar;
-	
-	DialogManager dialogManager;
 
 	public MainWindow()
 	{
@@ -43,7 +41,7 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(BorderLayout.CENTER, content);
         this.getContentPane().add(BorderLayout.SOUTH, statusBar);
         
-        this.dialogManager = new DialogManager(this);
+        DialogManager.window = this;
 	}
 	
 	public void addToTable(Object obj)

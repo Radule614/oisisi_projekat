@@ -12,15 +12,15 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import main.Settings;
+
 public abstract class Dialog extends JDialog {
 	private static final long serialVersionUID = -1676308500879210531L;
+	enum EntityType {STUDENT, PROFESOR, PREDMET};
 	protected final JFrame frame;
-	protected final String dateFormat = "dd/MM/yyyy";
 	
 	protected JTabbedPane tabbedPane;
 	protected ArrayList<DialogTab> tabPanels;
-	
-	enum EntityType {STUDENT, PROFESOR, PREDMET};
 	
 	EntityType entityType;
 	
@@ -30,7 +30,6 @@ public abstract class Dialog extends JDialog {
 		this.frame = frame;
 		this.init();	
 		this.entityType = et;
-		
 		
 		this.pack();
 	}
@@ -46,10 +45,11 @@ public abstract class Dialog extends JDialog {
 		this.setVisible(false);
 	}
 	
-	static protected JPanel createRowPanel()
+	static protected JPanel createRowPanel(int columnNumber)
 	{
+		if(columnNumber < 1) columnNumber = 1;
 		JPanel temp = new JPanel();
-		temp.setLayout(new GridLayout(0, 2, 32, 0));
+		temp.setLayout(new GridLayout(0, columnNumber, 32, 0));
 		temp.setBorder(new EmptyBorder(5, 0, 5, 0));
 		
 		return temp;
@@ -109,6 +109,11 @@ public abstract class Dialog extends JDialog {
 			this.dialog.pack();
 		}
 		
+		public void addLabel(int panelIndex, String labelText)
+		{
+			this.panels.get(panelIndex).addLabel(labelText);
+		}
+		
 		public void addTextField(int panelIndex, String labelText)
 		{
 			this.panels.get(panelIndex).addTextField(labelText);
@@ -155,57 +160,13 @@ public abstract class Dialog extends JDialog {
 				this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 			}
 			
-			private JTextField createTextField(String labelText)
+			protected void addLabel(String labelText)
 			{
-				JPanel panel = Dialog.createRowPanel();
+				JPanel panel = Dialog.createRowPanel(1);
 				this.add(panel);
 				JLabel label = new JLabel(labelText);
-				JTextField textField = new JTextField(16);
-				textField.setBorder(new CompoundBorder(textField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
-				
 				panel.add(label);
-				panel.add(textField);
-				
-				this.fields.add(textField);
 				this.dialog.pack();
-				
-				return textField;
-			}
-			
-			private JFormattedTextField createDataField(String labelText)
-			{
-				JPanel panel = Dialog.createRowPanel();
-				this.add(panel);
-				JLabel label = new JLabel(labelText);
-				DateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
-		        JFormattedTextField dateTextField = new JFormattedTextField(simpleDateFormat);
-		        dateTextField.setBorder(new CompoundBorder(dateTextField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
-		        
-		        panel.add(label);
-				panel.add(dateTextField);
-				
-				this.fields.add(dateTextField);
-				this.dialog.pack();
-				
-				return dateTextField;
-			}
-			
-			private JComboBox<?> createComboBox(String labelText, String[] arr)
-			{
-				JPanel panel = Dialog.createRowPanel();
-				this.add(panel);
-				JLabel label = new JLabel(labelText);
-				JComboBox<String> comboBox = new JComboBox<String>(arr);
-				JComponent tempComp = (JComponent) comboBox.getComponent(0);
-				tempComp.setBorder(new CompoundBorder(tempComp.getBorder(), new EmptyBorder(1, 1, 1, 1)));
-				
-				panel.add(label);
-				panel.add(comboBox);
-				
-				this.fields.add(comboBox);
-				this.dialog.pack();
-				
-				return comboBox;
 			}
 
 			protected void addTextField(String labelText)
@@ -222,12 +183,15 @@ public abstract class Dialog extends JDialog {
 			protected void addDateField(String labelText)
 			{
 				this.createDataField(labelText);
+				//this.createTextField(labelText);
 			}
 			
 			protected void addDateField(String labelText, String value)
 			{
 				JFormattedTextField dateTextField = this.createDataField(labelText);
 				dateTextField.setText(value);
+				//JTextField dateTextField = this.createTextField(labelText);
+				//dateTextField.setText(value);
 			}
 			
 			protected void addComboBox(String labelText, String[] arr)
@@ -239,6 +203,60 @@ public abstract class Dialog extends JDialog {
 			{
 				JComboBox<?> comboBox = this.createComboBox(labelText, arr);
 				comboBox.setSelectedIndex(optionIndex);
+			}
+			
+			private JTextField createTextField(String labelText)
+			{
+				JPanel panel = Dialog.createRowPanel(2);
+				this.add(panel);
+				JLabel label = new JLabel(labelText);
+				JTextField textField = new JTextField(16);
+				textField.setBorder(new CompoundBorder(textField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
+				
+				panel.add(label);
+				panel.add(textField);
+				
+				this.fields.add(textField);
+				this.dialog.pack();
+				
+				return textField;
+			}
+			
+			private JFormattedTextField createDataField(String labelText)
+			{
+				
+				JPanel panel = Dialog.createRowPanel(2);
+				this.add(panel);
+				JLabel label = new JLabel(labelText);
+				DateFormat simpleDateFormat = new SimpleDateFormat(Settings.dateFormat);
+		        JFormattedTextField dateTextField = new JFormattedTextField(simpleDateFormat);
+		        dateTextField.setBorder(new CompoundBorder(dateTextField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
+		        
+		        panel.add(label);
+				panel.add(dateTextField);
+				
+				this.fields.add(dateTextField);
+				this.dialog.pack();
+				
+				return dateTextField;
+			}
+			
+			private JComboBox<?> createComboBox(String labelText, String[] arr)
+			{
+				JPanel panel = Dialog.createRowPanel(2);
+				this.add(panel);
+				JLabel label = new JLabel(labelText);
+				JComboBox<String> comboBox = new JComboBox<String>(arr);
+				JComponent tempComp = (JComponent) comboBox.getComponent(0);
+				tempComp.setBorder(new CompoundBorder(tempComp.getBorder(), new EmptyBorder(1, 1, 1, 1)));
+				
+				panel.add(label);
+				panel.add(comboBox);
+				
+				this.fields.add(comboBox);
+				this.dialog.pack();
+				
+				return comboBox;
 			}
 		}
 		

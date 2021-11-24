@@ -1,24 +1,21 @@
 package gui.dialog;
 
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class DialogManager {
-	protected String[] studentiFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Broj indeksa", "Godina upisa", "Prosek", "Trenutna godina studija", "Način finansiranja"};
-	protected String[] profesoriFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje", "Godine staža"};
-	protected String[] predmetiFieldLabels = {"Sifra predmeta", "Naziv predmeta", "Semestar", "Godina studija", "Broj ESPB bodova"};
+	static protected String[] studentiFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Broj indeksa", "Godina upisa", "Prosek", "Trenutna godina studija", "Način finansiranja"};
+	static protected String[] profesoriFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje", "Godine staža"};
+	static protected String[] predmetiFieldLabels = {"Sifra predmeta", "Naziv predmeta", "Semestar", "Godina studija", "Broj ESPB bodova"};
 	
-	JFrame window;
-	
-	public DialogManager(JFrame frame)
-	{
-		this.window = frame;
-	}
+	public static JFrame window;
 
-	public void createAddStudentDialog()
+	public static void createAddStudentDialog()
 	{
 		AddDialog d = new AddDialog(window, "Dodavanje studenta", Dialog.EntityType.STUDENT);
 		
-		String[] labels = this.studentiFieldLabels;
+		String[] labels = studentiFieldLabels;
 		for(int i = 0; i < labels.length; ++i)
 		{
 			String temp = labels[i] + "*";
@@ -30,11 +27,11 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public void createAddProfesorDialog()
+	public static void createAddProfesorDialog()
 	{
 		AddDialog d = new AddDialog(window, "Dodavanje profesora", Dialog.EntityType.PROFESOR);
 		
-		String[] labels = this.profesoriFieldLabels;	
+		String[] labels = profesoriFieldLabels;	
 		for(int i = 0; i < labels.length; ++i)
 		{
 			String temp = labels[i] + "*";
@@ -44,25 +41,26 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public void createAddPredmetDialog()
+	public static void createAddPredmetDialog()
 	{
 		AddDialog d = new AddDialog(window, "Dodavanje predmeta", Dialog.EntityType.PREDMET);
 		
-		String[] labels = this.predmetiFieldLabels;
+		String[] labels = predmetiFieldLabels;
 		for(int i = 0; i < labels.length; ++i)
 		{
 			String temp = labels[i] + "*";
 			if		(i==2) 	d.addComboBox(temp, new String[] {"Letnji", "Zimski"});
+			else if	(i==3)	d.addComboBox(temp, new String[] {"1", "2", "3", "4"});
 			else 			d.addTextField(temp);
 		}
 		d.open();
 	}
 	
-	public void createEditStudentDialog(int tableRow, String[] data)
+	public static void createEditStudentDialog(int tableRow, String[] data)
 	{
-		MultiTabDialog d = new MultiTabDialog(window, "Izmena studenta", Dialog.EntityType.STUDENT, new String[] {"Informacije", "Položeni", "Nepoloženi"});
+		EditStudentDialog d = new EditStudentDialog(window, "Izmena studenta", Dialog.EntityType.STUDENT, new String[] {"Informacije", "Položeni", "Nepoloženi"});
 		
-		String[] labels = this.studentiFieldLabels;
+		String[] labels = studentiFieldLabels;
 		for(int i = 0; i < labels.length; ++i)
 		{
 			String temp = labels[i] + "*";
@@ -74,25 +72,43 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public void createEditProfesorDialog(int tableRow, String[] data)
+	public static void createEditProfesorDialog(int tableRow, String[] data)
 	{
-		MultiTabDialog d = new MultiTabDialog(window, "Izmena profesora", Dialog.EntityType.PROFESOR, new String[] {"Info", "Predmeti"});
+		EditProfesorDialog d = new EditProfesorDialog(window, "Izmena profesora", Dialog.EntityType.PROFESOR, new String[] {"Info", "Predmeti"});
 		
-		//TODO
+		String[] labels = profesoriFieldLabels;	
+		for(int i = 0; i < labels.length; ++i)
+		{
+			String temp = labels[i] + "*";
+			if		(i==2) 	d.tabPanels.get(0).addDateField(0, temp, data[i]);
+			else 			d.tabPanels.get(0).addTextField(0, temp, data[i]);
+		}
 		
 		d.open();
 	}
 	
-	public void createEditPredmetDialog(int tableRow, String[] data)
+	public static void createEditPredmetDialog(int tableRow, String[] data)
 	{
-		OneTabDialog d = new OneTabDialog(window, "Izmena predmeta", Dialog.EntityType.PREDMET);
+		EditPredmetDialog d = new EditPredmetDialog(window, "Izmena predmeta", Dialog.EntityType.PREDMET);
 		
-		//TODO
+		String[] labels = predmetiFieldLabels;
+		for(int i = 0; i < labels.length; ++i)
+		{
+			String temp = labels[i] + "*";
+			if		(i==2) 	d.addComboBox(temp, new String[] {"Letnji", "Zimski"}, Integer.parseInt(data[i]));
+			else if	(i==3)	d.addComboBox(temp, new String[] {"1", "2", "3", "4"}, Integer.parseInt(data[i]));
+			else 			d.addTextField(temp, data[i]);
+		}
 		
 		d.open();
 	}
 	
-	
+	public static void createInvalidInputDialog(ArrayList<String> messages)
+	{
+		InvalidInputDialog d = new InvalidInputDialog(window, "ERROR: Invalid Input", messages);
+		
+		d.open();
+	}
 }
 
 

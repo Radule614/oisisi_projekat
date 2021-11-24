@@ -5,15 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.util.ArrayList;
 
 import gui.dialog.Dialog.DialogTab.DialogPanel;
 import main.Events;
+import utility.Utility;
 
 public class AddDialog extends OneTabDialog{
 	private static final long serialVersionUID = -4200341794375887919L;
@@ -31,7 +29,7 @@ public class AddDialog extends OneTabDialog{
 	protected void setButtons()
 	{
 		DialogPanel buttonPanel = mainTab.panels.get(1);
-		JPanel panel = Dialog.createRowPanel();
+		JPanel panel = Dialog.createRowPanel(2);
 		buttonPanel.add(panel);
 		
 		FlowLayout leftPanelLayout = new FlowLayout(FlowLayout.RIGHT);
@@ -40,7 +38,7 @@ public class AddDialog extends OneTabDialog{
 		rightPanelLayout.setHgap(0);
 		
 		JPanel leftPanel = new JPanel(leftPanelLayout);
-		JPanel rightPanel = new JPanel(rightPanelLayout);		
+		JPanel rightPanel = new JPanel(rightPanelLayout);
 		
 		JButton submit = new JButton("Potvrdi");
 		JButton cancel = new JButton("Odustani");
@@ -54,8 +52,7 @@ public class AddDialog extends OneTabDialog{
 		AddDialog dialog = this;
 		DialogPanel fieldPanel = mainTab.panels.get(0);
 		
-		AddActionListener addListener = new AddActionListener(dialog, fieldPanel);
-		
+		AddEntityListener addListener = new AddEntityListener(dialog, fieldPanel, entityType);
 		submit.addActionListener(addListener);
 		
 		cancel.addActionListener(new ActionListener() 
@@ -71,70 +68,40 @@ public class AddDialog extends OneTabDialog{
 		panel.add(rightPanel);
 	}
 	
-	protected class AddActionListener implements ActionListener
+	protected class AddEntityListener extends EntityListener
 	{
-		protected Dialog dialog;
-		protected DialogPanel fieldPanel;
+		protected EntityType entityType;
 		
-		public AddActionListener(Dialog dialog, DialogPanel fieldPanel)
-		{
-			super();
-			this.dialog = dialog;
-			this.fieldPanel = fieldPanel;
+		public AddEntityListener(Dialog dialog, DialogPanel fieldPanel, EntityType entityType) {
+			super(dialog, fieldPanel);
+			this.entityType = entityType;
 		}
-		
-		public void actionPerformed(ActionEvent e) 
-		{
-			int r = 0;
-			boolean error = false;
-			String[] arr = new String[fieldPanel.fields.size()];
-			
-			for(JComponent field: fieldPanel.fields)
-			{
-				if(field instanceof JTextField)
-				{
-					JTextField temp = (JTextField)field;
-					if(temp.getText().isEmpty())
-					{
-						error = true;
-						break;
-					}
-					arr[r] = new String(temp.getText());
-				}
-				else if(field instanceof JFormattedTextField)
-				{
-					JFormattedTextField temp = (JFormattedTextField)field;
-					if(temp.getText().isEmpty())
-					{
-						error = true;
-						break;
-					}
-					arr[r] = new String(temp.getText());
-				}
-				else if(field instanceof JComboBox)
-				{
-					JComboBox<?> temp = (JComboBox<?>)field;
-					arr[r] = new String(Integer.toString(temp.getSelectedIndex()));
-				}
-				++r;
-			}
 
-			if(!error)
+		@Override
+		void action() {
+			Utility.trimEach(this.data);
+			ArrayList<String> messages = new ArrayList<String>();
+			switch(this.entityType)
 			{
-				switch(entityType)
+			case STUDENT:
+				if(this.error = !Events.createStudent(this.data, messages))
 				{
-				case STUDENT:
-					Events.createStudent(arr);
-					break;
-				case PROFESOR:
-					Events.createProfesor(arr);
-					break;
-				case PREDMET:
-					Events.createPredmet(arr);
-					break;
+					DialogManager.createInvalidInputDialog(messages);
 				}
-				
-				dialog.close();
+				break;
+			case PROFESOR:
+				if(this.error = !Events.createProfesor(this.data, messages))
+				{
+					DialogManager.createInvalidInputDialog(messages);
+				}
+				break;
+			case PREDMET:
+				if(this.error = !Events.createPredmet(this.data, messages))
+				{
+					DialogManager.createInvalidInputDialog(messages);
+				}
+				break;
+			default:;
 			}
 		}
 		
