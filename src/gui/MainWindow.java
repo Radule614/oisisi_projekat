@@ -2,6 +2,11 @@ package gui;
 
 import javax.swing.*;
 
+import gui.bar.MenuBar;
+import gui.bar.StatusBar;
+import gui.bar.ToolBar;
+import gui.dialog.DialogManager;
+
 import java.awt.*;
 
 public class MainWindow extends JFrame {
@@ -13,8 +18,6 @@ public class MainWindow extends JFrame {
 	protected ToolBar toolBar;
 	protected Content content;
 	protected StatusBar statusBar;
-	
-	DialogManager dialogManager;
 
 	public MainWindow()
 	{
@@ -41,12 +44,7 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(BorderLayout.CENTER, content);
         this.getContentPane().add(BorderLayout.SOUTH, statusBar);
         
-        this.dialogManager = new DialogManager(this);
-	}
-	
-	public void addToTable(Object obj)
-	{
-		this.content.addToTable(obj);				
+        DialogManager.window = this;
 	}
 	
 	public int getActivePane()

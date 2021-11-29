@@ -1,12 +1,13 @@
-package gui;
+package gui.bar;
 
 import javax.swing.*;
+
+import gui.MainWindow;
+import gui.dialog.DialogManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.text.SimpleDateFormat;  
-import java.util.Date;  
 
 public class ToolBar extends JToolBar {
 	private static final long serialVersionUID = -6297787221312734786L;
@@ -54,19 +55,10 @@ public class ToolBar extends JToolBar {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					if(windowGlobal.getActivePane() == 0 && buttonType == 0) 
+					if(buttonType == 0)
 					{
-						windowGlobal.dialogManager.createAddStudentDialog();
+						DialogManager.createAddDialog(windowGlobal.getActivePane());
 					}
-					else if (windowGlobal.getActivePane() == 1 && buttonType == 0)
-					{
-						windowGlobal.dialogManager.createAddProfesorDialog();
-					}
-					else if(windowGlobal.getActivePane() == 2 && buttonType == 0)
-					{
-						windowGlobal.dialogManager.createAddPredmetDialog();
-					}
-					
 				} 
 			});
 		}

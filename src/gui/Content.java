@@ -5,6 +5,8 @@ import javax.swing.border.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import gui.table.TableManager;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,7 +15,6 @@ public class Content extends JPanel {
 	
 	protected final String[] tabLabels = {"Studenti", "Profesori", "Predmeti"};
 	
-	TableManager tableManager;
 	ArrayList<JPanel> panels;
 	JTabbedPane tabbedPane;
 	MainWindow window;
@@ -22,7 +23,6 @@ public class Content extends JPanel {
 		super();
 		this.window = window;
 		panels = new ArrayList<JPanel>();
-		tableManager = new TableManager();
 		tabbedPane = new JTabbedPane();
 		for(int i = 0; i < 3; ++i)
 		{
@@ -45,11 +45,6 @@ public class Content extends JPanel {
         });
 	}
 	
-	public void addToTable(Object obj)
-	{	
-		tableManager.add(obj);		
-	}
-	
 	public int getActivePane()
 	{
 		return this.tabbedPane.getSelectedIndex();
@@ -62,7 +57,7 @@ public class Content extends JPanel {
 		{
 			p.setLayout(new BorderLayout());
 			
-			JScrollPane sp = new JScrollPane(tableManager.getTables().get(i));
+			JScrollPane sp = new JScrollPane(TableManager.getTables()[i]);
 			sp.setBorder(new CompoundBorder(new EmptyBorder(25, 40, 25, 40), sp.getBorder()));
 			p.add(sp, BorderLayout.CENTER);
 			

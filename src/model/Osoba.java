@@ -1,21 +1,77 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import main.Settings;
+import utility.Utility;
 
 public abstract class Osoba {
 	protected String ime;
 	protected String prezime;
 	protected LocalDate datumRodjenja;
 	protected Adresa adresaStanovanja;
-	protected int telefon;
+	protected String telefon;
 	protected String email;
-	
 	
 	public Osoba()
 	{
 		
 	}
-
+	
+	public Osoba(String[] arr)
+	{
+		LocalDate date = LocalDate.parse((String)arr[2], Settings.formatter);
+		
+		setIme(arr[0]);
+		setPrezime(arr[1]);
+		setDatumRodjenja(date);
+		setAdresaStanovanja(new Adresa(arr[3]));
+		setTelefon(arr[4]);
+		setEmail(arr[5]);
+	}
+	
+	public void toStringArray(String[] data)
+	{
+		data[0] = getIme();
+		data[1] = getPrezime();
+		data[2] = getDatumRodjenja().format(Settings.formatter);
+		data[3] = getAdresaStanovanja().toString();
+		data[4] = getTelefon();
+		data[5] = getEmail();
+	}
+	
+	public static boolean isValidData(String[] arr, ArrayList<String> messages)
+	{
+		boolean isValid = true;
+		if(!Utility.doesMatch(Settings.namePattern, arr[0]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Ime: dužina 3 ili više karaktera");
+		}
+		if(!Utility.doesMatch(Settings.namePattern, arr[1]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Prezime: dužina 3 ili više karaktera");
+		}
+		if(!Utility.isInInterval(Utility.parseInt(arr[2].substring(6)), 1900, 2021))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Godina rođenja: mora biti u intervalu [1900, 2021]");
+		}
+		if(!Utility.doesMatch(Settings.addressPattern, arr[3]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Adresa stanovanja: mora biti u obliku: ulica, broj, grad, drzava");
+		}
+		if(!Utility.doesMatch(Settings.emailPattern, arr[5]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Email: nije validan");
+		}
+		
+		return isValid;
+	}
 
 	public String getPrezime() {
 		return prezime;
@@ -57,12 +113,12 @@ public abstract class Osoba {
 	}
 
 
-	public int getTelefon() {
+	public String getTelefon() {
 		return telefon;
 	}
 
 
-	public void setTelefon(int telefon) {
+	public void setTelefon(String telefon) {
 		this.telefon = telefon;
 	}
 

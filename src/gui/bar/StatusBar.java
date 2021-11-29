@@ -1,6 +1,9 @@
-package gui;
+package gui.bar;
 
 import javax.swing.*;
+
+import gui.MainWindow;
+
 import java.awt.*;
 import java.text.SimpleDateFormat;  
 import java.util.Date;     

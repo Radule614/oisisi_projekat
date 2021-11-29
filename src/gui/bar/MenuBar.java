@@ -1,4 +1,4 @@
-package gui;
+package gui.bar;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 
 import javax.swing.*;
+
+import gui.MainWindow;
+import gui.dialog.DialogManager;
+import gui.table.TableManager;
 
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
@@ -95,20 +99,19 @@ public class MenuBar extends JMenuBar {
 				String temp = btn.getText();
 				if(temp == "New")
 				{
+					DialogManager.createAddDialog(window.getActivePane());
+				}
+				else if(temp == "Edit")
+				{
 					int active = window.getActivePane();
-					switch(active)
-					{
-					case 0:
-						window.dialogManager.createAddStudentDialog();
-						break;
-					case 1:
-						window.dialogManager.createAddProfesorDialog();
-						break;
-					case 2:
-						window.dialogManager.createAddPredmetDialog();
-						break;
-					default:;
-					}
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) DialogManager.createEditDialog(active, row);
+				}
+				else if(temp == "Delete")
+				{
+					int active = window.getActivePane();
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) DialogManager.createDeleteDialog(active , row);
 				}
 				else if(temp == "Close")
 				{

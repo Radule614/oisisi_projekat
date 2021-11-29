@@ -1,15 +1,30 @@
 package model;
 
+import utility.Utility;
+
 public class Adresa {
 	protected String ulica;
-	protected int broj;
+	protected String broj;
 	protected String grad;
 	protected String drzava;
 	
 	
-	public Adresa(String ulica)
+	public Adresa(String ulica, String broj, String grad, String drzava)
 	{
 		this.ulica = ulica;
+		this.broj = broj;
+		this.grad = grad;
+		this.drzava = drzava;
+	}
+	
+	public Adresa(String input)
+	{
+		String[] parts = input.split(",");
+		parts = Utility.trimEach(parts);
+		this.ulica = parts[0];
+		this.broj = parts[1];
+		this.grad = parts[2];
+		this.drzava = parts[3];
 	}
 
 
@@ -23,12 +38,12 @@ public class Adresa {
 	}
 
 
-	public int getBroj() {
+	public String getBroj() {
 		return broj;
 	}
 
 
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
 	}
 
@@ -52,5 +67,10 @@ public class Adresa {
 		this.drzava = drzava;
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		return new String(ulica + ", " + broj + ", "  + grad + ", " + drzava);
+		//return new String(ulica);
+	}
 }
