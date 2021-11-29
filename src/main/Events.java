@@ -3,21 +3,17 @@ package main;
 import java.util.ArrayList;
 
 import data.DataManager;
-import gui.MainWindow;
-import model.Predmet;
-import model.Profesor;
-import model.Student;
+import gui.table.TableManager;
+import model.*;
 
 public class Events {
-	public static MainWindow gui;
-	
 	public static boolean createStudent(String[] arr, ArrayList<String> messages)
 	{	
 		Student st = DataManager.createStudent(arr, messages);
 		
 		if(st == null) return false;
 		
-		gui.addToTable(st);
+		TableManager.add(st);
 		return true;
 	}
 	
@@ -27,7 +23,7 @@ public class Events {
 		
 		if(pr == null) return false;
 		
-		gui.addToTable(pr);
+		TableManager.add(pr);
 		return true;
 	}
 	
@@ -37,7 +33,7 @@ public class Events {
 		
 		if(pr == null) return false;
 		
-		gui.addToTable(pr);
+		TableManager.add(pr);
 		return true;
 	}
 	
@@ -60,6 +56,55 @@ public class Events {
 		String[] data = DataManager.getPredmetData(index);
 		
 		return data;
+	}
+	
+	public static boolean editStudent(String[] arr, int index, ArrayList<String> messages)
+	{
+		Student st = DataManager.createStudent(arr, messages, index);
+		
+		if(st == null) return false;
+		TableManager.remove(0, index);
+		TableManager.add(st, index);
+		DataManager.deleteStudent(index+1);
+		return true;
+	}
+	
+	public static boolean editProfesor(String[] arr, int index, ArrayList<String> messages)
+	{
+		Profesor pr = DataManager.createProfesor(arr, messages, index);
+		
+		if(pr == null) return false;
+		TableManager.remove(1, index);
+		TableManager.add(pr, index);
+		DataManager.deleteProfesor(index+1);
+		return true;
+	}
+	
+	public static boolean editPredmet(String[] arr, int index, ArrayList<String> messages)
+	{
+		Predmet pr = DataManager.createPredmet(arr, messages, index);
+		
+		if(pr == null) return false;
+		TableManager.remove(2, index);
+		TableManager.add(pr, index);
+		DataManager.deletePredmet(index+1);
+		return true;
+	}
+	
+	public static void deleteStudent(int index)
+	{
+		TableManager.remove(0, index);
+		DataManager.deleteStudent(index);
+	}
+	public static void deleteProfesor(int index)
+	{
+		TableManager.remove(1, index);
+		DataManager.deleteProfesor(index);
+	}
+	public static void deletePredmet(int index)
+	{
+		TableManager.remove(2, index);
+		DataManager.deletePredmet(index);
 	}
 }
 

@@ -1,7 +1,10 @@
 package gui.dialog;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
@@ -12,6 +15,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import gui.dialog.Dialog.DialogTab.DialogPanel;
 import main.Settings;
 
 public abstract class Dialog extends JDialog {
@@ -83,9 +87,48 @@ public abstract class Dialog extends JDialog {
         this.setVisible(false);
 	}
 	
+	protected void setButtons(int tabIndex, int panelIndex, ActionListener listener)
+	{
+		DialogTab tab = tabPanels.get(tabIndex);
+		DialogPanel buttonPanel = tab.panels.get(1);
+		JPanel panel = Dialog.createRowPanel(2);
+		buttonPanel.add(panel);
+		
+		FlowLayout leftPanelLayout = new FlowLayout(FlowLayout.RIGHT);
+		leftPanelLayout.setHgap(0);
+		FlowLayout rightPanelLayout = new FlowLayout(FlowLayout.LEFT);
+		rightPanelLayout.setHgap(0);
+		
+		JPanel leftPanel = new JPanel(leftPanelLayout);
+		JPanel rightPanel = new JPanel(rightPanelLayout);
+		
+		JButton submit = new JButton("Potvrdi");
+		JButton cancel = new JButton("Odustani");
+		
+		Dialog.setButtonHover(submit, "#95bcf2");
+		Dialog.setButtonHover(cancel, "#9b5377");
+		
+		leftPanel.add(submit);
+		rightPanel.add(cancel);
+		
+		Dialog dialog = this;
+		submit.addActionListener(listener);
+		
+		cancel.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				dialog.close();
+			}
+		});
+		
+		panel.add(leftPanel);
+		panel.add(rightPanel);
+	}
+	
 	protected class DialogTab extends JPanel{
 		private static final long serialVersionUID = -1130421378464245296L;
-		
 		Dialog dialog;
 		
 		protected ArrayList<DialogPanel> panels = new ArrayList<DialogPanel>();
@@ -144,9 +187,13 @@ public abstract class Dialog extends JDialog {
 			this.panels.get(panelIndex).addComboBox(labelText, arr, optionIndex);
 		}
 		
+		public String[] getData(int panelIndex)
+		{
+			return this.panels.get(panelIndex).getData();
+		}
+		
 		protected class DialogPanel extends JPanel{
 			private static final long serialVersionUID = 840831711625149150L;
-			
 			Dialog dialog;
 			
 			protected ArrayList<JComponent> fields = new ArrayList<JComponent>();
@@ -154,9 +201,7 @@ public abstract class Dialog extends JDialog {
 			public DialogPanel(Dialog dialog)
 			{
 				super();
-				
 				this.dialog = dialog;
-				
 				this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 			}
 			
@@ -203,6 +248,45 @@ public abstract class Dialog extends JDialog {
 			{
 				JComboBox<?> comboBox = this.createComboBox(labelText, arr);
 				comboBox.setSelectedIndex(optionIndex);
+			}
+			
+			protected String[] getData()
+			{
+				String[] data = new String[fields.size()];
+				
+				boolean error = false;
+				int r = 0;
+				for(JComponent field: fields)
+				{
+					if(field instanceof JTextField)
+					{
+						JTextField temp = (JTextField)field;
+						if(temp.getText().isEmpty())
+						{
+							error = true;
+							break;
+						}
+						data[r] = new String(temp.getText());
+					}
+					else if(field instanceof JFormattedTextField)
+					{
+						JFormattedTextField temp = (JFormattedTextField)field;
+						if(temp.getText().isEmpty())
+						{
+							error = true;
+							break;
+						}
+						data[r] = new String(temp.getText());
+					}
+					else if(field instanceof JComboBox)
+					{
+						JComboBox<?> temp = (JComboBox<?>)field;
+						data[r] = new String(Integer.toString(temp.getSelectedIndex()));
+					}
+					++r;
+				}
+				if(error) return null;
+				return data;
 			}
 			
 			private JTextField createTextField(String labelText)

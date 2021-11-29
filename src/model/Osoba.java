@@ -47,12 +47,12 @@ public abstract class Osoba {
 		if(!Utility.doesMatch(Settings.namePattern, arr[0]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Ime: prvo slovo veliko, dužina 3 ili više karaktera");
+			if(messages != null) messages.add("Ime: dužina 3 ili više karaktera");
 		}
 		if(!Utility.doesMatch(Settings.namePattern, arr[1]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Prezime: prvo slovo veliko, dužina 3 ili više karaktera");
+			if(messages != null) messages.add("Prezime: dužina 3 ili više karaktera");
 		}
 		if(!Utility.isInInterval(Utility.parseInt(arr[2].substring(6)), 1900, 2021))
 		{

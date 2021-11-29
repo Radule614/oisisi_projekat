@@ -20,7 +20,7 @@ public class Adresa {
 	public Adresa(String input)
 	{
 		String[] parts = input.split(",");
-		Utility.trimEach(parts);
+		parts = Utility.trimEach(parts);
 		this.ulica = parts[0];
 		this.broj = parts[1];
 		this.grad = parts[2];

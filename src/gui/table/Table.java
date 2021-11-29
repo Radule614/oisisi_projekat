@@ -1,4 +1,4 @@
-package gui;
+package gui.table;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -31,7 +31,16 @@ public class Table extends JTable {
 	public void addRow(Object[] data)
 	{
 		this.model.addRow(data);
-		
+	}
+	
+	public void insertRow(Object[] data, int row)
+	{
+		this.model.insertRow(row, data);
+	}
+	
+	public void removeRow(int tableRow)
+	{
+		this.model.removeRow(tableRow);
 	}
 	
 	protected class TableRenderer extends DefaultTableCellRenderer {

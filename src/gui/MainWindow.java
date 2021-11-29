@@ -2,6 +2,9 @@ package gui;
 
 import javax.swing.*;
 
+import gui.bar.MenuBar;
+import gui.bar.StatusBar;
+import gui.bar.ToolBar;
 import gui.dialog.DialogManager;
 
 import java.awt.*;
@@ -44,11 +47,6 @@ public class MainWindow extends JFrame {
         DialogManager.window = this;
 	}
 	
-	public void addToTable(Object obj)
-	{
-		this.content.addToTable(obj);				
-	}
-	
 	public int getActivePane()
 	{
 		return this.content.getActivePane();
@@ -57,11 +55,6 @@ public class MainWindow extends JFrame {
 	protected void setPaneStatus(int activePane)
 	{
 		statusBar.RefreshStatusBar(activePane);
-	}
-	
-	protected int getSelectedTableRow(int activePane)
-	{
-		return this.content.getSelectedTableRow(activePane);
 	}
 }
 

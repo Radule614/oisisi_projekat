@@ -1,4 +1,4 @@
-package gui;
+package gui.bar;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,8 +7,9 @@ import java.awt.event.InputEvent;
 
 import javax.swing.*;
 
+import gui.MainWindow;
 import gui.dialog.DialogManager;
-import main.Events;
+import gui.table.TableManager;
 
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
@@ -98,45 +99,19 @@ public class MenuBar extends JMenuBar {
 				String temp = btn.getText();
 				if(temp == "New")
 				{
-					int active = window.getActivePane();
-					switch(active)
-					{
-					case 0:
-						DialogManager.createAddStudentDialog();
-						break;
-					case 1:
-						DialogManager.createAddProfesorDialog();
-						break;
-					case 2:
-						DialogManager.createAddPredmetDialog();
-						break;
-					default:;
-					}
+					DialogManager.createAddDialog(window.getActivePane());
 				}
 				else if(temp == "Edit")
 				{
 					int active = window.getActivePane();
-					int row = window.getSelectedTableRow(active);
-					if(row != -1)
-					{
-						String[] data;
-						switch(active)
-						{
-						case 0:
-							data = Events.getStudentData(row);
-							DialogManager.createEditStudentDialog(row, data);
-							break;
-						case 1:
-							data = Events.getProfesorData(row);
-							DialogManager.createEditProfesorDialog(row, data);
-							break;
-						case 2:
-							data = Events.getPredmetData(row);
-							DialogManager.createEditPredmetDialog(row, data);
-							break;
-						default:;
-						}
-					}
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) DialogManager.createEditDialog(active, row);
+				}
+				else if(temp == "Delete")
+				{
+					int active = window.getActivePane();
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) DialogManager.createDeleteDialog(active , row);
 				}
 				else if(temp == "Close")
 				{

@@ -1,7 +1,8 @@
-package gui;
+package gui.bar;
 
 import javax.swing.*;
 
+import gui.MainWindow;
 import gui.dialog.DialogManager;
 
 import java.awt.*;
@@ -54,19 +55,10 @@ public class ToolBar extends JToolBar {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					if(windowGlobal.getActivePane() == 0 && buttonType == 0) 
+					if(buttonType == 0)
 					{
-						DialogManager.createAddStudentDialog();
+						DialogManager.createAddDialog(windowGlobal.getActivePane());
 					}
-					else if (windowGlobal.getActivePane() == 1 && buttonType == 0)
-					{
-						DialogManager.createAddProfesorDialog();
-					}
-					else if(windowGlobal.getActivePane() == 2 && buttonType == 0)
-					{
-						DialogManager.createAddPredmetDialog();
-					}
-					
 				} 
 			});
 		}

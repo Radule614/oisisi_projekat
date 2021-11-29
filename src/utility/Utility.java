@@ -33,20 +33,24 @@ public class Utility {
 		return n;
 	}
 	
-	public static void trimEach(String[] arr)
+	public static String[] trimEach(String[] arr)
 	{
-		for(String s: arr)
+		String[] temp = new String[arr.length];
+		for(int i = 0; i < arr.length; ++i)
 		{
-			s = s.trim();
+			temp[i] = arr[i].trim();
 		}
+		return temp;
 	}
 	
-	public static void trimEach(ArrayList<String> arr)
+	public static ArrayList<String> trimEach(ArrayList<String> arr)
 	{
-		for(String s: arr)
+		ArrayList<String> temp = new ArrayList<String>();
+		for(int i = 0; i < arr.size(); ++i)
 		{
-			s = s.trim();
+			temp.add(arr.get(0).trim());
 		}
+		return temp;
 	}
 	
 	public static boolean doesMatch(String patternInput, String input)

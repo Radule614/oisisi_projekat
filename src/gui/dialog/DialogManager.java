@@ -4,14 +4,84 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import gui.dialog.Dialog.EntityType;
+import main.Events;
+
 public class DialogManager {
 	static protected String[] studentiFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Broj indeksa", "Godina upisa", "Prosek", "Trenutna godina studija", "Način finansiranja"};
 	static protected String[] profesoriFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje", "Godine staža"};
 	static protected String[] predmetiFieldLabels = {"Sifra predmeta", "Naziv predmeta", "Semestar", "Godina studija", "Broj ESPB bodova"};
-	
 	public static JFrame window;
+	
+	public static void createAddDialog(int activeTab)
+	{
+		switch(activeTab)
+		{
+		case 0:
+			DialogManager.createAddStudentDialog();
+			break;
+		case 1:
+			DialogManager.createAddProfesorDialog();
+			break;
+		case 2:
+			DialogManager.createAddPredmetDialog();
+			break;
+		default:;
+		}
+	}
+	
+	public static void createEditDialog(int activeTab, int tableRow)
+	{
+		String[] data;
+		switch(activeTab)
+		{
+		case 0:
+			data = Events.getStudentData(tableRow);
+			DialogManager.createEditStudentDialog(tableRow, data);
+			break;
+		case 1:
+			data = Events.getProfesorData(tableRow);
+			DialogManager.createEditProfesorDialog(tableRow, data);
+			break;
+		case 2:
+			data = Events.getPredmetData(tableRow);
+			DialogManager.createEditPredmetDialog(tableRow, data);
+			break;
+		default:;
+		}
+	}
+	
+	public static void createDeleteDialog(int activeTab, int tableRow)
+	{
+		DeleteDialog d = null;
+		switch(activeTab)
+		{
+		case 0:
+			d = new DeleteDialog(window, "Brisanje studenta", EntityType.STUDENT, tableRow);
+			break;
+		case 1:
+			d = new DeleteDialog(window, "Brisanje profesora", EntityType.PROFESOR, tableRow);
+			break;
+		case 2:
+			d = new DeleteDialog(window, "Brisanje predmeta", EntityType.PREDMET, tableRow);
+			break;
+		default:;
+		}
+		d.open();
+	}
 
-	public static void createAddStudentDialog()
+	public static void createInvalidInputDialog(ArrayList<String> messages)
+	{
+		InvalidInputDialog d = new InvalidInputDialog(window, "Greška: podaci nisu validni", messages);
+		
+		d.open();
+	}
+	
+	
+	
+	//private
+	
+	private static void createAddStudentDialog()
 	{
 		AddDialog d = new AddDialog(window, "Dodavanje studenta", Dialog.EntityType.STUDENT);
 		
@@ -27,7 +97,7 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createAddProfesorDialog()
+	private static void createAddProfesorDialog()
 	{
 		AddDialog d = new AddDialog(window, "Dodavanje profesora", Dialog.EntityType.PROFESOR);
 		
@@ -41,7 +111,7 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createAddPredmetDialog()
+	private static void createAddPredmetDialog()
 	{
 		AddDialog d = new AddDialog(window, "Dodavanje predmeta", Dialog.EntityType.PREDMET);
 		
@@ -56,9 +126,9 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createEditStudentDialog(int tableRow, String[] data)
+	private static void createEditStudentDialog(int tableRow, String[] data)
 	{
-		EditStudentDialog d = new EditStudentDialog(window, "Izmena studenta", Dialog.EntityType.STUDENT, new String[] {"Informacije", "Položeni", "Nepoloženi"});
+		EditStudentDialog d = new EditStudentDialog(window, "Izmena studenta", Dialog.EntityType.STUDENT, tableRow, new String[] {"Informacije", "Položeni", "Nepoloženi"});
 		
 		String[] labels = studentiFieldLabels;
 		for(int i = 0; i < labels.length; ++i)
@@ -72,9 +142,9 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createEditProfesorDialog(int tableRow, String[] data)
+	private static void createEditProfesorDialog(int tableRow, String[] data)
 	{
-		EditProfesorDialog d = new EditProfesorDialog(window, "Izmena profesora", Dialog.EntityType.PROFESOR, new String[] {"Info", "Predmeti"});
+		EditProfesorDialog d = new EditProfesorDialog(window, "Izmena profesora", Dialog.EntityType.PROFESOR, tableRow, new String[] {"Info", "Predmeti"});
 		
 		String[] labels = profesoriFieldLabels;	
 		for(int i = 0; i < labels.length; ++i)
@@ -87,9 +157,9 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createEditPredmetDialog(int tableRow, String[] data)
+	private static void createEditPredmetDialog(int tableRow, String[] data)
 	{
-		EditPredmetDialog d = new EditPredmetDialog(window, "Izmena predmeta", Dialog.EntityType.PREDMET);
+		EditPredmetDialog d = new EditPredmetDialog(window, "Izmena predmeta", tableRow, Dialog.EntityType.PREDMET);
 		
 		String[] labels = predmetiFieldLabels;
 		for(int i = 0; i < labels.length; ++i)
@@ -103,12 +173,7 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createInvalidInputDialog(ArrayList<String> messages)
-	{
-		InvalidInputDialog d = new InvalidInputDialog(window, "ERROR: Invalid Input", messages);
-		
-		d.open();
-	}
+	
 }
 
 
