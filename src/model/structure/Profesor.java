@@ -1,9 +1,9 @@
-package model;
+package model.structure;
 
 import java.util.ArrayList;
 
-import main.Settings;
-import utility.Utility;
+import app.Settings;
+import app.Utility;
 
 public class Profesor extends Osoba {
 	protected Adresa adresaKancelarije;

@@ -2,6 +2,7 @@ package gui.table;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -36,6 +37,14 @@ public class Table extends JTable {
 	public void insertRow(Object[] data, int row)
 	{
 		this.model.insertRow(row, data);
+	}
+	
+	public void insertRows(ArrayList<Object[]> dataArray)
+	{
+		for(Object[] data: dataArray)
+		{
+			this.addRow(data);
+		}
 	}
 	
 	public void removeRow(int tableRow)

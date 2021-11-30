@@ -1,10 +1,12 @@
-package gui.dialog;
+package gui.dialog.edit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import main.Events;
+import controller.Controller;
+import gui.dialog.Dialog;
+import gui.dialog.DialogManager;
 
 public class EditActionListener implements ActionListener {
 	Dialog dialog;
@@ -25,13 +27,13 @@ public class EditActionListener implements ActionListener {
 			switch(dialog.entityType)
 			{
 			case STUDENT:
-				error = !Events.editStudent(data, tableRow, messages);
+				error = !Controller.editStudent(data, tableRow, messages);
 				break;
 			case PROFESOR:
-				error = !Events.editProfesor(data, tableRow, messages);
+				error = !Controller.editProfesor(data, tableRow, messages);
 				break;
 			case PREDMET:
-				error = !Events.editPredmet(data, tableRow, messages);
+				error = !Controller.editPredmet(data, tableRow, messages);
 				break;
 			default:;
 			}
