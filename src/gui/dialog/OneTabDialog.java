@@ -1,15 +1,13 @@
 package gui.dialog;
 
-import javax.swing.JFrame;
-
 public class OneTabDialog extends Dialog{
 	private static final long serialVersionUID = -1532191688826690608L;
 
 	protected DialogTab mainTab;
 	
-	public OneTabDialog(JFrame frame, String title, EntityType entityType)
+	public OneTabDialog(String title, EntityType entityType)
 	{
-		super(frame, title, entityType);
+		super(title, entityType);
 		
 		mainTab = new DialogTab(this);
 		tabPanels.add(mainTab);

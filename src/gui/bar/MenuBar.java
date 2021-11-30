@@ -14,17 +14,15 @@ import gui.table.TableManager;
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
 	
-	String[] fileNames = {"New", "Save", "Open", "Close"};
-	String[] editNames = {"Edit", "Delete"};
-	String[] helpNames = {"Help", "About"};
+	final String[] fileNames = {"New", "Save", "Open", "Close"};
+	final String[] editNames = {"Edit", "Delete"};
+	final String[] helpNames = {"Help", "About"};
 	
-	MainWindow window;
+	static MenuBar instance;
 	
-	public MenuBar(MainWindow window)
+	private MenuBar()
 	{
 		super();
-		
-		this.window = window;
 		
 		JMenu file = new JMenu("File");
 		JMenu edit = new JMenu("Edit");
@@ -65,6 +63,12 @@ public class MenuBar extends JMenuBar {
 		add(help);
 	}
 	
+	public static MenuBar getInstance()
+	{
+		if(MenuBar.instance == null) MenuBar.instance = new MenuBar();
+		return MenuBar.instance;
+	}
+	
 	class MenuItem extends JMenuItem
 	{
 		private static final long serialVersionUID = 5161695778852331256L;
@@ -97,6 +101,7 @@ public class MenuBar extends JMenuBar {
 			{
 				MenuItem btn = (MenuItem)ae.getSource();
 				String temp = btn.getText();
+				MainWindow window = MainWindow.getInstance();
 				if(temp == "New")
 				{
 					DialogManager.createAddDialog(window.getActivePane());

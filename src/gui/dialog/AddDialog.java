@@ -1,18 +1,16 @@
 package gui.dialog;
 
-import javax.swing.JFrame;
+import controller.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import main.Events;
-
 public class AddDialog extends OneTabDialog{
 	private static final long serialVersionUID = -4200341794375887919L;
 	protected EntityType entityType;
-	public AddDialog(JFrame frame, String title, EntityType entityType) {
-		super(frame, title, entityType);
+	public AddDialog(String title, EntityType entityType) {
+		super(title, entityType);
 		this.entityType = entityType;
 		this.mainTab.createPanel();	//prvi panel
 		this.mainTab.createPanel();	//drugi panel
@@ -23,7 +21,7 @@ public class AddDialog extends OneTabDialog{
 	void setAddButtons()
 	{
 		AddDialog dialog = this;
-		this.setButtons(0, 1, new ActionListener()
+		this.setButtons(0, 1, null, new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
@@ -36,13 +34,13 @@ public class AddDialog extends OneTabDialog{
 					switch(entityType)
 					{
 					case STUDENT:
-						error = !Events.createStudent(data, messages);
+						error = !Controller.createStudent(data, messages);
 						break;
 					case PROFESOR:
-						error = !Events.createProfesor(data, messages);
+						error = !Controller.createProfesor(data, messages);
 						break;
 					case PREDMET:
-						error = !Events.createPredmet(data, messages);
+						error = !Controller.createPredmet(data, messages);
 						break;
 					default:;
 					}

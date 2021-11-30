@@ -15,23 +15,23 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import app.Settings;
+import gui.MainWindow;
 import gui.dialog.Dialog.DialogTab.DialogPanel;
-import main.Settings;
 
 public abstract class Dialog extends JDialog {
 	private static final long serialVersionUID = -1676308500879210531L;
-	enum EntityType {STUDENT, PROFESOR, PREDMET};
-	protected final JFrame frame;
+	public enum EntityType {STUDENT, PROFESOR, PREDMET};
+	protected final static MainWindow window = MainWindow.getInstance();
 	
 	protected JTabbedPane tabbedPane;
-	protected ArrayList<DialogTab> tabPanels;
+	public ArrayList<DialogTab> tabPanels;
 	
-	EntityType entityType;
+	public EntityType entityType;
 	
-	public Dialog(JFrame frame, String title, EntityType et)
+	public Dialog(String title, EntityType et)
 	{
-		super(frame, title, true);
-		this.frame = frame;
+		super(window, title, true);
 		this.init();	
 		this.entityType = et;
 		
@@ -87,7 +87,7 @@ public abstract class Dialog extends JDialog {
         this.setVisible(false);
 	}
 	
-	protected void setButtons(int tabIndex, int panelIndex, ActionListener listener)
+	protected void setButtons(int tabIndex, int panelIndex, String[] labels, ActionListener listener)
 	{
 		DialogTab tab = tabPanels.get(tabIndex);
 		DialogPanel buttonPanel = tab.panels.get(1);
@@ -99,11 +99,24 @@ public abstract class Dialog extends JDialog {
 		FlowLayout rightPanelLayout = new FlowLayout(FlowLayout.LEFT);
 		rightPanelLayout.setHgap(0);
 		
+		JButton submit = null;
+		JButton cancel = null;
+		
+		if(labels != null && labels.length == 2)
+		{
+			submit = new JButton(labels[0]);
+			cancel = new JButton(labels[1]);
+		}
+		else
+		{
+			submit = new JButton("Potvrdi");
+			cancel = new JButton("Odustani");
+		}
+		
 		JPanel leftPanel = new JPanel(leftPanelLayout);
 		JPanel rightPanel = new JPanel(rightPanelLayout);
 		
-		JButton submit = new JButton("Potvrdi");
-		JButton cancel = new JButton("Odustani");
+		
 		
 		Dialog.setButtonHover(submit, "#95bcf2");
 		Dialog.setButtonHover(cancel, "#9b5377");
@@ -127,11 +140,11 @@ public abstract class Dialog extends JDialog {
 		panel.add(rightPanel);
 	}
 	
-	protected class DialogTab extends JPanel{
+	public class DialogTab extends JPanel{
 		private static final long serialVersionUID = -1130421378464245296L;
 		Dialog dialog;
 		
-		protected ArrayList<DialogPanel> panels = new ArrayList<DialogPanel>();
+		public ArrayList<DialogPanel> panels = new ArrayList<DialogPanel>();
 		
 		public DialogTab(Dialog dialog)
 		{
@@ -192,7 +205,7 @@ public abstract class Dialog extends JDialog {
 			return this.panels.get(panelIndex).getData();
 		}
 		
-		protected class DialogPanel extends JPanel{
+		public class DialogPanel extends JPanel{
 			private static final long serialVersionUID = 840831711625149150L;
 			Dialog dialog;
 			
@@ -228,15 +241,12 @@ public abstract class Dialog extends JDialog {
 			protected void addDateField(String labelText)
 			{
 				this.createDataField(labelText);
-				//this.createTextField(labelText);
 			}
 			
 			protected void addDateField(String labelText, String value)
 			{
 				JFormattedTextField dateTextField = this.createDataField(labelText);
 				dateTextField.setText(value);
-				//JTextField dateTextField = this.createTextField(labelText);
-				//dateTextField.setText(value);
 			}
 			
 			protected void addComboBox(String labelText, String[] arr)

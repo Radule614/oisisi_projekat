@@ -1,6 +1,6 @@
-package model;
+package model.structure;
 
-import utility.Utility;
+import app.Utility;
 
 public class Adresa {
 	protected String ulica;

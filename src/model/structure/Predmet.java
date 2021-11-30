@@ -1,8 +1,8 @@
-package model;
+package model.structure;
 
 import java.util.ArrayList;
 
-import utility.Utility;
+import app.Utility;
 
 public class Predmet {
 	public enum VrstaSemestra {L, Z};

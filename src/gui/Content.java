@@ -15,13 +15,14 @@ public class Content extends JPanel {
 	
 	protected final String[] tabLabels = {"Studenti", "Profesori", "Predmeti"};
 	
+	static Content instance;
+	
 	ArrayList<JPanel> panels;
 	JTabbedPane tabbedPane;
-	MainWindow window;
 	
-	public Content(MainWindow window) {
+	private Content() {
 		super();
-		this.window = window;
+
 		panels = new ArrayList<JPanel>();
 		tabbedPane = new JTabbedPane();
 		for(int i = 0; i < 3; ++i)
@@ -40,9 +41,15 @@ public class Content extends JPanel {
         {
             public void stateChanged(ChangeEvent e) 
             {
-                window.setPaneStatus(tabbedPane.getSelectedIndex());
+                MainWindow.getInstance().setPaneStatus(tabbedPane.getSelectedIndex());
             }
         });
+	}
+	
+	public static Content getInstance()
+	{
+		if(Content.instance == null) Content.instance = new Content();
+		return Content.instance;
 	}
 	
 	public int getActivePane()

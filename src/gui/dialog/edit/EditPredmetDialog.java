@@ -1,12 +1,12 @@
-package gui.dialog;
+package gui.dialog.edit;
 
-import javax.swing.JFrame;
+import gui.dialog.OneTabDialog;
 
 public class EditPredmetDialog extends OneTabDialog{
 	private static final long serialVersionUID = -268052684667075413L;
 	protected int tableRow;
-	public EditPredmetDialog(JFrame frame, String title, int tableRow, EntityType entityType) {
-		super(frame, title, entityType);
+	public EditPredmetDialog(String title, int tableRow, EntityType entityType) {
+		super(title, entityType);
 		this.tableRow = tableRow;
 		this.mainTab.createPanel();	//prvi panel
 		this.mainTab.createPanel();	//drugi panel
@@ -17,7 +17,7 @@ public class EditPredmetDialog extends OneTabDialog{
 	public void setEditButtons()
 	{
 		EditActionListener action = new EditActionListener(this, tableRow);
-		this.setButtons(0, 1, action);
+		this.setButtons(0, 1, null, action);
 	}
 }
 

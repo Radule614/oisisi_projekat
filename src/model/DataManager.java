@@ -1,9 +1,11 @@
-package data;
+package model;
 
 import java.util.ArrayList;
 
-import model.*;
-import utility.Utility;
+import app.Utility;
+import model.structure.Predmet;
+import model.structure.Profesor;
+import model.structure.Student;
 
 public class DataManager {
 	static ArrayList<Student> studenti = new ArrayList<Student>();
@@ -20,6 +22,7 @@ public class DataManager {
 			return null;
 		}
 		Student st = new Student(arr);
+		
 		studenti.add(index, st);
 		return st;
 	}
@@ -88,6 +91,11 @@ public class DataManager {
 		String[] data = st.toStringArray();
 		
 		return data;
+	}
+	
+	public static ArrayList<String[]> getPolozeniIspiti(int index)
+	{
+		return studenti.get(index).polozeniToArrayList();
 	}
 	
 	public static String[] getProfesorData(int index)

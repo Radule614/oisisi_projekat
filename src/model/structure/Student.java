@@ -1,9 +1,9 @@
-package model;
+package model.structure;
 
 import java.util.ArrayList;
 
-import main.Settings;
-import utility.Utility;
+import app.Settings;
+import app.Utility;
 
 public class Student extends Osoba {
 	public enum VrstaFinansiranja {B, S};
@@ -14,14 +14,12 @@ public class Student extends Osoba {
 	protected VrstaFinansiranja Status;
 	protected double prosek;
 	
-	protected ArrayList<Ocena> polozeniIspiti;
-	protected ArrayList<Ocena> nepolozeniIspiti;
+	protected ArrayList<Ocena> polozeniIspiti = new ArrayList<Ocena>();
+	protected ArrayList<Ocena> nepolozeniIspiti = new ArrayList<Ocena>();
 	
 	public Student()
 	{
 		super();
-		polozeniIspiti = new ArrayList<Ocena>();
-		nepolozeniIspiti = new ArrayList<Ocena>();
 	}
 	
 	public Student(String[] arr)
@@ -29,25 +27,23 @@ public class Student extends Osoba {
 		super(arr);
 		setBrojIndeksa(arr[6]);
 		setGodinaUpisa(Utility.parseInt(arr[7]));
-		setProsek(Utility.parseDouble(arr[8]));
-		setTrenutnaGodina(Utility.parseInt(arr[9]) + 1);
+		setTrenutnaGodina(Utility.parseInt(arr[8]) + 1);
 		VrstaFinansiranja vf = null;
-		if		(Utility.parseInt(arr[10]) == 0) vf = VrstaFinansiranja.B;
-		else if	(Utility.parseInt(arr[10]) == 1) vf = VrstaFinansiranja.S;
+		if		(Utility.parseInt(arr[9]) == 0) vf = VrstaFinansiranja.B;
+		else if	(Utility.parseInt(arr[9]) == 1) vf = VrstaFinansiranja.S;
 		setStatus(vf);
 	}
 	
 	public String[] toStringArray()
 	{
-		String[] data = new String[11];
+		String[] data = new String[10];
 		super.toStringArray(data);
 		
 		data[6] = getBrojIndeksa();
 		data[7] = Integer.toString(getGodinaUpisa());
-		data[8] = Double.toString(getProsek());
-		data[9] = Integer.toString(getTrenutnaGodina()-1);
-		if(getStatus() == VrstaFinansiranja.B) data[10] = "0";
-		else if(getStatus() == VrstaFinansiranja.S) data[10] = "1";
+		data[8] = Integer.toString(getTrenutnaGodina()-1);
+		if(getStatus() == VrstaFinansiranja.B) data[9] = "0";
+		else if(getStatus() == VrstaFinansiranja.S) data[9] = "1";
 		
 		return data;
 	}
@@ -65,15 +61,49 @@ public class Student extends Osoba {
 			isValid = false;
 			if(messages != null) messages.add("Godina upisa: mora biti u intervalu [1950, 2021]");
 		}
-		if(!Utility.isInInterval(Utility.parseDouble(arr[8]), 5.0, 10.0))
-		{
-			isValid = false;
-			if(messages != null) messages.add("Prosek: mora biti u intervalu [5.0, 10.0]");
-		}
 		
 		return isValid;
 	}
+	
+	public ArrayList<String[]> polozeniToArrayList()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		
+		for(Ocena ocena: this.polozeniIspiti)
+		{
+			String[] data = new String[5];
+			Predmet predmet = ocena.getPredmet();
+			
+			data[0] = Integer.toString(predmet.getSifra());
+			data[1] = predmet.getNaziv();
+			data[2] = Integer.toString(predmet.getESPB());
+			data[3] = Integer.toString(ocena.getVrednost());
+			data[4] = ocena.getDatumPolaganja().format(Settings.formatter);
+			
+			dataArray.add(data);
+		}
+		
+		return dataArray;
+	}
+	
+	public void calculateProsek()
+	{
+		double sum = 0;
+		ArrayList<Ocena> arr = this.getPolozeniIspiti();
+		for(Ocena o: arr)
+		{
+			sum += o.vrednost;
+		}
+		this.prosek = sum/(double)(arr.size());
+	}
+	
+	public void addPolozeniIspit(Ocena o)
+	{
+		this.polozeniIspiti.add(o);
+		this.calculateProsek();
+	}
 
+	
 	public String getBrojIndeksa() {
 		return brojIndeksa;
 	}
@@ -122,7 +152,6 @@ public class Student extends Osoba {
 	public void setProsek(double prosek) {
 		this.prosek = prosek;
 	}
-
 
 	public ArrayList<Ocena> getPolozeniIspiti() {
 		return polozeniIspiti;

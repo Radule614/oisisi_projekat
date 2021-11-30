@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\gui",
+    "\\src\\gui\\dialog",
+    "\\src\\main",
+    "\\src\\model",
+    "\\src\\utility"
+  ],
+  "SelectedNode": "\\src\\gui\\dialog\\Dialog.java",
+  "PreviewInSolutionExplorer": false
+}

@@ -2,14 +2,14 @@ package gui.table;
 
 import java.util.ArrayList;
 
-import model.Predmet;
-import model.Profesor;
-import model.Student;
+import model.structure.Predmet;
+import model.structure.Profesor;
+import model.structure.Student;
 
 public class TableManager {		
 	private static final String[] studentiLabels = { "Indeks", "Ime", "Prezime", "Godina studija", "Status", "Prosek" };
-	private static String[] profesoriLabels = { "Ime", "Prezime", "Titula", "Zvanje"};
-	private static String[] predmetiLabels = { "Šifra predmeta", "Naziv predmeta", "Broj ESPB bodova", "Godina izvodjenja", "Semestar izvodjenja"};
+	private static final String[] profesoriLabels = { "Ime", "Prezime", "Titula", "Zvanje"};
+	private static final String[] predmetiLabels = { "Šifra predmeta", "Naziv predmeta", "Broj ESPB bodova", "Godina izvodjenja", "Semestar izvodjenja"};
 	
 	public static Table studentiTable = new Table(studentiLabels);
 	public static Table profesoriTable = new Table(profesoriLabels);
@@ -67,6 +67,16 @@ public class TableManager {
 	public static Table[] getTables()
 	{
 		return TableManager.tables;
+	}
+	
+	public static Table createPolozeniTable(ArrayList<String[]> dataArray)
+	{
+		Table table = new Table(new String[] {"Šifra predmeta", "Naziv predmeta", "ESPB", "Ocena", "Datum"});
+		for(String[] data: dataArray)
+		{
+			table.addRow(data);
+		}
+		return table;
 	}
 }
 
