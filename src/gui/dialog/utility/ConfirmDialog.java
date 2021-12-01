@@ -1,7 +1,9 @@
-package gui.dialog;
+package gui.dialog.utility;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+
+import gui.dialog.OneTabDialog;
 
 public class ConfirmDialog extends OneTabDialog {
 	private static final long serialVersionUID = 4484919395472986840L;

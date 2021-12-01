@@ -1,6 +1,8 @@
-package gui.dialog;
+package gui.dialog.add;
 
 import controller.Controller;
+import gui.dialog.OneTabDialog;
+import gui.manager.DialogManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +14,8 @@ public class AddDialog extends OneTabDialog{
 	public AddDialog(String title, EntityType entityType) {
 		super(title, entityType);
 		this.entityType = entityType;
-		this.mainTab.createPanel();	//prvi panel
-		this.mainTab.createPanel();	//drugi panel
+		this.mainTab.createPanel();
+		this.mainTab.createPanel();
 		this.setAddButtons();
         this.pack();
 	}

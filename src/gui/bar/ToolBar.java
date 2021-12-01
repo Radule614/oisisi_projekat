@@ -3,7 +3,7 @@ package gui.bar;
 import javax.swing.*;
 
 import gui.MainWindow;
-import gui.dialog.DialogManager;
+import gui.manager.DialogManager;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

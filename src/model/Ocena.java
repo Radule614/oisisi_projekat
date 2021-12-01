@@ -1,4 +1,4 @@
-package model.structure;
+package model;
 
 import java.time.LocalDate;
 
@@ -21,6 +21,16 @@ public class Ocena {
 		this.student = student;
 		this.predmet = predmet;
 		this.vrednost = vrednost;
+		
+		LocalDate ld = LocalDate.parse("01-01-2000", Settings.formatter);
+		datumPolaganja = ld;
+	}
+	
+	public Ocena(Student student, Predmet predmet)
+	{
+		this.student = student;
+		this.predmet = predmet;
+		this.vrednost = 0;
 		
 		LocalDate ld = LocalDate.parse("01-01-2000", Settings.formatter);
 		datumPolaganja = ld;
