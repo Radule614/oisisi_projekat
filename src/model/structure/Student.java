@@ -88,14 +88,19 @@ public class Student extends Osoba {
 	
 	public void calculateProsek()
 	{
-		double sum = 0;
 		ArrayList<Ocena> arr = this.getPolozeniIspiti();
+		if(arr.size() == 0) 
+		{
+			this.prosek = 0;
+			return;
+		}
+		double sum = 0;
+		
 		for(Ocena o: arr)
 		{
 			sum += o.vrednost;
 		}
-		if(arr.size() == 0) this.prosek = 0;
-		else 				this.prosek = sum/(double)(arr.size());
+		this.prosek = sum/(double)(arr.size());
 	}
 	
 	public void addPolozeniIspit(Ocena o)
