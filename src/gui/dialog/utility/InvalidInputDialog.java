@@ -1,7 +1,9 @@
-package gui.dialog;
+package gui.dialog.utility;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+
+import gui.dialog.OneTabDialog;
 
 public class InvalidInputDialog extends OneTabDialog {
 	private static final long serialVersionUID = -363672527656760257L;

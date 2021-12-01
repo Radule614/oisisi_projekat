@@ -1,9 +1,10 @@
-package model.structure;
+package model;
 
 import java.util.ArrayList;
 
 import app.Settings;
 import app.Utility;
+import model.Predmet.VrstaSemestra;
 
 public class Student extends Osoba {
 	public enum VrstaFinansiranja {B, S};
@@ -11,7 +12,7 @@ public class Student extends Osoba {
 	protected String brojIndeksa;
 	protected int godinaUpisa;
 	protected int trenutnaGodina;
-	protected VrstaFinansiranja Status;
+	protected VrstaFinansiranja status;
 	protected double prosek;
 	
 	protected ArrayList<Ocena> polozeniIspiti = new ArrayList<Ocena>();
@@ -65,6 +66,23 @@ public class Student extends Osoba {
 		return isValid;
 	}
 	
+	public String[] getTableData()
+	{
+		String status;
+		if(this.status == VrstaFinansiranja.B) 	status = "Budžet";
+		else									status = "Samofinansiranje";
+		
+		String[] data = new String[6];
+		data[0] = this.brojIndeksa;
+		data[1] = this.ime;
+		data[2] = this.prezime;
+		data[3] = Integer.toString(this.trenutnaGodina);
+		data[4] = status;
+		data[5] = Double.toString(prosek);
+		
+		return data;
+	}
+	
 	public ArrayList<String[]> polozeniToArrayList()
 	{
 		ArrayList<String[]> dataArray = new ArrayList<String[]>();
@@ -79,6 +97,31 @@ public class Student extends Osoba {
 			data[2] = Integer.toString(predmet.getESPB());
 			data[3] = Integer.toString(ocena.getVrednost());
 			data[4] = ocena.getDatumPolaganja().format(Settings.formatter);
+			
+			dataArray.add(data);
+		}
+		
+		return dataArray;
+	}
+	
+	public ArrayList<String[]> nepolozeniToArrayList()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		
+		for(Ocena ocena: this.nepolozeniIspiti)
+		{
+			String[] data = new String[5];
+			Predmet predmet = ocena.getPredmet();
+			
+			data[0] = Integer.toString(predmet.getSifra());
+			data[1] = predmet.getNaziv();
+			data[2] = Integer.toString(predmet.getESPB());
+			data[3] = Integer.toString(predmet.getGodinaStudija());
+			
+			String sem;
+			if(predmet.getSemestar() == VrstaSemestra.L) 	sem = "Letnji";
+			else											sem = "Zimski";
+			data[4] = sem;
 			
 			dataArray.add(data);
 		}
@@ -109,6 +152,10 @@ public class Student extends Osoba {
 		this.calculateProsek();
 	}
 
+	public void addNepolozeniIspit(Ocena o)
+	{
+		this.nepolozeniIspiti.add(o);
+	}
 	
 	public String getBrojIndeksa() {
 		return brojIndeksa;
@@ -141,12 +188,12 @@ public class Student extends Osoba {
 
 
 	public VrstaFinansiranja getStatus() {
-		return Status;
+		return status;
 	}
 
 
 	public void setStatus(VrstaFinansiranja status) {
-		Status = status;
+		this.status = status;
 	}
 
 

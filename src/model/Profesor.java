@@ -1,4 +1,4 @@
-package model.structure;
+package model;
 
 import java.util.ArrayList;
 
@@ -68,6 +68,16 @@ public class Profesor extends Osoba {
 		}
 		
 		return isValid;
+	}
+	
+	public String[] getTableData()
+	{
+		String[] data = new String[4];
+		data[0] = this.ime;
+		data[1] = this.prezime;
+		data[2] = this.titula;
+		data[3] = this.zvanje;
+		return data;
 	}
 	
 	public Adresa getAdresaKancelarije() {

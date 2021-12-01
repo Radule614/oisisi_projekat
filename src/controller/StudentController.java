@@ -2,17 +2,17 @@ package controller;
 
 import java.util.ArrayList;
 
-import gui.table.TableManager;
-import model.DataManager;
-import model.structure.Ocena;
-import model.structure.Student;
+import gui.manager.TableManager;
+import model.Ocena;
+import model.Student;
+import model.manager.DataManager;
 
 class StudentController {
 	static boolean create(String[] arr, ArrayList<String> messages)
 	{
 		Student st = DataManager.createStudent(arr, messages);
 		if(st == null) return false;
-		TableManager.add(st);
+		TableManager.addRow(0, st.getTableData());
 		return true;
 	}
 	
@@ -38,7 +38,7 @@ class StudentController {
 		st.setProsek(oldStudent.getProsek());
 		
 		TableManager.remove(0, index);
-		TableManager.add(st, index);
+		TableManager.insertRow(0, st.getTableData(), index);
 		DataManager.deleteStudent(index+1);
 		return true;
 	}
@@ -51,6 +51,11 @@ class StudentController {
 	static ArrayList<String[]> getPolozeniIspiti(int index)
 	{
 		return DataManager.getPolozeniIspiti(index);
+	}
+	
+	static ArrayList<String[]> getNepolozeniIspiti(int index)
+	{
+		return DataManager.getNepolozeniIspiti(index);
 	}
 	
 	static double getProsek(int index)
@@ -76,7 +81,7 @@ class StudentController {
 		ispiti.remove(gradeIndex);
 		st.calculateProsek();
 		TableManager.remove(0, studentIndex);
-		TableManager.add(st, studentIndex);
+		TableManager.insertRow(0, st.getTableData(), studentIndex);
 	}
 }
 

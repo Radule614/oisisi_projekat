@@ -8,8 +8,8 @@ import java.awt.event.InputEvent;
 import javax.swing.*;
 
 import gui.MainWindow;
-import gui.dialog.DialogManager;
-import gui.table.TableManager;
+import gui.manager.DialogManager;
+import gui.manager.TableManager;
 
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;

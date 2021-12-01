@@ -5,7 +5,7 @@ import javax.swing.border.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import gui.table.TableManager;
+import gui.manager.TableManager;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,16 +1,37 @@
-package model;
+package model.manager;
 
 import java.util.ArrayList;
 
 import app.Utility;
-import model.structure.Predmet;
-import model.structure.Profesor;
-import model.structure.Student;
+import model.Predmet;
+import model.Profesor;
+import model.Student;
 
 public class DataManager {
 	static ArrayList<Student> studenti = new ArrayList<Student>();
 	static ArrayList<Profesor> profesori = new ArrayList<Profesor>();
 	static ArrayList<Predmet> predmeti = new ArrayList<Predmet>();
+	
+	public static ArrayList<String[]> studentiToTableDataArray()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		for(Student temp: studenti) dataArray.add(temp.getTableData());
+		return dataArray;
+	}
+	
+	public static ArrayList<String[]> profesoriToTableDataArray()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		for(Profesor temp: profesori) dataArray.add(temp.getTableData());
+		return dataArray;
+	}
+	
+	public static ArrayList<String[]> predmetiToTableDataArray()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		for(Predmet temp: predmeti) dataArray.add(temp.getTableData());
+		return dataArray;
+	}
 
 	public static Student createStudent(String[] arr, ArrayList<String> messages, int index)
 	{
@@ -96,6 +117,11 @@ public class DataManager {
 	public static ArrayList<String[]> getPolozeniIspiti(int index)
 	{
 		return studenti.get(index).polozeniToArrayList();
+	}
+	
+	public static ArrayList<String[]> getNepolozeniIspiti(int index)
+	{
+		return studenti.get(index).nepolozeniToArrayList();
 	}
 	
 	public static String[] getProfesorData(int index)

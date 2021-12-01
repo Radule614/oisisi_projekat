@@ -16,10 +16,10 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 import gui.dialog.Dialog;
-import gui.dialog.DialogManager;
 import gui.dialog.MultiTabDialog;
+import gui.manager.DialogManager;
+import gui.manager.TableManager;
 import gui.table.Table;
-import gui.table.TableManager;
 
 public class EditStudentDialog extends MultiTabDialog {
 	private static final long serialVersionUID = -268052684667075413L;
@@ -27,6 +27,9 @@ public class EditStudentDialog extends MultiTabDialog {
 	
 	protected Table polozeniTable;
 	protected TablePanel polozeniTablePanel;
+	
+	protected Table nepolozeniTable;
+	protected TablePanel nepolozeniTablePanel;
 	
 	public EditStudentDialog(String title, EntityType entityType, int tableRow, String[] tabLabels) {
 		super(title, entityType, tabLabels);
@@ -41,15 +44,23 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.tabPanels.get(0).createPanel();
 		this.tabPanels.get(0).setBorder(new CompoundBorder(this.tabPanels.get(0).getBorder(), new EmptyBorder(0, 75, 0, 75)));
 		this.setEditButtons();
+		
 		this.setPolozeniTable();
+		this.setNepolozeniTable();
 		
 		this.polozeniTablePanel = new TablePanel(this.polozeniTable);
 		this.tabPanels.get(1).setBorder(new EmptyBorder(25, 40, 25, 40));
 		this.tabPanels.get(1).panels.get(0).add(this.polozeniTablePanel);
 		
+		this.nepolozeniTablePanel = new TablePanel(this.nepolozeniTable);
+		this.tabPanels.get(2).setBorder(new EmptyBorder(25, 40, 25, 40));
+		this.tabPanels.get(2).panels.get(0).add(this.nepolozeniTablePanel);
+		
 		this.tabPanels.get(1).createPanel();
 		
-		this.setRemoveGradeButton();
+		this.setPolozeniRemoveGradeButton();
+		this.setNepolozeniButtons();
+		
 		this.setPolozeniLabels();
 	}
 	
@@ -59,7 +70,7 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.setButtons(0, 1, null, action);
 	}
 	
-	protected void setRemoveGradeButton()
+	protected void setPolozeniRemoveGradeButton()
 	{
 		JButton btn = new JButton("Poništi ocenu");
 		Dialog.setButtonHover(btn, "#95bcf2");
@@ -75,10 +86,31 @@ public class EditStudentDialog extends MultiTabDialog {
 		});
 	}
 	
+	protected void setNepolozeniButtons()
+	{
+		JButton btnDodaj 		= new JButton("Dodaj");
+		JButton btnObrisi 		= new JButton("Obrisi");
+		JButton btnPolaganje 	= new JButton("Polaganje");
+		
+		Dialog.setButtonHover(btnDodaj, "#95bcf2");
+		Dialog.setButtonHover(btnObrisi, "#95bcf2");
+		Dialog.setButtonHover(btnPolaganje, "#95bcf2");
+		
+		this.nepolozeniTablePanel.addButton(btnDodaj);
+		this.nepolozeniTablePanel.addButton(btnObrisi);
+		this.nepolozeniTablePanel.addButton(btnPolaganje);
+	}
+	
 	protected void setPolozeniTable()
 	{
 		ArrayList<String[]> dataArray = Controller.getPolozeniIspiti(studentTableRow);
 		this.polozeniTable = TableManager.createPolozeniTable(dataArray);
+	}
+	
+	protected void setNepolozeniTable()
+	{
+		ArrayList<String[]> dataArray = Controller.getNepolozeniIspiti(studentTableRow);
+		this.nepolozeniTable = TableManager.createNepolozeniTable(dataArray);
 	}
 	
 	public void setPolozeniLabels()

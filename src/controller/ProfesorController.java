@@ -2,16 +2,16 @@ package controller;
 
 import java.util.ArrayList;
 
-import gui.table.TableManager;
-import model.DataManager;
-import model.structure.Profesor;
+import gui.manager.TableManager;
+import model.Profesor;
+import model.manager.DataManager;
 
 class ProfesorController {
 	static boolean create(String[] arr, ArrayList<String> messages)
 	{
 		Profesor pr = DataManager.createProfesor(arr, messages);
 		if(pr == null) return false;
-		TableManager.add(pr);
+		TableManager.addRow(1, pr.getTableData());
 		return true;
 	}
 	
@@ -35,7 +35,7 @@ class ProfesorController {
 		pr.setPredmeti(oldProfesor.getPredmeti());
 		
 		TableManager.remove(1, index);
-		TableManager.add(pr, index);
+		TableManager.insertRow(1, pr.getTableData(), index);
 		DataManager.deleteProfesor(index+1);
 		return true;
 	}

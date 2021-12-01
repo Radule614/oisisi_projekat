@@ -1,16 +1,16 @@
 package controller;
 import java.util.ArrayList;
 
-import gui.table.TableManager;
-import model.DataManager;
-import model.structure.Predmet;
+import gui.manager.TableManager;
+import model.Predmet;
+import model.manager.DataManager;
 
 class PredmetController {
 	static boolean create(String[] arr, ArrayList<String> messages)
 	{
 		Predmet pr = DataManager.createPredmet(arr, messages);
 		if(pr == null) return false;
-		TableManager.add(pr);
+		TableManager.addRow(2, pr.getTableData());
 		return true;
 	}
 	
@@ -35,7 +35,7 @@ class PredmetController {
 		pr.setStudentiNepolozeno(oldPredmet.getStudentiNepolozeno());
 		
 		TableManager.remove(2, index);
-		TableManager.add(pr, index);
+		TableManager.insertRow(2, pr.getTableData(), index);
 		DataManager.deletePredmet(index+1);
 		return true;
 	}

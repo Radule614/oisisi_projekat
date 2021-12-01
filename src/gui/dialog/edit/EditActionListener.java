@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import controller.Controller;
 import gui.dialog.Dialog;
-import gui.dialog.DialogManager;
+import gui.manager.DialogManager;
 
 public class EditActionListener implements ActionListener {
 	Dialog dialog;

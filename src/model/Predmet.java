@@ -1,4 +1,4 @@
-package model.structure;
+package model;
 
 import java.util.ArrayList;
 
@@ -56,6 +56,21 @@ public class Predmet {
 		//TODO checks
 		
 		return isValid;
+	}
+	
+	public String[] getTableData()
+	{
+		String sem;
+		if(this.semestar == VrstaSemestra.L) 	sem = "Letnji";
+		else									sem = "Zimski";
+		
+		String[] data = new String[5];
+		data[0] = Integer.toString(this.sifra);
+		data[1] = this.naziv;
+		data[2] = Integer.toString(this.ESPB);
+		data[3] = Integer.toString(this.godinaStudija);
+		data[4] = sem;
+		return data;
 	}
 	
 	public int getSifra() {

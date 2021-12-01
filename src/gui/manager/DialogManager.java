@@ -1,12 +1,16 @@
-package gui.dialog;
+package gui.manager;
 
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.Controller;
+import gui.dialog.Dialog;
+import gui.dialog.add.AddDialog;
 import gui.dialog.edit.EditPredmetDialog;
 import gui.dialog.edit.EditProfesorDialog;
 import gui.dialog.edit.EditStudentDialog;
+import gui.dialog.utility.ConfirmDialog;
+import gui.dialog.utility.InvalidInputDialog;
 
 public class DialogManager {
 	static protected String[] studentiFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Broj indeksa", "Godina upisa", "Trenutna godina studija", "Način finansiranja"};

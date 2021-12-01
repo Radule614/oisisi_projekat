@@ -29,19 +29,19 @@ public class Table extends JTable {
 		this.setFillsViewportHeight(true);
 	}
 	
-	public void addRow(Object[] data)
+	public void addRow(String[] data)
 	{
 		this.model.addRow(data);
 	}
 	
-	public void insertRow(Object[] data, int row)
+	public void insertRow(String[] data, int row)
 	{
 		this.model.insertRow(row, data);
 	}
 	
-	public void insertRows(ArrayList<Object[]> dataArray)
+	public void addRows(ArrayList<String[]> dataArray)
 	{
-		for(Object[] data: dataArray)
+		for(String[] data: dataArray)
 		{
 			this.addRow(data);
 		}

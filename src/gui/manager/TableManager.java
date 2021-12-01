@@ -1,10 +1,8 @@
-package gui.table;
+package gui.manager;
 
 import java.util.ArrayList;
 
-import model.structure.Predmet;
-import model.structure.Profesor;
-import model.structure.Student;
+import gui.table.Table;
 
 public class TableManager {		
 	private static final String[] studentiLabels = { "Indeks", "Ime", "Prezime", "Godina studija", "Status", "Prosek" };
@@ -17,41 +15,19 @@ public class TableManager {
 	
 	public static Table[] tables = {studentiTable, profesoriTable, predmetiTable};
 	
-	public static void add(Object obj, int row)
+	public static void addRow(int tableIndex, String[] data)
 	{
-		if(obj instanceof Student)
-		{
-			Student st = (Student)obj;
-			Object[] data = {st.getBrojIndeksa(), st.getIme(), st.getPrezime(), st.getTrenutnaGodina(), st.getStatus(), st.getProsek()};
-			if(row == - 1)  studentiTable.addRow(data);
-			else			studentiTable.insertRow(data, row);
-		}
-		else if(obj instanceof Profesor)
-		{
-			Profesor pf = (Profesor)obj;
-			Object[] data = {pf.getIme(), pf.getPrezime(), pf.getTitula(), pf.getZvanje()};
-			if(row == - 1)  profesoriTable.addRow(data);
-			else			profesoriTable.insertRow(data, row);
-		}
-		else if(obj instanceof Predmet)
-		{
-			Predmet pr = (Predmet)obj;
-			Object[] data = {pr.getSifra(), pr.getNaziv(), pr.getESPB(), pr.getGodinaStudija(), pr.getSemestar()};
-			if(row == - 1)  predmetiTable.addRow(data);
-			else			predmetiTable.insertRow(data, row);
-		}
-		else if(obj instanceof ArrayList)
-		{
-			for(Object item: (ArrayList<?>)obj)
-			{
-				TableManager.add(item, -1);
-			}
-		}
+		tables[tableIndex].addRow(data);
 	}
 	
-	public static void add(Object obj)
+	public static void addRows(int tableIndex, ArrayList<String[]> dataArray)
 	{
-		TableManager.add(obj, -1);
+		tables[tableIndex].addRows(dataArray);
+	}
+	
+	public static void insertRow(int tableIndex, String[] data, int row)
+	{
+		tables[tableIndex].insertRow(data, row);
 	}
 	
 	public static void remove(int tableIndex, int tableRow)
@@ -72,6 +48,16 @@ public class TableManager {
 	public static Table createPolozeniTable(ArrayList<String[]> dataArray)
 	{
 		Table table = new Table(new String[] {"Šifra predmeta", "Naziv predmeta", "ESPB", "Ocena", "Datum"});
+		for(String[] data: dataArray)
+		{
+			table.addRow(data);
+		}
+		return table;
+	}
+	
+	public static Table createNepolozeniTable(ArrayList<String[]> dataArray)
+	{
+		Table table = new Table(new String[] {"Šifra predmeta", "Naziv predmeta", "ESPB", "Godina studija", "Semestar"});
 		for(String[] data: dataArray)
 		{
 			table.addRow(data);
