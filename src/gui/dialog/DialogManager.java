@@ -103,6 +103,21 @@ public class DialogManager {
 		d.open();
 	}
 	
+	public static void createRemoveGradeDialog(EditStudentDialog editDialog, int studentIndex, int gradeIndex)
+	{
+		ConfirmDialog d = new ConfirmDialog("Poništavanje ocene");
+		ActionListener listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Controller.removeStudentGrade(studentIndex, gradeIndex);
+				editDialog.getPolozeniTable().removeRow(gradeIndex);	
+				editDialog.setPolozeniLabels();
+				d.close();
+			}
+		};
+		d.setListener(listener);
+		d.open();
+	}
 	
 	
 	//private
