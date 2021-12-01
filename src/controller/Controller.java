@@ -28,6 +28,7 @@ public class Controller {
 	public static ArrayList<String[]> getPolozeniIspiti(int index) {return StudentController.getPolozeniIspiti(index);}
 	public static double getProsek(int index) {return StudentController.getProsek(index);}
 	public static int getTotalESPB(int index) {return StudentController.getTotalESPB(index);}
+	public static void removeStudentGrade(int studentIndex, int gradeIndex) { StudentController.removeGrade(studentIndex, gradeIndex);}
 	
 }
 	

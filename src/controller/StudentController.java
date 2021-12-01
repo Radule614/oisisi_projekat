@@ -69,7 +69,15 @@ class StudentController {
 		return ESPB;
 	}
 	
-	
+	static void removeGrade(int studentIndex, int gradeIndex)
+	{
+		Student st = DataManager.getStudenti().get(studentIndex);
+		ArrayList<Ocena> ispiti = st.getPolozeniIspiti();
+		ispiti.remove(gradeIndex);
+		st.calculateProsek();
+		TableManager.remove(0, studentIndex);
+		TableManager.add(st, studentIndex);
+	}
 }
 
 

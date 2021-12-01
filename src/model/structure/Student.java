@@ -94,7 +94,8 @@ public class Student extends Osoba {
 		{
 			sum += o.vrednost;
 		}
-		this.prosek = sum/(double)(arr.size());
+		if(arr.size() == 0) this.prosek = 0;
+		else 				this.prosek = sum/(double)(arr.size());
 	}
 	
 	public void addPolozeniIspit(Ocena o)
