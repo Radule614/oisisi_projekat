@@ -58,7 +58,7 @@ public class EditStudentDialog extends MultiTabDialog {
 		
 		this.tabPanels.get(1).createPanel();
 		
-		this.setPolozeniRemoveGradeButton();
+		this.setPolozeniRemoveOcenaButton();
 		this.setNepolozeniButtons();
 		
 		this.setPolozeniLabels();
@@ -70,18 +70,18 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.setButtons(0, 1, null, action);
 	}
 	
-	protected void setPolozeniRemoveGradeButton()
+	protected void setPolozeniRemoveOcenaButton()
 	{
 		JButton btn = new JButton("Poništi ocenu");
 		Dialog.setButtonHover(btn, "#95bcf2");
 		this.polozeniTablePanel.addButton(btn);
 		
 		EditStudentDialog dialog = this;
-		btn.addActionListener( new ActionListener() {
+		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int gradeRow = polozeniTable.getSelectedRow();
-				if(gradeRow != -1) DialogManager.createRemoveGradeDialog(dialog, studentTableRow, gradeRow);
+				if(gradeRow != -1) DialogManager.createRemoveOcenaDialog(dialog, studentTableRow, gradeRow);
 			}
 		});
 	}
@@ -99,6 +99,13 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.nepolozeniTablePanel.addButton(btnDodaj);
 		this.nepolozeniTablePanel.addButton(btnObrisi);
 		this.nepolozeniTablePanel.addButton(btnPolaganje);
+		
+		btnDodaj.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DialogManager.createAddIspitDialog(studentTableRow);
+			}
+		});
 	}
 	
 	protected void setPolozeniTable()
@@ -141,6 +148,8 @@ public class EditStudentDialog extends MultiTabDialog {
 	{
 		return this.polozeniTable;
 	}
+	
+	
 }
 
 

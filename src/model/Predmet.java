@@ -7,7 +7,7 @@ import app.Utility;
 public class Predmet {
 	public enum VrstaSemestra {L, Z};
 	
-	protected int sifra;
+	protected String sifra;
 	protected String naziv;
 	protected VrstaSemestra semestar;
 	protected int godinaStudija;
@@ -25,7 +25,7 @@ public class Predmet {
 	
 	public Predmet(String[] arr)
 	{
-		setSifra(Utility.parseInt(arr[0]));
+		setSifra(arr[0]);
 		setNaziv(arr[1]);
 		VrstaSemestra vs = null;
 		if		(Utility.parseInt(arr[2]) == 0) vs = VrstaSemestra.L;
@@ -39,7 +39,7 @@ public class Predmet {
 	{
 		String[] data = new String[11];
 		
-		data[0] = Integer.toString(getSifra());
+		data[0] = getSifra();
 		data[1] = getNaziv();
 		if		(getSemestar() == VrstaSemestra.L) data[2] = "0";
 		else if	(getSemestar() == VrstaSemestra.Z) data[2] = "1";
@@ -65,7 +65,7 @@ public class Predmet {
 		else									sem = "Zimski";
 		String[] godine = {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"};
 		String[] data = new String[5];
-		data[0] = Integer.toString(this.sifra);
+		data[0] = this.sifra;
 		data[1] = this.naziv;
 		data[2] = Integer.toString(this.ESPB);
 		data[3] = Integer.toString(this.godinaStudija);
@@ -74,12 +74,12 @@ public class Predmet {
 		return data;
 	}
 	
-	public int getSifra() {
+	public String getSifra() {
 		return sifra;
 	}
 
 
-	public void setSifra(int sifra) {
+	public void setSifra(String sifra) {
 		this.sifra = sifra;
 	}
 

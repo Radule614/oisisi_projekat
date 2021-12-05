@@ -13,11 +13,22 @@ public class Table extends JTable {
 	private static final long serialVersionUID = -2108154469027694188L;
 	protected DefaultTableModel model;
 	
-	public Table(String[] columnLabels)
+	public Table(int colNumber)
 	{
+		super(new DefaultTableModel(0, colNumber));
+		init();
+	}
+	
+	public Table(String[] columnLabels)
+	{ 
 		super(new DefaultTableModel(columnLabels, 0));
-		this.model = (DefaultTableModel) this.getModel();
 		
+		init();
+	}
+	
+	private void init()
+	{
+		this.model = (DefaultTableModel) this.getModel();
 		this.setRowHeight(30);
 		this.setDefaultRenderer(Object.class, new TableRenderer());
 		this.getTableHeader().setReorderingAllowed(false);

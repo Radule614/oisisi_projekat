@@ -13,11 +13,3 @@ public class Main {
 		app.setVisible(true);
 	}
 }
-
-
-
-
-
-
-
-

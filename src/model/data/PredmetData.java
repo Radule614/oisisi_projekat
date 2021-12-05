@@ -19,7 +19,7 @@ class PredmetData {
 	{
 		arr = Utility.trimEach(arr);
 		if(!Predmet.isValidData(arr, messages)) return null;
-		if(messages != null && exists(Utility.parseInt(arr[0]), index))
+		if(messages != null && exists(arr[0], index))
 		{
 			messages.add("Predmet sa šifrom " + arr[0] + " već postoji.");
 			return null;
@@ -51,17 +51,17 @@ class PredmetData {
 		return predmeti;
 	}
 
-	static boolean exists(int key)
+	static boolean exists(String key)
 	{
 		return exists(key, -1);
 	}
 
-	static boolean exists(int key, int index)
+	static boolean exists(String key, int index)
 	{
 		for(int i = 0; i < predmeti.size(); ++i)
 		{
 			if(index == i) continue;
-			if(predmeti.get(i).getSifra() == key) return true;
+			if(predmeti.get(i).getSifra().equals(key)) return true;
 		}
 		return false;
 	}

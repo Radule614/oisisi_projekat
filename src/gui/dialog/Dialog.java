@@ -364,10 +364,11 @@ public abstract class Dialog extends JDialog {
 		
 		Table table;
 		
-		ArrayList<JPanel> panels = new ArrayList<JPanel>();
-		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		public ArrayList<JPanel> panels = new ArrayList<JPanel>();
+		public ArrayList<JButton> buttons = new ArrayList<JButton>();
 		
-		JPanel buttonPanel;
+		public JPanel buttonPanel;
+		public JScrollPane scrollPane;
 		
 		public TablePanel(Table table)
 		{
@@ -415,6 +416,7 @@ public abstract class Dialog extends JDialog {
 			sp.setBorder(new CompoundBorder(new EmptyBorder(15, 0, 25, 0), sp.getBorder()));
 			panel.add(sp, BorderLayout.CENTER);
 			
+			this.scrollPane = sp;
 			this.panels.add(panel);
 		}
 		

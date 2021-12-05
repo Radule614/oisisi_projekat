@@ -64,6 +64,17 @@ public class TableManager {
 		}
 		return table;
 	}
+	
+	public static Table createIspitiTable(ArrayList<String[]> dataArray)
+	{
+		Table table = new Table(1);
+		
+		for(String[] data: dataArray)
+		{
+			table.addRow(data);
+		}
+		return table;
+	}
 }
 
 

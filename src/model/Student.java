@@ -92,7 +92,7 @@ public class Student extends Osoba {
 			String[] data = new String[5];
 			Predmet predmet = ocena.getPredmet();
 			
-			data[0] = Integer.toString(predmet.getSifra());
+			data[0] = predmet.getSifra();
 			data[1] = predmet.getNaziv();
 			data[2] = Integer.toString(predmet.getESPB());
 			data[3] = Integer.toString(ocena.getVrednost());
@@ -113,7 +113,7 @@ public class Student extends Osoba {
 			String[] data = new String[5];
 			Predmet predmet = ocena.getPredmet();
 			
-			data[0] = Integer.toString(predmet.getSifra());
+			data[0] = predmet.getSifra();
 			data[1] = predmet.getNaziv();
 			data[2] = Integer.toString(predmet.getESPB());
 			data[3] = Integer.toString(predmet.getGodinaStudija());

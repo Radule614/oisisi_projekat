@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import gui.manager.TableManager;
 import model.Ocena;
+import model.Predmet;
 import model.Student;
 import model.data.Data;
 
@@ -82,6 +83,14 @@ class StudentController {
 		st.calculateProsek();
 		TableManager.remove(0, studentIndex);
 		TableManager.insertRow(0, st.getTableData(), studentIndex);
+	}
+	
+	static void addToNepolozeni(int studentIndex, int predmetIndex)
+	{
+		Student st = Data.getStudenti().get(studentIndex);
+		Predmet pr = Data.getPredmeti().get(predmetIndex);
+		Ocena o = new Ocena(st, pr);
+		st.getNepolozeniIspiti().add(o);
 	}
 }
 
