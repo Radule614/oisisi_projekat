@@ -4,75 +4,117 @@ import javax.swing.*;
 
 import gui.MainWindow;
 import gui.manager.DialogManager;
+import gui.manager.TableManager;
 
 import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolBar extends JToolBar {
 	private static final long serialVersionUID = -6297787221312734786L;
-	public MainWindow windowGlobal;
+
+	ToolBarButton btnNew, btnEdit, btnDelete;
+	static ToolBar instance;
 	
-	public ToolBar(MainWindow window )
+	private ToolBar()
 	{	
 		super(SwingConstants.HORIZONTAL);
-		windowGlobal = window;
 		this.setLayout(new GridLayout(1, 2));
 		JPanel left = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
-        left.add(new toolBarButton("img/icon_new.png", 0, "Add new user"));
-        left.add(new toolBarButton("img/icon_edit.png", 1, "Edit user"));
-        left.add(new toolBarButton("img/icon_delete.png", 2, "Delete user"));
+        
+        btnNew = new ToolBarButton("img/icon_new.png", "New", "Add new user");
+        left.add(btnNew);
+        
+        btnEdit = new ToolBarButton("img/icon_edit.png","Edit", "Edit user");
+        left.add(btnEdit);
+        
+        btnDelete = new ToolBarButton("img/icon_delete.png", "Delete", "Delete user");
+        left.add(btnDelete);
 
-        right.add(new toolBarTextField());        
-        right.add(new toolBarButton("img/icon_search.png", 3, "Search user"));
+        right.add(new ToolBarTextField());        
+        right.add(new ToolBarButton("img/icon_search.png","Search", "Search user"));
         
 		this.add(left);
 		this.add(right);
 		this.setFloatable(false);
+
 	}
 	
 	
-	class toolBarButton extends JButton
+	public static ToolBar getInstance()
+	{
+		if(ToolBar.instance == null) 
+		{
+			ToolBar.instance = new ToolBar();
+		}
+		
+		
+		return ToolBar.instance;
+	}
+	
+	class ToolBarButton extends JButton
 	{
 		private static final long serialVersionUID = -747644966302195350L;
 		
-		public toolBarButton(String path, int buttonType, String ToolTip)
+		private String buttonType;
+		
+		public ToolBarButton(String path, String buttonType, String ToolTip)
 		{
 			super(new ImageIcon(path));
-			this.setPreferredSize(new Dimension(32, 32));
-			
+			this.buttonType = buttonType;
+			this.setPreferredSize(new Dimension(32, 32));	
 			this.setToolTipText(ToolTip);
-			
-			if(buttonType == 2)
+			this.addActionListener(new ToolBarButtonListener());				
+		}	
+		
+		
+		public class ToolBarButtonListener implements ActionListener 
+		{
+			public void actionPerformed(ActionEvent ae)
 			{
-				
-			}
-			
-			this.addActionListener(new ActionListener() 
-			{
-				@Override
-				public void actionPerformed(ActionEvent e) 
+				ToolBarButton btn = (ToolBarButton)ae.getSource();
+				String temp = btn.buttonType;
+				MainWindow window = MainWindow.getInstance();
+				if(temp == "New")
 				{
-					if(buttonType == 0)
+					DialogManager.createAddDialog(window.getActivePane());
+				}
+				else if(temp == "Edit")
+				{
+					int active = window.getActivePane();
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) 
 					{
-						DialogManager.createAddDialog(windowGlobal.getActivePane());
+						DialogManager.createEditDialog(active, row);
 					}
-				} 
-			});
+				}
+				else if(temp == "Delete")
+				{
+					int active = window.getActivePane();
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) 
+					{
+						DialogManager.createDeleteDialog(active , row);
+					}
+				}
+				else if(temp == "Close")
+				{
+					System.exit(0);
+				}
+			}
 		}
-		
-
-		
+	
 	}
 
-	class toolBarTextField extends JTextField
+	class ToolBarTextField extends JTextField
 	{
 
 		private static final long serialVersionUID = -9107600755725276369L;
 
-		public toolBarTextField()
+		public ToolBarTextField()
 		{
 			super();
 			this.setFocusAccelerator('f');
