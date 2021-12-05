@@ -36,9 +36,9 @@ public class MainWindow extends JFrame {
 		this.setFont(new Font("Monaco", Font.PLAIN, 15));
 		
 		menuBar = MenuBar.getInstance();
-		toolBar = new ToolBar(this);
+		toolBar = ToolBar.getInstance();
         content = Content.getInstance();
-        statusBar = new StatusBar(this);
+        statusBar = StatusBar.getInstance();
         
         this.setJMenuBar(menuBar);
         this.getContentPane().add(BorderLayout.NORTH, toolBar);
