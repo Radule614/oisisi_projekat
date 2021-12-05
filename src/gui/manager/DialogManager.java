@@ -165,7 +165,7 @@ public class DialogManager {
 		{
 			String temp = labels[i] + "*";
 			if		(i==2) 	d.addComboBox(temp, new String[] {"Letnji", "Zimski"});
-			else if	(i==3)	d.addComboBox(temp, new String[] {"1", "2", "3", "4"});
+			else if	(i==3)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"});
 			else 			d.addTextField(temp);
 		}
 		d.open();
@@ -211,7 +211,7 @@ public class DialogManager {
 		{
 			String temp = labels[i] + "*";
 			if		(i==2) 	d.addComboBox(temp, new String[] {"Letnji", "Zimski"}, Integer.parseInt(data[i]));
-			else if	(i==3)	d.addComboBox(temp, new String[] {"1", "2", "3", "4"}, Integer.parseInt(data[i]));
+			else if	(i==3)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"}, Integer.parseInt(data[i]));
 			else 			d.addTextField(temp, data[i]);
 		}
 		

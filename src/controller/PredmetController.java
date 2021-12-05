@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 import gui.manager.TableManager;
 import model.Predmet;
-import model.manager.DataManager;
+import model.data.Data;
 
 class PredmetController {
 	static boolean create(String[] arr, ArrayList<String> messages)
 	{
-		Predmet pr = DataManager.createPredmet(arr, messages);
+		Predmet pr = Data.createPredmet(arr, messages);
 		if(pr == null) return false;
 		TableManager.addRow(2, pr.getTableData());
 		return true;
@@ -16,19 +16,19 @@ class PredmetController {
 	
 	static String[] getData(int index)
 	{
-		String[] data = DataManager.getPredmetData(index);
+		String[] data = Data.getPredmetData(index);
 		return data;
 	}
 
 	static Predmet get(int index)
 	{
-		return DataManager.getPredmeti().get(index);
+		return Data.getPredmeti().get(index);
 	}
 
 	static boolean edit(String[] arr, int index, ArrayList<String> messages)
 	{
-		Predmet oldPredmet = DataManager.getPredmeti().get(index);
-		Predmet pr = DataManager.createPredmet(arr, messages, index);
+		Predmet oldPredmet = Data.getPredmeti().get(index);
+		Predmet pr = Data.createPredmet(arr, messages, index);
 		if(pr == null) return false;
 		
 		pr.setStudentiPolozeno(oldPredmet.getStudentiPolozeno());
@@ -36,13 +36,13 @@ class PredmetController {
 		
 		TableManager.remove(2, index);
 		TableManager.insertRow(2, pr.getTableData(), index);
-		DataManager.deletePredmet(index+1);
+		Data.deletePredmet(index+1);
 		return true;
 	}
 
 	static void delete(int index)
 	{
 		TableManager.remove(2, index);
-		DataManager.deletePredmet(index);
+		Data.deletePredmet(index);
 	}
 }

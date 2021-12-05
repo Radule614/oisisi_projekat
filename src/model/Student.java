@@ -71,12 +71,12 @@ public class Student extends Osoba {
 		String status;
 		if(this.status == VrstaFinansiranja.B) 	status = "Budžet";
 		else									status = "Samofinansiranje";
-		
+		String[] godine = {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"};
 		String[] data = new String[6];
 		data[0] = this.brojIndeksa;
 		data[1] = this.ime;
 		data[2] = this.prezime;
-		data[3] = Integer.toString(this.trenutnaGodina);
+		data[3] = godine[this.trenutnaGodina-1];
 		data[4] = status;
 		data[5] = Double.toString(prosek);
 		

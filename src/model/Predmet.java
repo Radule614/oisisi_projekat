@@ -63,12 +63,13 @@ public class Predmet {
 		String sem;
 		if(this.semestar == VrstaSemestra.L) 	sem = "Letnji";
 		else									sem = "Zimski";
-		
+		String[] godine = {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"};
 		String[] data = new String[5];
 		data[0] = Integer.toString(this.sifra);
 		data[1] = this.naziv;
 		data[2] = Integer.toString(this.ESPB);
 		data[3] = Integer.toString(this.godinaStudija);
+		data[3] = godine[this.godinaStudija-1];
 		data[4] = sem;
 		return data;
 	}

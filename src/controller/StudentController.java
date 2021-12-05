@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import gui.manager.TableManager;
 import model.Ocena;
 import model.Student;
-import model.manager.DataManager;
+import model.data.Data;
 
 class StudentController {
 	static boolean create(String[] arr, ArrayList<String> messages)
 	{
-		Student st = DataManager.createStudent(arr, messages);
+		Student st = Data.createStudent(arr, messages);
 		if(st == null) return false;
 		TableManager.addRow(0, st.getTableData());
 		return true;
@@ -18,19 +18,19 @@ class StudentController {
 	
 	static String[] getData(int index)
 	{
-		String[] data = DataManager.getStudentData(index);
+		String[] data = Data.getStudentData(index);
 		return data;
 	}
 	
 	static Student get(int index)
 	{
-		return DataManager.getStudenti().get(index);
+		return Data.getStudenti().get(index);
 	}
 	
 	static boolean edit(String[] arr, int index, ArrayList<String> messages)
 	{
-		Student oldStudent = DataManager.getStudenti().get(index);
-		Student st = DataManager.createStudent(arr, messages, index);
+		Student oldStudent = Data.getStudenti().get(index);
+		Student st = Data.createStudent(arr, messages, index);
 		if(st == null) return false;
 		
 		st.setPolozeniIspiti(oldStudent.getPolozeniIspiti());
@@ -39,33 +39,33 @@ class StudentController {
 		
 		TableManager.remove(0, index);
 		TableManager.insertRow(0, st.getTableData(), index);
-		DataManager.deleteStudent(index+1);
+		Data.deleteStudent(index+1);
 		return true;
 	}
 	static void delete(int index)
 	{
 		TableManager.remove(0, index);
-		DataManager.deleteStudent(index);
+		Data.deleteStudent(index);
 	}
 	
 	static ArrayList<String[]> getPolozeniIspiti(int index)
 	{
-		return DataManager.getPolozeniIspiti(index);
+		return Data.getPolozeniIspiti(index);
 	}
 	
 	static ArrayList<String[]> getNepolozeniIspiti(int index)
 	{
-		return DataManager.getNepolozeniIspiti(index);
+		return Data.getNepolozeniIspiti(index);
 	}
 	
 	static double getProsek(int index)
 	{
-		return DataManager.getStudenti().get(index).getProsek();
+		return Data.getStudenti().get(index).getProsek();
 	}
 	
 	static int getTotalESPB(int index)
 	{
-		ArrayList<Ocena> ispiti = DataManager.getStudenti().get(index).getPolozeniIspiti();
+		ArrayList<Ocena> ispiti = Data.getStudenti().get(index).getPolozeniIspiti();
 		int ESPB = 0;
 		for(Ocena o: ispiti)
 		{
@@ -76,7 +76,7 @@ class StudentController {
 	
 	static void removeGrade(int studentIndex, int gradeIndex)
 	{
-		Student st = DataManager.getStudenti().get(studentIndex);
+		Student st = Data.getStudenti().get(studentIndex);
 		ArrayList<Ocena> ispiti = st.getPolozeniIspiti();
 		ispiti.remove(gradeIndex);
 		st.calculateProsek();
