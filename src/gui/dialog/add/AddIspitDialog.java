@@ -72,7 +72,7 @@ public class AddIspitDialog extends OneTabDialog {
 	
 	protected void addToNepolozeni(int predmetRow)
 	{
-		ConfirmDialog d = new ConfirmDialog("Da li ste sigurni");
+		ConfirmDialog d = new ConfirmDialog("Dodavanje predmeta");
 		ActionListener listener = new ActionListener() 
 		{
 			@Override
