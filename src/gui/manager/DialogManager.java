@@ -125,6 +125,21 @@ public class DialogManager {
 		d.open();
 	}
 	
+	public static void createRemovePredmetDialog(EditStudentDialog editDialog, int studentIndex, int gradeIndex)
+	{
+		ConfirmDialog d = new ConfirmDialog("Uklanjanje predmeta");
+		ActionListener listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Controller.removeStudentFromPredmet(studentIndex, gradeIndex);
+				editDialog.getNepolozeniTable().removeRow(gradeIndex);	
+				d.close();
+			}
+		};
+		d.setListener(listener);
+		d.open();
+	}
+	
 	public static void createAddIspitDialog(EditStudentDialog editDialog, int studentIndex)
 	{
 		AddIspitDialog d = new AddIspitDialog(editDialog, studentIndex);

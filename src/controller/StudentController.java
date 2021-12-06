@@ -95,6 +95,12 @@ class StudentController {
 		Ocena o = new Ocena(st, pr);
 		st.getNepolozeniIspiti().add(o);
 	}
+	
+	static void removeStudentFromPredmet(int studentIndex, int predmetIndex)
+	{
+		Student st = Data.getStudenti().get(studentIndex);
+		st.getNepolozeniIspiti().remove(predmetIndex);
+	}
 }
 
 
