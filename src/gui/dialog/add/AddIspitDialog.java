@@ -11,22 +11,25 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import gui.dialog.Dialog;
 import gui.dialog.OneTabDialog;
+import gui.dialog.edit.EditStudentDialog;
 import gui.dialog.utility.ConfirmDialog;
 import gui.manager.TableManager;
 import gui.table.Table;
 
 public class AddIspitDialog extends OneTabDialog {
 	private static final long serialVersionUID = 904193011924022021L;
+	EditStudentDialog editDialog;
 	protected int studentTableRow;
 	
 	ArrayList<Integer> predmetiDataIndexes;  
 	protected Table predmetiTable;
 	protected TablePanel predmetiTablePanel;
 	
-	public AddIspitDialog(int studentTableRow) {
+	public AddIspitDialog(EditStudentDialog editDialog, int studentTableRow) {
 		super("Dodavanje predmeta", Dialog.EntityType.STUDENT);
+		this.editDialog = editDialog;
 		this.studentTableRow = studentTableRow;
-		predmetiDataIndexes = new ArrayList<Integer>();
+		this.predmetiDataIndexes = new ArrayList<Integer>();
 		this.mainTab.createPanel();
 		this.mainTab.createPanel();
 		this.setTable();
@@ -61,28 +64,27 @@ public class AddIspitDialog extends OneTabDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int predmetRow = predmetiTable.getSelectedRow();
-				System.out.print(predmetiDataIndexes.size());
 				if(predmetRow != -1) d.addToNepolozeni(predmetRow);
 			}
 		};
-		
 		super.setButtons(0, 1, null, listener);
 	}
 	
 	protected void addToNepolozeni(int predmetRow)
 	{
 		ConfirmDialog d = new ConfirmDialog("Da li ste sigurni");
-		ActionListener innerListener = new ActionListener() 
+		ActionListener listener = new ActionListener() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				Controller.addToNepolozeni(studentTableRow, predmetiDataIndexes.get(predmetRow));
 				predmetiTable.removeRow(predmetRow);
+				editDialog.updateNepolozeniTable();
+				predmetiDataIndexes.remove(predmetRow);
 				d.close();
 			}
 		};
-		d.setListener(innerListener);
+		d.setListener(listener);
 		d.open();
 	}
 }

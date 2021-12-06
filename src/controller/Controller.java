@@ -72,6 +72,8 @@ public class Controller {
 		Data.createPredmet(new String[] {"12", 	"Baze Podataka 1", 		 	"0", "3", "8"}, null);
 		Predmet ar = Data.createPredmet(new String[] {"123", "Arhitektura Racunara", 	"0", "0", "9"}, null);
 		Data.createPredmet(new String[] {"1234", "Operativni sistemi", 		"0", "0", "8"}, null);
+		Data.createPredmet(new String[] {"alg", "Algebra", 	"0", "2", "5"}, null);
+		Data.createPredmet(new String[] {"oi123", "oisisi", "0", "1", "6"}, null);
 		
 		
 		rade.addPolozeniIspit	(new Ocena(rade, an, 8));

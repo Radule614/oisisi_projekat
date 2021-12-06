@@ -117,6 +117,7 @@ public class DialogManager {
 				Controller.removeStudentGrade(studentIndex, gradeIndex);
 				editDialog.getPolozeniTable().removeRow(gradeIndex);	
 				editDialog.setPolozeniLabels();
+				editDialog.updateNepolozeniTable();
 				d.close();
 			}
 		};
@@ -124,9 +125,9 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createAddIspitDialog(int studentIndex)
+	public static void createAddIspitDialog(EditStudentDialog editDialog, int studentIndex)
 	{
-		AddIspitDialog d = new AddIspitDialog(studentIndex);
+		AddIspitDialog d = new AddIspitDialog(editDialog, studentIndex);
 		
 		d.open();
 	}

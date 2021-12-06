@@ -369,6 +369,7 @@ public abstract class Dialog extends JDialog {
 		
 		public JPanel buttonPanel;
 		public JScrollPane scrollPane;
+		public JPanel scrollPanel;
 		
 		public TablePanel(Table table)
 		{
@@ -416,8 +417,22 @@ public abstract class Dialog extends JDialog {
 			sp.setBorder(new CompoundBorder(new EmptyBorder(15, 0, 25, 0), sp.getBorder()));
 			panel.add(sp, BorderLayout.CENTER);
 			
+			this.scrollPanel = panel;
 			this.scrollPane = sp;
 			this.panels.add(panel);
+		}
+		
+		public void updateTable(Table table)
+		{
+			this.table = table;
+			this.table.getTableHeader().setFont(new Font("Monaco", Font.PLAIN, 13));
+			this.table.setFont(new Font("Monaco", Font.PLAIN, 13));
+			
+			JScrollPane sp = new JScrollPane(this.table);
+			sp.setBorder(new CompoundBorder(new EmptyBorder(15, 0, 25, 0), sp.getBorder()));
+			this.scrollPane = sp;
+			this.scrollPanel.removeAll();
+			this.scrollPanel.add(sp);
 		}
 		
 	}

@@ -78,8 +78,11 @@ class StudentController {
 	static void removeGrade(int studentIndex, int gradeIndex)
 	{
 		Student st = Data.getStudenti().get(studentIndex);
-		ArrayList<Ocena> ispiti = st.getPolozeniIspiti();
-		ispiti.remove(gradeIndex);
+		ArrayList<Ocena> polozeniIspiti = st.getPolozeniIspiti();
+		ArrayList<Ocena> nepolozeniIspiti = st.getNepolozeniIspiti();
+		Ocena o = polozeniIspiti.get(gradeIndex);
+		nepolozeniIspiti.add(o);
+		polozeniIspiti.remove(gradeIndex);
 		st.calculateProsek();
 		TableManager.remove(0, studentIndex);
 		TableManager.insertRow(0, st.getTableData(), studentIndex);
