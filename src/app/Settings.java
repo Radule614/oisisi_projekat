@@ -15,4 +15,6 @@ public class Settings {
 	
 	public static final String dateFormat = "dd-MM-yyyy";
 	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+	
+	public static final int trenutnaGodina = 2022;
 }

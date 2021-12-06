@@ -81,7 +81,7 @@ public class EditStudentDialog extends MultiTabDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int gradeRow = polozeniTable.getSelectedRow();
-				if(gradeRow != -1) DialogManager.createRemoveOcenaDialog(dialog, studentTableRow, gradeRow);
+				if(gradeRow != -1) DialogManager.createRemoveOcenaDialog(dialog, gradeRow);
 			}
 		});
 	}
@@ -104,15 +104,23 @@ public class EditStudentDialog extends MultiTabDialog {
 		btnDodaj.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DialogManager.createAddIspitDialog(dialog, studentTableRow);
+				DialogManager.createAddIspitDialog(dialog);
 			}
 		});
 		
 		btnObrisi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int gradeRow = nepolozeniTable.getSelectedRow();
-				if(gradeRow != -1) DialogManager.createRemovePredmetDialog(dialog, studentTableRow, gradeRow);
+				int predmetRow = nepolozeniTable.getSelectedRow();
+				if(predmetRow != -1) DialogManager.createRemovePredmetDialog(dialog, predmetRow);
+			}
+		});
+		
+		btnPolaganje.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int predmetRow = nepolozeniTable.getSelectedRow();
+				if(predmetRow != -1) DialogManager.createAddOcenaDialog(dialog, predmetRow);
 			}
 		});
 	}
@@ -177,6 +185,10 @@ public class EditStudentDialog extends MultiTabDialog {
 		return this.nepolozeniTable;
 	}
 	
+	public int getStudentIndex()
+	{
+		return this.studentTableRow;
+	}
 	
 }
 

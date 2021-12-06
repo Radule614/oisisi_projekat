@@ -34,12 +34,12 @@ public class Controller {
 	
 	public static double 					getProsek				(int index) {return StudentController.getProsek(index);}
 	public static int 						getTotalESPB			(int index) {return StudentController.getTotalESPB(index);}
-	public static void 						removeStudentGrade		(int studentIndex, int gradeIndex) {StudentController.removeGrade(studentIndex, gradeIndex);}
 	
+	public static void 						removeStudentGrade		(int studentIndex, int gradeIndex) {StudentController.removeGrade(studentIndex, gradeIndex);}
 	public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
 	public static void						addToNepolozeni			(int studentIndex, int predmetIndex) {StudentController.addToNepolozeni(studentIndex, predmetIndex);}
 	public static void						removeStudentFromPredmet(int studentIndex, int predmetIndex) {StudentController.removeStudentFromPredmet(studentIndex, predmetIndex);}
-	
+	public static boolean 					addToPolozeni			(int studentIndex, int nepolozeniIndex, String[] data, ArrayList<String> messages) {return StudentController.addToPolozeni(studentIndex, nepolozeniIndex, data, messages);}
 	
 	
 	
@@ -64,24 +64,19 @@ public class Controller {
 	
 	public static void initData()
 	{
-		Student rade = Data.createStudent(new String[] {"Rade", 	"Stojanovic", 	"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA138/2019", "2019", 	"2", "0"}, null);
+		Data.createStudent(new String[] {"Rade", 	"Stojanovic", 	"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA138/2019", "2019", 	"2", "0"}, null);
 		Data.createStudent(new String[] {"Damjan", 	"Dimitrijevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA115/2019", "2019" , 	"2", "0"}, null);
 		Data.createStudent(new String[] {"Uros", 	"Jokovic", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA119/2019", "2019" ,	"2", "0"}, null);
 		Data.createStudent(new String[] {"Luka", 	"Pikula", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA146/2019", "2019" , 	"2", "0"}, null);
 
 		Data.createProfesor(new String[] {"Nebojsa", "Ralevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "u, 1, g, d", "0", "Doktor", "Redovni profesor", "0"}, null);			
 
-		Predmet an = Data.createPredmet(new String[] {"1", 	"Matematicka Analiza 1", 	"0", "0", "9"}, null);
-		Data.createPredmet(new String[] {"12", 	"Baze Podataka 1", 		 	"0", "3", "8"}, null);
-		Predmet ar = Data.createPredmet(new String[] {"123", "Arhitektura Racunara", 	"0", "0", "9"}, null);
-		Data.createPredmet(new String[] {"1234", "Operativni sistemi", 		"0", "0", "8"}, null);
-		Data.createPredmet(new String[] {"alg", "Algebra", 	"0", "2", "5"}, null);
-		Data.createPredmet(new String[] {"oi123", "oisisi", "0", "1", "6"}, null);
-		
-		
-		rade.addPolozeniIspit	(new Ocena(rade, an, 8));
-		rade.addNepolozeniIspit	(new Ocena(rade, ar));
-		
+		Data.createPredmet(new String[] {"1", 		"Matematicka Analiza 1", 	"0", "0", "9"}, null);
+		Data.createPredmet(new String[] {"12", 		"Baze Podataka 1", 		 	"0", "3", "8"}, null);
+		Data.createPredmet(new String[] {"123", 	"Arhitektura Racunara", 	"0", "0", "9"}, null);
+		Data.createPredmet(new String[] {"1234", 	"Operativni sistemi", 		"0", "0", "8"}, null);
+		Data.createPredmet(new String[] {"alg", 	"Algebra", 					"0", "2", "5"}, null);
+		Data.createPredmet(new String[] {"oi123", 	"oisisi", 					"0", "1", "6"}, null);
 	}
 }
 	

@@ -120,8 +120,6 @@ public abstract class Dialog extends JDialog {
 		JPanel leftPanel = new JPanel(leftPanelLayout);
 		JPanel rightPanel = new JPanel(rightPanelLayout);
 		
-		
-		
 		Dialog.setButtonHover(submit, "#95bcf2");
 		Dialog.setButtonHover(cancel, "#9b5377");
 		
@@ -173,35 +171,41 @@ public abstract class Dialog extends JDialog {
 		{
 			this.panels.get(panelIndex).addLabel(labelText);
 		}
-		
 		public void addTextField(int panelIndex, String labelText)
 		{
 			this.panels.get(panelIndex).addTextField(labelText);
 		}
-		
 		public void addTextField(int panelIndex, String labelText, String value)
 		{
 			this.panels.get(panelIndex).addTextField(labelText, value);
 		}
-		
+		public void addTextField(int panelIndex, String labelText, String value, boolean editable)
+		{
+			this.panels.get(panelIndex).addTextField(labelText, value, editable);
+		}
 		public void addDateField(int panelIndex, String labelText)
 		{
 			this.panels.get(panelIndex).addDateField(labelText);
 		}
-		
 		public void addDateField(int panelIndex, String labelText, String value)
 		{
 			this.panels.get(panelIndex).addDateField(labelText, value);
 		}
-		
+		public void addDateField(int panelIndex, String labelText, String value, boolean editable)
+		{
+			this.panels.get(panelIndex).addDateField(labelText, value, editable);
+		}
 		public void addComboBox(int panelIndex, String labelText, String[] arr)
 		{
 			this.panels.get(panelIndex).addComboBox(labelText, arr);
 		}
-		
 		public void addComboBox(int panelIndex, String labelText, String[] arr, int optionIndex)
 		{
 			this.panels.get(panelIndex).addComboBox(labelText, arr, optionIndex);
+		}
+		public void addComboBox(int panelIndex, String labelText, String[] arr, int optionIndex, boolean editable)
+		{
+			this.panels.get(panelIndex).addComboBox(labelText, arr, optionIndex, editable);
 		}
 		
 		public String[] getData(int panelIndex)
@@ -212,7 +216,7 @@ public abstract class Dialog extends JDialog {
 		public class DialogPanel extends JPanel{
 			private static final long serialVersionUID = 840831711625149150L;
 			Dialog dialog;
-			
+			public int textFieldLength = 16;
 			protected ArrayList<JComponent> fields = new ArrayList<JComponent>();
 			
 			public DialogPanel(Dialog dialog)
@@ -235,33 +239,46 @@ public abstract class Dialog extends JDialog {
 			{
 				this.createTextField(labelText);
 			}
-			
 			protected void addTextField(String labelText, String value)
 			{
 				JTextField textField = this.createTextField(labelText);
 				textField.setText(value);
 			}
-			
+			protected void addTextField(String labelText, String value, boolean editable)
+			{
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
+				textField.setEditable(editable);
+			}
 			protected void addDateField(String labelText)
 			{
 				this.createDataField(labelText);
 			}
-			
 			protected void addDateField(String labelText, String value)
 			{
 				JFormattedTextField dateTextField = this.createDataField(labelText);
 				dateTextField.setText(value);
 			}
-			
+			protected void addDateField(String labelText, String value, boolean editable)
+			{
+				JFormattedTextField dateTextField = this.createDataField(labelText);
+				dateTextField.setText(value);
+				dateTextField.setEditable(editable);
+			}
 			protected void addComboBox(String labelText, String[] arr)
 			{
 				this.createComboBox(labelText, arr);
 			}
-			
 			protected void addComboBox(String labelText, String[] arr, int optionIndex)
 			{
 				JComboBox<?> comboBox = this.createComboBox(labelText, arr);
 				comboBox.setSelectedIndex(optionIndex);
+			}
+			protected void addComboBox(String labelText, String[] arr, int optionIndex, boolean editable)
+			{
+				JComboBox<?> comboBox = this.createComboBox(labelText, arr);
+				comboBox.setSelectedIndex(optionIndex);
+				comboBox.setEditable(editable);
 			}
 			
 			protected String[] getData()
@@ -308,7 +325,7 @@ public abstract class Dialog extends JDialog {
 				JPanel panel = Dialog.createRowPanel(2);
 				this.add(panel);
 				JLabel label = new JLabel(labelText);
-				JTextField textField = new JTextField(16);
+				JTextField textField = new JTextField(this.textFieldLength);
 				textField.setBorder(new CompoundBorder(textField.getBorder(), new EmptyBorder(4, 2, 4, 4)));
 				
 				panel.add(label);

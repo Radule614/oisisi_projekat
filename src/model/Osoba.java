@@ -54,10 +54,10 @@ public abstract class Osoba {
 			isValid = false;
 			if(messages != null) messages.add("Prezime: dužina 3 ili više karaktera");
 		}
-		if(!Utility.isInInterval(Utility.parseInt(arr[2].substring(6)), 1900, 2021))
+		if(!Utility.isInInterval(Utility.parseInt(arr[2].substring(6)), 1900, Settings.trenutnaGodina))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Godina rođenja: mora biti u intervalu [1900, 2021]");
+			if(messages != null) messages.add("Godina rođenja: mora biti u intervalu [1900, " + Settings.trenutnaGodina +"]");
 		}
 		if(!Utility.doesMatch(Settings.addressPattern, arr[3]))
 		{

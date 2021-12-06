@@ -25,10 +25,10 @@ public class AddIspitDialog extends OneTabDialog {
 	protected Table predmetiTable;
 	protected TablePanel predmetiTablePanel;
 	
-	public AddIspitDialog(EditStudentDialog editDialog, int studentTableRow) {
+	public AddIspitDialog(EditStudentDialog editDialog) {
 		super("Dodavanje predmeta", Dialog.EntityType.STUDENT);
 		this.editDialog = editDialog;
-		this.studentTableRow = studentTableRow;
+		this.studentTableRow = editDialog.getStudentIndex();
 		this.predmetiDataIndexes = new ArrayList<Integer>();
 		this.mainTab.createPanel();
 		this.mainTab.createPanel();
