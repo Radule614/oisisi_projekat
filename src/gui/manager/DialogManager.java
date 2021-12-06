@@ -7,6 +7,7 @@ import controller.Controller;
 import gui.dialog.*;
 import gui.dialog.add.AddDialog;
 import gui.dialog.add.AddIspitDialog;
+import gui.dialog.add.AddOcenaDialog;
 import gui.dialog.edit.EditPredmetDialog;
 import gui.dialog.edit.EditProfesorDialog;
 import gui.dialog.edit.EditStudentDialog;
@@ -108,13 +109,13 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createRemoveOcenaDialog(EditStudentDialog editDialog, int studentIndex, int gradeIndex)
+	public static void createRemoveOcenaDialog(EditStudentDialog editDialog, int gradeIndex)
 	{
 		ConfirmDialog d = new ConfirmDialog("Poništavanje ocene");
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.removeStudentGrade(studentIndex, gradeIndex);
+				Controller.removeStudentGrade(editDialog.getStudentIndex(), gradeIndex);
 				editDialog.getPolozeniTable().removeRow(gradeIndex);	
 				editDialog.setPolozeniLabels();
 				editDialog.updateNepolozeniTable();
@@ -125,14 +126,14 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createRemovePredmetDialog(EditStudentDialog editDialog, int studentIndex, int gradeIndex)
+	public static void createRemovePredmetDialog(EditStudentDialog editDialog, int predmetIndex)
 	{
 		ConfirmDialog d = new ConfirmDialog("Uklanjanje predmeta");
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.removeStudentFromPredmet(studentIndex, gradeIndex);
-				editDialog.getNepolozeniTable().removeRow(gradeIndex);	
+				Controller.removeStudentFromPredmet(editDialog.getStudentIndex(), predmetIndex);
+				editDialog.getNepolozeniTable().removeRow(predmetIndex);	
 				d.close();
 			}
 		};
@@ -140,10 +141,15 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createAddIspitDialog(EditStudentDialog editDialog, int studentIndex)
+	public static void createAddIspitDialog(EditStudentDialog editDialog)
 	{
-		AddIspitDialog d = new AddIspitDialog(editDialog, studentIndex);
-		
+		AddIspitDialog d = new AddIspitDialog(editDialog);
+		d.open();
+	}
+	
+	public static void createAddOcenaDialog(EditStudentDialog editDialog, int predmetIndex)
+	{
+		AddOcenaDialog d = new AddOcenaDialog(editDialog, predmetIndex);
 		d.open();
 	}
 	

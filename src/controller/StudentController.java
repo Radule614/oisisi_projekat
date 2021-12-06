@@ -1,7 +1,10 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+import app.Settings;
+import app.Utility;
 import gui.manager.TableManager;
 import model.Ocena;
 import model.Predmet;
@@ -100,6 +103,27 @@ class StudentController {
 	{
 		Student st = Data.getStudenti().get(studentIndex);
 		st.getNepolozeniIspiti().remove(predmetIndex);
+	}
+	
+	static boolean addToPolozeni(int studentIndex, int nepolozeniIndex, String[] data, ArrayList<String> messages)
+	{
+		Student st = Data.getStudenti().get(studentIndex);
+		if(!Utility.isInInterval(Utility.parseInt(data[3].substring(6)), st.getGodinaUpisa(), Settings.trenutnaGodina))
+		{
+			if(messages != null) messages.add("Godina polaganja: mora biti u intervalu [" + st.getGodinaUpisa() + ", " + Settings.trenutnaGodina + "]");
+			return false;
+		}
+		LocalDate datum = LocalDate.parse(data[3], Settings.formatter);
+		
+		Ocena ocena = st.getNepolozeniIspiti().get(nepolozeniIndex);
+		ocena.setDatumPolaganja(datum);
+		ocena.setVrednost(Utility.parseInt(data[2]) + 6);
+		st.getNepolozeniIspiti().remove(nepolozeniIndex);
+		st.getPolozeniIspiti().add(ocena);
+		st.calculateProsek();
+		TableManager.remove(0, studentIndex);
+		TableManager.insertRow(0, st.getTableData(), studentIndex);
+		return true;
 	}
 }
 
