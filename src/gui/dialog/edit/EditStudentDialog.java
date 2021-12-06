@@ -55,10 +55,10 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.nepolozeniTablePanel = new TablePanel(this.nepolozeniTable);
 		this.tabPanels.get(2).setBorder(new EmptyBorder(25, 40, 25, 40));
 		this.tabPanels.get(2).panels.get(0).add(this.nepolozeniTablePanel);
-		
+
 		this.tabPanels.get(1).createPanel();
 		
-		this.setPolozeniRemoveGradeButton();
+		this.setPolozeniRemoveOcenaButton();
 		this.setNepolozeniButtons();
 		
 		this.setPolozeniLabels();
@@ -70,18 +70,18 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.setButtons(0, 1, null, action);
 	}
 	
-	protected void setPolozeniRemoveGradeButton()
+	protected void setPolozeniRemoveOcenaButton()
 	{
 		JButton btn = new JButton("Poništi ocenu");
 		Dialog.setButtonHover(btn, "#95bcf2");
 		this.polozeniTablePanel.addButton(btn);
 		
 		EditStudentDialog dialog = this;
-		btn.addActionListener( new ActionListener() {
+		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int gradeRow = polozeniTable.getSelectedRow();
-				if(gradeRow != -1) DialogManager.createRemoveGradeDialog(dialog, studentTableRow, gradeRow);
+				if(gradeRow != -1) DialogManager.createRemoveOcenaDialog(dialog, studentTableRow, gradeRow);
 			}
 		});
 	}
@@ -99,18 +99,40 @@ public class EditStudentDialog extends MultiTabDialog {
 		this.nepolozeniTablePanel.addButton(btnDodaj);
 		this.nepolozeniTablePanel.addButton(btnObrisi);
 		this.nepolozeniTablePanel.addButton(btnPolaganje);
+		
+		EditStudentDialog dialog = this;
+		btnDodaj.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DialogManager.createAddIspitDialog(dialog, studentTableRow);
+			}
+		});
 	}
 	
-	protected void setPolozeniTable()
+	public void setPolozeniTable()
 	{
 		ArrayList<String[]> dataArray = Controller.getPolozeniIspiti(studentTableRow);
-		this.polozeniTable = TableManager.createPolozeniTable(dataArray);
+		this.polozeniTable = TableManager.createPolozeniTable(dataArray);	
 	}
 	
-	protected void setNepolozeniTable()
+	public void setNepolozeniTable()
 	{
 		ArrayList<String[]> dataArray = Controller.getNepolozeniIspiti(studentTableRow);
 		this.nepolozeniTable = TableManager.createNepolozeniTable(dataArray);
+	}
+	
+	public void updatePolozeniTable()
+	{
+		this.setPolozeniTable();
+		this.polozeniTablePanel.updateTable(this.polozeniTable);
+		this.polozeniTablePanel.revalidate();
+	}
+	
+	public void updateNepolozeniTable()
+	{
+		this.setNepolozeniTable();
+		this.nepolozeniTablePanel.updateTable(this.nepolozeniTable);
+		this.nepolozeniTablePanel.revalidate();
 	}
 	
 	public void setPolozeniLabels()
@@ -141,6 +163,13 @@ public class EditStudentDialog extends MultiTabDialog {
 	{
 		return this.polozeniTable;
 	}
+	
+	public Table getNepolozeniTable()
+	{
+		return this.nepolozeniTable;
+	}
+	
+	
 }
 
 

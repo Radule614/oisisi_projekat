@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.Controller;
-import gui.dialog.Dialog;
+import gui.dialog.*;
 import gui.dialog.add.AddDialog;
+import gui.dialog.add.AddIspitDialog;
 import gui.dialog.edit.EditPredmetDialog;
 import gui.dialog.edit.EditProfesorDialog;
 import gui.dialog.edit.EditStudentDialog;
@@ -107,7 +108,7 @@ public class DialogManager {
 		d.open();
 	}
 	
-	public static void createRemoveGradeDialog(EditStudentDialog editDialog, int studentIndex, int gradeIndex)
+	public static void createRemoveOcenaDialog(EditStudentDialog editDialog, int studentIndex, int gradeIndex)
 	{
 		ConfirmDialog d = new ConfirmDialog("Poništavanje ocene");
 		ActionListener listener = new ActionListener() {
@@ -116,6 +117,7 @@ public class DialogManager {
 				Controller.removeStudentGrade(studentIndex, gradeIndex);
 				editDialog.getPolozeniTable().removeRow(gradeIndex);	
 				editDialog.setPolozeniLabels();
+				editDialog.updateNepolozeniTable();
 				d.close();
 			}
 		};
@@ -123,6 +125,12 @@ public class DialogManager {
 		d.open();
 	}
 	
+	public static void createAddIspitDialog(EditStudentDialog editDialog, int studentIndex)
+	{
+		AddIspitDialog d = new AddIspitDialog(editDialog, studentIndex);
+		
+		d.open();
+	}
 	
 	//private
 	
@@ -136,7 +144,7 @@ public class DialogManager {
 			String temp = labels[i] + "*";
 			if		(i==2) 	d.addDateField(temp);
 			else if	(i==8)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"});
-			else if	(i==9) d.addComboBox(temp, new String[] {"Budžet", "Samofinansiranje"});
+			else if	(i==9) 	d.addComboBox(temp, new String[] {"Budžet", "Samofinansiranje"});
 			else 			d.addTextField(temp);
 		}
 		d.open();

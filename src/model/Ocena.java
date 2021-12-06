@@ -15,25 +15,33 @@ public class Ocena {
 	{
 		
 	}
-
-	public Ocena(Student student, Predmet predmet, int vrednost)
-	{
-		this.student = student;
-		this.predmet = predmet;
-		this.vrednost = vrednost;
-		
-		LocalDate ld = LocalDate.parse("01-01-2000", Settings.formatter);
-		datumPolaganja = ld;
-	}
 	
 	public Ocena(Student student, Predmet predmet)
 	{
 		this.student = student;
 		this.predmet = predmet;
 		this.vrednost = 0;
-		
+		this.datumPolaganja = null;
+	}
+
+	public Ocena(Student student, Predmet predmet, int vrednost)
+	{
 		LocalDate ld = LocalDate.parse("01-01-2000", Settings.formatter);
-		datumPolaganja = ld;
+		
+		this.student = student;
+		this.predmet = predmet;
+		this.vrednost = vrednost;
+		this.datumPolaganja = ld;
+	}
+	
+	public Ocena(Student student, Predmet predmet, int vrednost, String datumStr)
+	{
+		LocalDate ld = LocalDate.parse(datumStr, Settings.formatter);
+		
+		this.student = student;
+		this.predmet = predmet;
+		this.vrednost = vrednost;		
+		this.datumPolaganja = ld;
 	}
 
 	public Student getStudent() {

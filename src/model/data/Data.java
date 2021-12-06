@@ -1,6 +1,7 @@
 package model.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import model.*;
 
 public class Data {
@@ -34,9 +35,45 @@ public class Data {
 	public static boolean 				studentExists				(String key, int index) {return StudentData.exists(key, index);}
 	public static boolean 				profesorExists				(int key) {return ProfesorData.exists(key);}
 	public static boolean 				profesorExists				(int key, int index) {return ProfesorData.exists(key, index);}
-	public static boolean 				predmetExists				(int key) {return PredmetData.exists(key);}
-	public static boolean 				predmetExists				(int key, int index) {return PredmetData.exists(key, index);}
+	public static boolean 				predmetExists				(String key) {return PredmetData.exists(key);}
+	public static boolean 				predmetExists				(String key, int index) {return PredmetData.exists(key, index);}
 	
+	
+
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static HashMap<Integer, String> getEligiblePredmeti(int studentIndex)
+	{
+		HashMap<Integer, String> data = new HashMap<Integer, String>();
+		
+		Student s = StudentData.getStudenti().get(studentIndex);
+		ArrayList<Predmet> predmeti = PredmetData.getPredmeti();		
+		
+		ArrayList<Predmet> polozeni = new ArrayList<Predmet>();
+		for(Ocena o: s.getPolozeniIspiti())
+		{
+			polozeni.add(o.getPredmet());
+		}
+		ArrayList<Predmet> nepolozeni = new ArrayList<Predmet>();
+		for(Ocena o: s.getNepolozeniIspiti())
+		{
+			nepolozeni.add(o.getPredmet());
+		}
+		
+		for(int i = 0; i < predmeti.size(); ++i)
+		{
+			Predmet pr = predmeti.get(i);
+			if(s.getTrenutnaGodina() < pr.getGodinaStudija())
+				continue;
+			if(polozeni.contains(pr) || nepolozeni.contains(pr))
+				continue;
+			String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
+			data.put(i, predmetString);
+		}
+		
+		return data;
+	}
 }
 
 
