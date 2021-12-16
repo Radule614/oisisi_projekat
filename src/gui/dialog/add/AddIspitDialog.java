@@ -77,7 +77,7 @@ public class AddIspitDialog extends OneTabDialog {
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.addToNepolozeni(studentTableRow, predmetiDataIndexes.get(predmetRow));
+				Controller.student.addToNepolozeni(studentTableRow, predmetiDataIndexes.get(predmetRow));
 				predmetiTable.removeRow(predmetRow);
 				editDialog.updateNepolozeniTable();
 				predmetiDataIndexes.remove(predmetRow);

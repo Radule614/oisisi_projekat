@@ -1,83 +1,64 @@
 package controller;
 
-import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 import gui.MainWindow;
 import gui.manager.TableManager;
-import model.*;
 import model.data.Data;
 
 public class Controller {
-	public static boolean 					createStudent			(String[] arr, ArrayList<String> messages) {return StudentController.create(arr, messages);}
-	public static boolean 					createProfesor			(String[] arr, ArrayList<String> messages) {return ProfesorController.create(arr, messages);}
-	public static boolean 					createPredmet			(String[] arr, ArrayList<String> messages) {return PredmetController.create(arr, messages);}
-	
-	public static String[] 					getStudentData			(int index) {return StudentController.getData(index);}
-	public static String[] 					getProfesorData			(int index) {return ProfesorController.getData(index);}
-	public static String[] 					getPredmetData			(int index) {return PredmetController.getData(index);}
-	
-	public static Student 					getStudent				(int index) {return StudentController.get(index);}
-	public static Profesor					getProfesor				(int index) {return ProfesorController.get(index);}
-	public static Predmet 					getPredmet				(int index) {return PredmetController.get(index);}
-	
-	public static boolean 					editStudent				(String[] arr, int index, ArrayList<String> messages) {return StudentController.edit(arr, index, messages);}
-	public static boolean 					editProfesor			(String[] arr, int index, ArrayList<String> messages) {return ProfesorController.edit(arr, index, messages);}
-	public static boolean 					editPredmet				(String[] arr, int index, ArrayList<String> messages) {return PredmetController.edit(arr, index, messages);}
-	
-	public static void 						deleteStudent			(int index) {StudentController.delete(index);}
-	public static void 						deleteProfesor			(int index) {ProfesorController.delete(index);}
-	public static void 						deletePredmet			(int index) {PredmetController.delete(index);}
-	
-	public static ArrayList<String[]> 		getPolozeniIspiti		(int index) {return StudentController.getPolozeniIspiti(index);}
-	public static ArrayList<String[]> 		getNepolozeniIspiti		(int index) {return StudentController.getNepolozeniIspiti(index);}
-	
-	public static double 					getProsek				(int index) {return StudentController.getProsek(index);}
-	public static int 						getTotalESPB			(int index) {return StudentController.getTotalESPB(index);}
-	
-	public static void 						removeStudentGrade		(int studentIndex, int gradeIndex) {StudentController.removeGrade(studentIndex, gradeIndex);}
-	public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
-	public static void						addToNepolozeni			(int studentIndex, int predmetIndex) {StudentController.addToNepolozeni(studentIndex, predmetIndex);}
-	public static void						removeStudentFromPredmet(int studentIndex, int predmetIndex) {StudentController.removeStudentFromPredmet(studentIndex, predmetIndex);}
-	public static boolean 					addToPolozeni			(int studentIndex, int nepolozeniIndex, String[] data, ArrayList<String> messages) {return StudentController.addToPolozeni(studentIndex, nepolozeniIndex, data, messages);}
-	
-	
-	
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public static MainWindow initApp()
-	{
-		MainWindow app = MainWindow.getInstance();
-		
-		initData();
-		initTables();
-		
-		return app;
-	}
-	
-	public static void initTables()
-	{
-		TableManager.addRows(0, Data.studentiToTableDataArray());
-		TableManager.addRows(1, Data.profesoriToTableDataArray());
-		TableManager.addRows(2, Data.predmetiToTableDataArray());
-	}
-	
-	public static void initData()
-	{
-		Data.createStudent(new String[] {"Rade", 	"Stojanovic", 	"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA138/2019", "2019", 	"2", "0"}, null);
-		Data.createStudent(new String[] {"Damjan", 	"Dimitrijevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA115/2019", "2019" , 	"2", "0"}, null);
-		Data.createStudent(new String[] {"Uros", 	"Jokovic", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA119/2019", "2019" ,	"2", "0"}, null);
-		Data.createStudent(new String[] {"Luka", 	"Pikula", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA146/2019", "2019" , 	"2", "0"}, null);
+	public static StudentController student = StudentController.getInstance();
+    public static ProfesorController profesor = ProfesorController.getInstance();
+    public static PredmetController predmet = PredmetController.getInstance();
 
-		Data.createProfesor(new String[] {"Nebojsa", "Ralevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "u, 1, g, d", "0", "Doktor", "Redovni profesor", "0"}, null);			
+    public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
 
-		Data.createPredmet(new String[] {"1", 		"Matematicka Analiza 1", 	"0", "0", "9"}, null);
-		Data.createPredmet(new String[] {"12", 		"Baze Podataka 1", 		 	"0", "3", "8"}, null);
-		Data.createPredmet(new String[] {"123", 	"Arhitektura Racunara", 	"0", "0", "9"}, null);
-		Data.createPredmet(new String[] {"1234", 	"Operativni sistemi", 		"0", "0", "8"}, null);
-		Data.createPredmet(new String[] {"alg", 	"Algebra", 					"0", "2", "5"}, null);
-		Data.createPredmet(new String[] {"oi123", 	"oisisi", 					"0", "1", "6"}, null);
-	}
+
+    ///////////////////////////////////////////////////////////////////////
+
+    public static MainWindow initApp()
+    {
+        MainWindow app = MainWindow.getInstance();
+
+        if(!Data.getSavedData())
+            initData();
+
+        initTables();
+        app.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Data.saveData();
+            }
+        });
+
+        return app;
+    }
+
+    public static void initTables()
+    {
+        TableManager.addRows(0, Data.student.toTableDataArray());
+        TableManager.addRows(1, Data.profesor.toTableDataArray());
+        TableManager.addRows(2, Data.predmet.toTableDataArray());
+    }
+
+    public static void initData()
+    {
+        Data.student.create(new String[] {"Rade", 	"Stojanovic", 	"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA138/2019", "2019", 	"2", "0"}, null);
+        Data.student.create(new String[] {"Damjan", "Dimitrijevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA115/2019", "2019" , 	"2", "0"}, null);
+        Data.student.create(new String[] {"Uros", 	"Jokovic", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA119/2019", "2019" ,	"2", "0"}, null);
+        Data.student.create(new String[] {"Luka", 	"Pikula", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA146/2019", "2019" , 	"2", "0"}, null);
+
+        Data.profesor.create(new String[] {"Nebojsa", "Ralevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "u, 1, g, d", "0", "Doktor", "Redovni profesor", "0"}, null);
+
+        Data.predmet.create(new String[] {"1", 		"Matematicka Analiza 1", 	"0", "0", "9"}, null);
+        Data.predmet.create(new String[] {"12", 	"Baze Podataka 1", 		    "0", "3", "8"}, null);
+        Data.predmet.create(new String[] {"123", 	"Arhitektura Racunara", 	"0", "0", "9"}, null);
+        Data.predmet.create(new String[] {"1234", 	"Operativni sistemi", 		"0", "0", "8"}, null);
+        Data.predmet.create(new String[] {"alg", 	"Algebra", 					"0", "2", "5"}, null);
+        Data.predmet.create(new String[] {"oi123", 	"oisisi", 					"0", "1", "6"}, null);
+    }
 }
 	
 	

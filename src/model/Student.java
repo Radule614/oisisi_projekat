@@ -7,6 +7,8 @@ import app.Utility;
 import model.Predmet.VrstaSemestra;
 
 public class Student extends Osoba {
+	private static final long serialVersionUID = 116089341347121589L;
+
 	public enum VrstaFinansiranja {B, S};
 	
 	protected String brojIndeksa;

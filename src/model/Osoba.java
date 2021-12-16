@@ -1,12 +1,15 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import app.Settings;
 import app.Utility;
 
-public abstract class Osoba {
+public abstract class Osoba implements Serializable {
+	private static final long serialVersionUID = 1435561261890824899L;
+	
 	protected String ime;
 	protected String prezime;
 	protected LocalDate datumRodjenja;

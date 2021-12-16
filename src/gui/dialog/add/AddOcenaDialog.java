@@ -32,7 +32,7 @@ public class AddOcenaDialog extends OneTabDialog {
 
 	protected void setFields()
 	{
-		ArrayList<String[]> data = Controller.getNepolozeniIspiti(studentTableRow);
+		ArrayList<String[]> data = Controller.student.getNepolozeniIspiti(studentTableRow);
 		String[] ocenaData = data.get(predmetTableRow);
 		this.mainTab.panels.get(0).textFieldLength = 12;
 		
@@ -53,7 +53,7 @@ public class AddOcenaDialog extends OneTabDialog {
 				boolean error;
 				if(data != null)
 				{
-					error = !Controller.addToPolozeni(studentTableRow, predmetTableRow, data, messages);
+					error = !Controller.student.addToPolozeni(studentTableRow, predmetTableRow, data, messages);
 					if(!error) 	
 					{
 						editDialog.updateNepolozeniTable();

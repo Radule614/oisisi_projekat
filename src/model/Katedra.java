@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Katedra {
+public class Katedra implements Serializable {
+	private static final long serialVersionUID = -4767123478567952277L;
+	
 	protected int sifra;
 	protected String naziv;
 	protected Profesor sef;

@@ -1,8 +1,12 @@
 package model;
 
+import java.io.Serializable;
+
 import app.Utility;
 
-public class Adresa {
+public class Adresa implements Serializable {
+	private static final long serialVersionUID = 5016159581224197581L;
+	
 	protected String ulica;
 	protected String broj;
 	protected String grad;

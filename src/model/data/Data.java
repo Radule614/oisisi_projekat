@@ -1,54 +1,26 @@
 package model.data;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.*;
 
 public class Data {
-	public static ArrayList<String[]> 	studentiToTableDataArray	() {return StudentData.toTableDataArray();}
-	public static ArrayList<String[]> 	profesoriToTableDataArray	() {return ProfesorData.toTableDataArray();}
-	public static ArrayList<String[]> 	predmetiToTableDataArray	() {return PredmetData.toTableDataArray();}
+	public static final StudentData student = StudentData.getInstance();
+    public static final ProfesorData profesor = ProfesorData.getInstance();
+    public static final PredmetData predmet = PredmetData.getInstance();
 	
-	public static Student 				createStudent				(String[] arr, ArrayList<String> messages, int index) {return StudentData.create(arr, messages, index);}
-	public static Student 				createStudent				(String[] arr, ArrayList<String> messages) {return StudentData.create(arr, messages);}
-	public static Profesor 				createProfesor				(String[] arr, ArrayList<String> messages, int index) {return ProfesorData.create(arr, messages, index);}
-	public static Profesor 				createProfesor				(String[] arr, ArrayList<String> messages) {return ProfesorData.create(arr, messages);}
-	public static Predmet 				createPredmet				(String[] arr, ArrayList<String> messages, int index) {return PredmetData.create(arr, messages, index);}
-	public static Predmet 				createPredmet				(String[] arr, ArrayList<String> messages) {return PredmetData.create(arr, messages);}
-	
-	public static void 					deleteStudent				(int index) {StudentData.delete(index);}
-	public static void 					deleteProfesor				(int index) {ProfesorData.delete(index);}
-	public static void 					deletePredmet				(int index) {PredmetData.delete(index);}
-	
-	public static String[] 				getStudentData				(int index) {return StudentData.getData(index);}
-	public static String[] 				getProfesorData				(int index) {return ProfesorData.getData(index);}
-	public static String[] 				getPredmetData				(int index) {return PredmetData.getData(index);}
-	
-	public static ArrayList<Student> 	getStudenti					() {return StudentData.getStudenti();}
-	public static ArrayList<Profesor> 	getProfesori				() {return ProfesorData.getProfesori();}
-	public static ArrayList<Predmet> 	getPredmeti					() {return PredmetData.getPredmeti();}
-	
-	public static ArrayList<String[]> 	getPolozeniIspiti			(int index) {return StudentData.getPolozeniIspiti(index);}
-	public static ArrayList<String[]> 	getNepolozeniIspiti			(int index) {return StudentData.getNepolozeniIspiti(index);}
-	
-	public static boolean 				studentExists				(String key) {return StudentData.exists(key);}
-	public static boolean 				studentExists				(String key, int index) {return StudentData.exists(key, index);}
-	public static boolean 				profesorExists				(int key) {return ProfesorData.exists(key);}
-	public static boolean 				profesorExists				(int key, int index) {return ProfesorData.exists(key, index);}
-	public static boolean 				predmetExists				(String key) {return PredmetData.exists(key);}
-	public static boolean 				predmetExists				(String key, int index) {return PredmetData.exists(key, index);}
-	
-	
-
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static HashMap<Integer, String> getEligiblePredmeti(int studentIndex)
 	{
 		HashMap<Integer, String> data = new HashMap<Integer, String>();
 		
-		Student s = StudentData.getStudenti().get(studentIndex);
-		ArrayList<Predmet> predmeti = PredmetData.getPredmeti();		
+		Student s = student.getAll().get(studentIndex);
+		ArrayList<Predmet> predmeti = predmet.getAll();		
 		
 		ArrayList<Predmet> polozeni = new ArrayList<Predmet>();
 		for(Ocena o: s.getPolozeniIspiti())
@@ -74,6 +46,41 @@ public class Data {
 		
 		return data;
 	}
+	
+	public static boolean saveData()
+    {
+        try(FileOutputStream fs = new FileOutputStream("data/data.ser", false);
+            ObjectOutputStream os = new ObjectOutputStream(fs))
+        {
+            os.writeObject(student.getAll());
+            os.writeObject(profesor.getAll());
+            os.writeObject(predmet.getAll());
+            return true;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static boolean getSavedData()
+    {
+        try(FileInputStream fs = new FileInputStream(("data/data.ser"));
+            ObjectInputStream os = new ObjectInputStream(fs))
+        {
+            student.setAll((ArrayList<Student>) os.readObject());
+            profesor.setAll((ArrayList<Profesor>) os.readObject());
+            predmet.setAll((ArrayList<Predmet>) os.readObject());
+            return true;
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            System.out.println("no file found");
+            return false;
+        }
+    }
 }
 
 
