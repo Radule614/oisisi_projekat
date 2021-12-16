@@ -2,7 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+import app.Settings;
+import app.Utility;
+
 public class Profesor extends Osoba {
+	private static final long serialVersionUID = -5074812364592294015L;
+	
 	protected Adresa adresaKancelarije;
 	protected int licnaKarta;
 	protected String titula;
@@ -17,6 +22,65 @@ public class Profesor extends Osoba {
 		predmeti = new ArrayList<Predmet>();
 	}
 	
+	public Profesor(String[] arr)
+	{
+		super(arr);
+		setAdresaKancelarije(new Adresa(arr[6]));
+		setLicnaKarta(Utility.parseInt(arr[7]));
+		setTitula(arr[8]);
+		setZvanje(arr[9]);
+		setGodineStaza(Utility.parseInt(arr[10]));
+	}
+	
+	public String[] toStringArray()
+	{
+		String[] data = new String[11];
+		super.toStringArray(data);
+		data[6] = getAdresaKancelarije().toString();
+		data[7] = Integer.toString(getLicnaKarta());
+		data[8] = getTitula();
+		data[9] = getZvanje();
+		data[10] = Integer.toString(getGodineStaza());
+		
+		return data;
+	}
+	
+	public static boolean isValidData(String[] arr, ArrayList<String> messages)
+	{
+		boolean isValid = Osoba.isValidData(arr, messages);
+		if(!Utility.doesMatch(Settings.addressPattern, arr[6]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Adresa kancelarije: mora biti u obliku: ulica, broj, grad, drzava");
+		}
+		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[8]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Titula: mora da sadrži jednu ili više reči bez brojeva");
+		}
+		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[9]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Zvanje: mora da sadrži jednu ili više reči bez brojeva");
+		}
+		if(!Utility.isInInterval(Utility.parseInt(arr[10]), 0, 50))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Godine staža: mora biti u intervalu [0, 50]");
+		}
+		
+		return isValid;
+	}
+	
+	public String[] getTableData()
+	{
+		String[] data = new String[4];
+		data[0] = this.ime;
+		data[1] = this.prezime;
+		data[2] = this.titula;
+		data[3] = this.zvanje;
+		return data;
+	}
 	
 	public Adresa getAdresaKancelarije() {
 		return adresaKancelarije;

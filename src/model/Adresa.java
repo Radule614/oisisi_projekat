@@ -1,15 +1,34 @@
 package model;
 
-public class Adresa {
+import java.io.Serializable;
+
+import app.Utility;
+
+public class Adresa implements Serializable {
+	private static final long serialVersionUID = 5016159581224197581L;
+	
 	protected String ulica;
-	protected int broj;
+	protected String broj;
 	protected String grad;
 	protected String drzava;
 	
 	
-	public Adresa(String ulica)
+	public Adresa(String ulica, String broj, String grad, String drzava)
 	{
 		this.ulica = ulica;
+		this.broj = broj;
+		this.grad = grad;
+		this.drzava = drzava;
+	}
+	
+	public Adresa(String input)
+	{
+		String[] parts = input.split(",");
+		parts = Utility.trimEach(parts);
+		this.ulica = parts[0];
+		this.broj = parts[1];
+		this.grad = parts[2];
+		this.drzava = parts[3];
 	}
 
 
@@ -23,12 +42,12 @@ public class Adresa {
 	}
 
 
-	public int getBroj() {
+	public String getBroj() {
 		return broj;
 	}
 
 
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
 	}
 
@@ -52,5 +71,10 @@ public class Adresa {
 		this.drzava = drzava;
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		return new String(ulica + ", " + broj + ", "  + grad + ", " + drzava);
+		//return new String(ulica);
+	}
 }

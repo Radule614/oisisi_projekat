@@ -2,10 +2,16 @@ package gui;
 
 import javax.swing.*;
 
+import gui.bar.MenuBar;
+import gui.bar.StatusBar;
+import gui.bar.ToolBar;
+
 import java.awt.*;
 
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 2740437090361841747L;
+	private static MainWindow instance;
+	
 	public int width;
 	public int height;
 	
@@ -13,10 +19,8 @@ public class MainWindow extends JFrame {
 	protected ToolBar toolBar;
 	protected Content content;
 	protected StatusBar statusBar;
-	
-	DialogManager dialogManager;
 
-	public MainWindow()
+	private MainWindow()
 	{
 		super();
 		
@@ -31,22 +35,21 @@ public class MainWindow extends JFrame {
 		
 		this.setFont(new Font("Monaco", Font.PLAIN, 15));
 		
-		menuBar = new MenuBar(this);
-        toolBar = new ToolBar(this);
-        content = new Content(this);
-        statusBar = new StatusBar(this);
+		menuBar = MenuBar.getInstance();
+		toolBar = ToolBar.getInstance();
+        content = Content.getInstance();
+        statusBar = StatusBar.getInstance();
         
         this.setJMenuBar(menuBar);
         this.getContentPane().add(BorderLayout.NORTH, toolBar);
         this.getContentPane().add(BorderLayout.CENTER, content);
         this.getContentPane().add(BorderLayout.SOUTH, statusBar);
-        
-        this.dialogManager = new DialogManager(this);
 	}
 	
-	public void addToTable(Object obj)
+	public static MainWindow getInstance()
 	{
-		this.content.addToTable(obj);				
+		if(MainWindow.instance == null) MainWindow.instance = new MainWindow();
+		return MainWindow.instance;
 	}
 	
 	public int getActivePane()

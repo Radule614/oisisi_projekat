@@ -1,4 +1,4 @@
-package gui;
+package gui.bar;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,20 +7,22 @@ import java.awt.event.InputEvent;
 
 import javax.swing.*;
 
+import gui.MainWindow;
+import gui.manager.DialogManager;
+import gui.manager.TableManager;
+
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
 	
-	String[] fileNames = {"New", "Save", "Open", "Close"};
-	String[] editNames = {"Edit", "Delete"};
-	String[] helpNames = {"Help", "About"};
+	final String[] fileNames = {"New", "Save", "Open", "Close"};
+	final String[] editNames = {"Edit", "Delete"};
+	final String[] helpNames = {"Help", "About"};
 	
-	MainWindow window;
+	static MenuBar instance;
 	
-	public MenuBar(MainWindow window)
+	private MenuBar()
 	{
 		super();
-		
-		this.window = window;
 		
 		JMenu file = new JMenu("File");
 		JMenu edit = new JMenu("Edit");
@@ -37,10 +39,10 @@ public class MenuBar extends JMenuBar {
 		submenu.setMnemonic('O');
 		submenu.setPreferredSize(new Dimension(180, 32));
 		submenu.setIcon(new ImageIcon("img/icon_open.png"));
-		submenu.add(new MenuItem("Studenti", 'T', "img/icon_arrow.png"));
-		submenu.add(new MenuItem("Profesori", 'P', "img/icon_arrow.png"));
-		submenu.add(new MenuItem("Predmeti", 'R', "img/icon_arrow.png"));
-		submenu.add(new MenuItem("Katedre", 'K', "img/icon_arrow.png"));
+		submenu.add(new MenuItem("Studenti", 'T', "img/icon_student.png"));
+        submenu.add(new MenuItem("Profesori", 'P', "img/icon_profesor.png"));
+        submenu.add(new MenuItem("Predmeti", 'R', "img/icon_predmet.png"));
+        submenu.add(new MenuItem("Katedra", 'K', "img/icon_katedra.png"));
 		
 		file.add(submenu);
 		file.addSeparator();
@@ -59,6 +61,12 @@ public class MenuBar extends JMenuBar {
 		add(file);
 		add(edit);
 		add(help);
+	}
+	
+	public static MenuBar getInstance()
+	{
+		if(MenuBar.instance == null) MenuBar.instance = new MenuBar();
+		return MenuBar.instance;
 	}
 	
 	class MenuItem extends JMenuItem
@@ -93,22 +101,22 @@ public class MenuBar extends JMenuBar {
 			{
 				MenuItem btn = (MenuItem)ae.getSource();
 				String temp = btn.getText();
+				MainWindow window = MainWindow.getInstance();
 				if(temp == "New")
 				{
+					DialogManager.createAddDialog(window.getActivePane());
+				}
+				else if(temp == "Edit")
+				{
 					int active = window.getActivePane();
-					switch(active)
-					{
-					case 0:
-						window.dialogManager.createAddStudentDialog();
-						break;
-					case 1:
-						window.dialogManager.createAddProfesorDialog();
-						break;
-					case 2:
-						window.dialogManager.createAddPredmetDialog();
-						break;
-					default:;
-					}
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) DialogManager.createEditDialog(active, row);
+				}
+				else if(temp == "Delete")
+				{
+					int active = window.getActivePane();
+					int row = TableManager.getSelectedTableRow(active);
+					if(row != -1) DialogManager.createDeleteDialog(active , row);
 				}
 				else if(temp == "Close")
 				{

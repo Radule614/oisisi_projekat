@@ -1,7 +1,8 @@
-package gui;
+package gui.table;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,11 +13,22 @@ public class Table extends JTable {
 	private static final long serialVersionUID = -2108154469027694188L;
 	protected DefaultTableModel model;
 	
-	public Table(String[] columnLabels)
+	public Table(int colNumber)
 	{
+		super(new DefaultTableModel(0, colNumber));
+		init();
+	}
+	
+	public Table(String[] columnLabels)
+	{ 
 		super(new DefaultTableModel(columnLabels, 0));
-		this.model = (DefaultTableModel) this.getModel();
 		
+		init();
+	}
+	
+	private void init()
+	{
+		this.model = (DefaultTableModel) this.getModel();
 		this.setRowHeight(30);
 		this.setDefaultRenderer(Object.class, new TableRenderer());
 		this.getTableHeader().setReorderingAllowed(false);
@@ -28,9 +40,27 @@ public class Table extends JTable {
 		this.setFillsViewportHeight(true);
 	}
 	
-	public void addRow(Object[] data)
+	public void addRow(String[] data)
 	{
 		this.model.addRow(data);
+	}
+	
+	public void insertRow(String[] data, int row)
+	{
+		this.model.insertRow(row, data);
+	}
+	
+	public void addRows(ArrayList<String[]> dataArray)
+	{
+		for(String[] data: dataArray)
+		{
+			this.addRow(data);
+		}
+	}
+	
+	public void removeRow(int tableRow)
+	{
+		this.model.removeRow(tableRow);
 	}
 	
 	protected class TableRenderer extends DefaultTableCellRenderer {

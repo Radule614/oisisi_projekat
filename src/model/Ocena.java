@@ -1,17 +1,51 @@
 package model;
 
-public class Ocena {
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import app.Settings;
+
+public class Ocena implements Serializable {
+	private static final long serialVersionUID = 8966320168277099863L;
+	
 	protected Student student;
 	protected Predmet predmet;
 	protected int vrednost;
-	protected String datumPolaganja;
+	protected LocalDate datumPolaganja;
 	
 	
 	public Ocena()
 	{
 		
 	}
+	
+	public Ocena(Student student, Predmet predmet)
+	{
+		this.student = student;
+		this.predmet = predmet;
+		this.vrednost = 0;
+		this.datumPolaganja = null;
+	}
 
+	public Ocena(Student student, Predmet predmet, int vrednost)
+	{
+		LocalDate ld = LocalDate.parse("01-01-2000", Settings.formatter);
+		
+		this.student = student;
+		this.predmet = predmet;
+		this.vrednost = vrednost;
+		this.datumPolaganja = ld;
+	}
+	
+	public Ocena(Student student, Predmet predmet, int vrednost, String datumStr)
+	{
+		LocalDate ld = LocalDate.parse(datumStr, Settings.formatter);
+		
+		this.student = student;
+		this.predmet = predmet;
+		this.vrednost = vrednost;		
+		this.datumPolaganja = ld;
+	}
 
 	public Student getStudent() {
 		return student;
@@ -43,12 +77,12 @@ public class Ocena {
 	}
 
 
-	public String getDatumPolaganja() {
+	public LocalDate getDatumPolaganja() {
 		return datumPolaganja;
 	}
 
 
-	public void setDatumPolaganja(String datumPolaganja) {
+	public void setDatumPolaganja(LocalDate datumPolaganja) {
 		this.datumPolaganja = datumPolaganja;
 	}
 	
