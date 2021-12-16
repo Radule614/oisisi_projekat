@@ -39,10 +39,10 @@ public class MenuBar extends JMenuBar {
 		submenu.setMnemonic('O');
 		submenu.setPreferredSize(new Dimension(180, 32));
 		submenu.setIcon(new ImageIcon("img/icon_open.png"));
-		submenu.add(new MenuItem("Studenti", 'T', "img/icon_arrow.png"));
-		submenu.add(new MenuItem("Profesori", 'P', "img/icon_arrow.png"));
-		submenu.add(new MenuItem("Predmeti", 'R', "img/icon_arrow.png"));
-		submenu.add(new MenuItem("Katedre", 'K', "img/icon_arrow.png"));
+		submenu.add(new MenuItem("Studenti", 'T', "img/icon_student.png"));
+        submenu.add(new MenuItem("Profesori", 'P', "img/icon_profesor.png"));
+        submenu.add(new MenuItem("Predmeti", 'R', "img/icon_predmet.png"));
+        submenu.add(new MenuItem("Katedra", 'K', "img/icon_katedra.png"));
 		
 		file.add(submenu);
 		file.addSeparator();

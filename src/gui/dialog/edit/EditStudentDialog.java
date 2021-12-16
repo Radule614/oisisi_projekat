@@ -127,13 +127,13 @@ public class EditStudentDialog extends MultiTabDialog {
 	
 	public void setPolozeniTable()
 	{
-		ArrayList<String[]> dataArray = Controller.getPolozeniIspiti(studentTableRow);
+		ArrayList<String[]> dataArray = Controller.student.getPolozeniIspiti(studentTableRow);
 		this.polozeniTable = TableManager.createPolozeniTable(dataArray);	
 	}
 	
 	public void setNepolozeniTable()
 	{
-		ArrayList<String[]> dataArray = Controller.getNepolozeniIspiti(studentTableRow);
+		ArrayList<String[]> dataArray = Controller.student.getNepolozeniIspiti(studentTableRow);
 		this.nepolozeniTable = TableManager.createNepolozeniTable(dataArray);
 	}
 	
@@ -153,8 +153,8 @@ public class EditStudentDialog extends MultiTabDialog {
 	
 	public void setPolozeniLabels()
 	{
-		double avg = Controller.getProsek(studentTableRow);
-		int ESPB = Controller.getTotalESPB(studentTableRow);
+		double avg = Controller.student.getProsek(studentTableRow);
+		int ESPB = Controller.student.getTotalESPB(studentTableRow);
 		
 		String[] data = new String[2];
 		data[0] = new String("Prosečna ocena: " + avg);

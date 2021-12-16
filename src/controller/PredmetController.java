@@ -5,44 +5,49 @@ import gui.manager.TableManager;
 import model.Predmet;
 import model.data.Data;
 
-class PredmetController {
-	static boolean create(String[] arr, ArrayList<String> messages)
-	{
-		Predmet pr = Data.createPredmet(arr, messages);
-		if(pr == null) return false;
-		TableManager.addRow(2, pr.getTableData());
-		return true;
-	}
-	
-	static String[] getData(int index)
-	{
-		String[] data = Data.getPredmetData(index);
-		return data;
-	}
+public class PredmetController implements ControllerInterface {
+    private static PredmetController instance = null;
 
-	static Predmet get(int index)
-	{
-		return Data.getPredmeti().get(index);
-	}
+    private PredmetController(){}
 
-	static boolean edit(String[] arr, int index, ArrayList<String> messages)
-	{
-		Predmet oldPredmet = Data.getPredmeti().get(index);
-		Predmet pr = Data.createPredmet(arr, messages, index);
-		if(pr == null) return false;
-		
-		pr.setStudentiPolozeno(oldPredmet.getStudentiPolozeno());
-		pr.setStudentiNepolozeno(oldPredmet.getStudentiNepolozeno());
-		
-		TableManager.remove(2, index);
-		TableManager.insertRow(2, pr.getTableData(), index);
-		Data.deletePredmet(index+1);
-		return true;
-	}
+    public static PredmetController getInstance()
+    {
+        if(instance == null)
+            instance = new PredmetController();
+        return instance;
+    }
 
-	static void delete(int index)
-	{
-		TableManager.remove(2, index);
-		Data.deletePredmet(index);
-	}
+    public boolean create(String[] arr, ArrayList<String> messages)
+    {
+        Predmet pr = Data.predmet.create(arr, messages);
+        if(pr == null) return false;
+        TableManager.addRow(2, pr.getTableData());
+        return true;
+    }
+
+    public String[] getData(int index)
+    {
+        return Data.predmet.getData(index);
+    }
+
+    public boolean edit(String[] arr, int index, ArrayList<String> messages)
+    {
+        Predmet oldPredmet = Data.predmet.getAll().get(index);
+        Predmet pr = Data.predmet.create(arr, messages, index);
+        if(pr == null) return false;
+
+        pr.setStudentiPolozeno(oldPredmet.getStudentiPolozeno());
+        pr.setStudentiNepolozeno(oldPredmet.getStudentiNepolozeno());
+
+        TableManager.remove(2, index);
+        TableManager.insertRow(2, pr.getTableData(), index);
+        Data.predmet.delete(index+1);
+        return true;
+    }
+
+    public void delete(int index)
+    {
+        TableManager.remove(2, index);
+        Data.predmet.delete(index);
+    }
 }

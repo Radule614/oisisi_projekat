@@ -27,13 +27,13 @@ public class EditActionListener implements ActionListener {
 			switch(dialog.entityType)
 			{
 			case STUDENT:
-				error = !Controller.editStudent(data, tableRow, messages);
+				error = !Controller.student.edit(data, tableRow, messages);
 				break;
 			case PROFESOR:
-				error = !Controller.editProfesor(data, tableRow, messages);
+				error = !Controller.profesor.edit(data, tableRow, messages);
 				break;
 			case PREDMET:
-				error = !Controller.editPredmet(data, tableRow, messages);
+				error = !Controller.predmet.edit(data, tableRow, messages);
 				break;
 			default:;
 			}

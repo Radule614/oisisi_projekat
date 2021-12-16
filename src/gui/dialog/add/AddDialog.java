@@ -36,13 +36,13 @@ public class AddDialog extends OneTabDialog{
 					switch(entityType)
 					{
 					case STUDENT:
-						error = !Controller.createStudent(data, messages);
+						error = !Controller.student.create(data, messages);
 						break;
 					case PROFESOR:
-						error = !Controller.createProfesor(data, messages);
+						error = !Controller.profesor.create(data, messages);
 						break;
 					case PREDMET:
-						error = !Controller.createPredmet(data, messages);
+						error = !Controller.predmet.create(data, messages);
 						break;
 					default:;
 					}

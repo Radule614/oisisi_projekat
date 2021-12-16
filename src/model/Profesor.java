@@ -6,6 +6,8 @@ import app.Settings;
 import app.Utility;
 
 public class Profesor extends Osoba {
+	private static final long serialVersionUID = -5074812364592294015L;
+	
 	protected Adresa adresaKancelarije;
 	protected int licnaKarta;
 	protected String titula;

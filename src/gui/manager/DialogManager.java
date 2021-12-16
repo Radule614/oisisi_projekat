@@ -42,15 +42,15 @@ public class DialogManager {
 		switch(activeTab)
 		{
 		case 0:
-			data = Controller.getStudentData(tableRow);
+			data = Controller.student.getData(tableRow);
 			DialogManager.createEditStudentDialog(tableRow, data);
 			break;
 		case 1:
-			data = Controller.getProfesorData(tableRow);
+			data = Controller.profesor.getData(tableRow);
 			DialogManager.createEditProfesorDialog(tableRow, data);
 			break;
 		case 2:
-			data = Controller.getPredmetData(tableRow);
+			data = Controller.predmet.getData(tableRow);
 			DialogManager.createEditPredmetDialog(tableRow, data);
 			break;
 		default:;
@@ -82,15 +82,15 @@ public class DialogManager {
 				switch(activeTab)
 				{
 				case 0:
-					Controller.deleteStudent(tableRow);
+					Controller.student.delete(tableRow);
 					d.setTitle("Brisanje studenta");
 					break;
 				case 1:
-					Controller.deleteProfesor(tableRow);
+					Controller.profesor.delete(tableRow);
 					d.setTitle("Brisanje profesora");
 					break;
 				case 2:
-					Controller.deletePredmet(tableRow);
+					Controller.predmet.delete(tableRow);
 					d.setTitle("Brisanje predmeta");
 					break;
 				default:;
@@ -115,7 +115,7 @@ public class DialogManager {
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.removeStudentGrade(editDialog.getStudentIndex(), gradeIndex);
+				Controller.student.removeGrade(editDialog.getStudentIndex(), gradeIndex);
 				editDialog.getPolozeniTable().removeRow(gradeIndex);	
 				editDialog.setPolozeniLabels();
 				editDialog.updateNepolozeniTable();
@@ -132,7 +132,7 @@ public class DialogManager {
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.removeStudentFromPredmet(editDialog.getStudentIndex(), predmetIndex);
+				Controller.student.removeFromPredmet(editDialog.getStudentIndex(), predmetIndex);
 				editDialog.getNepolozeniTable().removeRow(predmetIndex);	
 				d.close();
 			}
