@@ -53,6 +53,11 @@ public class Profesor extends Osoba {
 			isValid = false;
 			if(messages != null) messages.add("Adresa kancelarije: mora biti u obliku: ulica, broj, grad, drzava");
 		}
+		if(!Utility.doesMatch(Settings.idCardPattern, arr[7]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Broj lične karte mora imati 9 brojeva");
+		}
 		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[8]))
 		{
 			isValid = false;

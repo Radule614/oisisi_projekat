@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -18,6 +19,7 @@ public class AddOcenaDialog extends OneTabDialog {
 	EditStudentDialog editDialog;
 	protected int studentTableRow;
 	protected int predmetTableRow;
+	JButton submit;
 	public AddOcenaDialog(EditStudentDialog editDialog, int predmetIndex) {
 		super("Unos ocene", editDialog.entityType);
 		this.editDialog = editDialog;
@@ -70,7 +72,13 @@ public class AddOcenaDialog extends OneTabDialog {
 		};
 		JPanel panel = this.mainTab.panels.get(1);
 		panel.setBorder(new CompoundBorder(panel.getBorder(), new EmptyBorder(10, 0, 0, 0)));
-		super.setButtons(0, 1, null, listener);
+		submit = super.setButtons(0, 1, null, listener);
+		submit.setEnabled(false);
+	}
+	
+	public void setSubmitEnabledEvents()
+	{
+		this.mainTab.panels.get(0).setEmptyDocumentListeners(submit);
 	}
 }
 

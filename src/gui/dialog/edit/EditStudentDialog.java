@@ -31,6 +31,8 @@ public class EditStudentDialog extends MultiTabDialog {
 	protected Table nepolozeniTable;
 	protected TablePanel nepolozeniTablePanel;
 	
+	JButton submit;
+	
 	public EditStudentDialog(String title, EntityType entityType, int tableRow, String[] tabLabels) {
 		super(title, entityType, tabLabels);
 		this.studentTableRow = tableRow;
@@ -67,7 +69,12 @@ public class EditStudentDialog extends MultiTabDialog {
 	protected void setEditButtons()
 	{
 		EditActionListener action = new EditActionListener(this, studentTableRow);
-		this.setButtons(0, 1, null, action);
+		submit = this.setButtons(0, 1, null, action);
+	}
+	
+	public void setSubmitEnabledEvents()
+	{
+		this.tabPanels.get(0).panels.get(0).setEmptyDocumentListeners(submit);
 	}
 	
 	protected void setRemoveOcenaButton()

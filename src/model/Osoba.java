@@ -67,6 +67,11 @@ public abstract class Osoba implements Serializable {
 			isValid = false;
 			if(messages != null) messages.add("Adresa stanovanja: mora biti u obliku: ulica, broj, grad, drzava");
 		}
+		if(!Utility.doesMatch(Settings.phonePattern, arr[4]))
+		{
+			isValid = false;
+			if(messages != null) messages.add("Broj telefona mora biti u formatu: nnn/nnn-nnn");
+		}
 		if(!Utility.doesMatch(Settings.emailPattern, arr[5]))
 		{
 			isValid = false;

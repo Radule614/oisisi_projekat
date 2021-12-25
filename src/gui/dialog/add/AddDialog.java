@@ -8,9 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
 public class AddDialog extends OneTabDialog{
 	private static final long serialVersionUID = -4200341794375887919L;
 	protected EntityType entityType;
+	JButton submit;
 	public AddDialog(String title, EntityType entityType) {
 		super(title, entityType);
 		this.entityType = entityType;
@@ -23,7 +26,7 @@ public class AddDialog extends OneTabDialog{
 	void setAddButtons()
 	{
 		AddDialog dialog = this;
-		this.setButtons(0, 1, null, new ActionListener()
+		submit = this.setButtons(0, 1, null, new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
@@ -49,10 +52,15 @@ public class AddDialog extends OneTabDialog{
 					if(!error) 	dialog.close();
 					else		DialogManager.createInvalidInputDialog(messages);
 				}
-			}
-			
+			}	
 		});
+		submit.setEnabled(false);
 		this.pack();
+	}
+	
+	public void setSubmitEnabledEvents()
+	{
+		this.mainTab.panels.get(0).setEmptyDocumentListeners(submit);
 	}
 }
 
