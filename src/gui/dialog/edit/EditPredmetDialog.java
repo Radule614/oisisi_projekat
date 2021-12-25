@@ -1,10 +1,13 @@
 package gui.dialog.edit;
 
+import javax.swing.JButton;
+
 import gui.dialog.OneTabDialog;
 
 public class EditPredmetDialog extends OneTabDialog{
 	private static final long serialVersionUID = -268052684667075413L;
 	protected int tableRow;
+	JButton submit;
 	public EditPredmetDialog(String title, int tableRow, EntityType entityType) {
 		super(title, entityType);
 		this.tableRow = tableRow;
@@ -17,7 +20,12 @@ public class EditPredmetDialog extends OneTabDialog{
 	public void setEditButtons()
 	{
 		EditActionListener action = new EditActionListener(this, tableRow);
-		this.setButtons(0, 1, null, action);
+		submit = this.setButtons(0, 1, null, action);
+	}
+	
+	public void setSubmitEnabledEvents()
+	{
+		this.tabPanels.get(0).panels.get(0).setEmptyDocumentListeners(submit);
 	}
 }
 

@@ -150,6 +150,7 @@ public class DialogManager {
 	public static void createAddOcenaDialog(EditStudentDialog editDialog, int predmetIndex)
 	{
 		AddOcenaDialog d = new AddOcenaDialog(editDialog, predmetIndex);
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	
@@ -168,6 +169,7 @@ public class DialogManager {
 			else if	(i==9) 	d.addComboBox(temp, new String[] {"Budžet", "Samofinansiranje"});
 			else 			d.addTextField(temp);
 		}
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	
@@ -182,6 +184,7 @@ public class DialogManager {
 			if		(i==2) 	d.addDateField(temp);
 			else 			d.addTextField(temp);
 		}
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	
@@ -197,6 +200,7 @@ public class DialogManager {
 			else if	(i==3)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"});
 			else 			d.addTextField(temp);
 		}
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	
@@ -213,6 +217,7 @@ public class DialogManager {
 			else if	(i==9) d.tabPanels.get(0).addComboBox(0, temp, new String[] {"Budžet", "Samofinansiranje"}, Integer.parseInt(data[i]));
 			else 			d.tabPanels.get(0).addTextField(0, temp, data[i]);
 		}
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	
@@ -227,7 +232,7 @@ public class DialogManager {
 			if		(i==2) 	d.tabPanels.get(0).addDateField(0, temp, data[i]);
 			else 			d.tabPanels.get(0).addTextField(0, temp, data[i]);
 		}
-		
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	
@@ -243,7 +248,7 @@ public class DialogManager {
 			else if	(i==3)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"}, Integer.parseInt(data[i]));
 			else 			d.addTextField(temp, data[i]);
 		}
-		
+		d.setSubmitEnabledEvents();
 		d.open();
 	}
 	

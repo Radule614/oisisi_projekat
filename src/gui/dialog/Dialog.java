@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import app.Settings;
 import gui.MainWindow;
@@ -91,7 +93,7 @@ public abstract class Dialog extends JDialog {
         this.setVisible(false);
 	}
 	
-	protected void setButtons(int tabIndex, int panelIndex, String[] labels, ActionListener listener)
+	protected JButton setButtons(int tabIndex, int panelIndex, String[] labels, ActionListener listener)
 	{
 		DialogTab tab = tabPanels.get(tabIndex);
 		DialogPanel buttonPanel = tab.panels.get(1);
@@ -140,6 +142,8 @@ public abstract class Dialog extends JDialog {
 		
 		panel.add(leftPanel);
 		panel.add(rightPanel);
+		
+		return submit;
 	}
 	
 	public class DialogTab extends JPanel{
@@ -318,6 +322,65 @@ public abstract class Dialog extends JDialog {
 				}
 				if(error) return null;
 				return data;
+			}
+			
+			private boolean checkFields()
+			{
+				boolean error = false;
+				for(JComponent field: fields)
+				{
+					if(field instanceof JTextField)
+					{
+						JTextField temp = (JTextField)field;
+						if(temp.getText().isEmpty())
+						{
+							error = true;
+							break;
+						}
+					}
+					else if(field instanceof JFormattedTextField)
+					{
+						JFormattedTextField temp = (JFormattedTextField)field;
+						if(temp.getText().isEmpty())
+						{
+							error = true;
+							break;
+						}
+					}
+				}
+				return !error;
+			}
+			
+			public void setEmptyDocumentListeners(JButton btn)
+			{
+				DocumentListener listener = new DocumentListener() {
+					@Override
+					public void insertUpdate(DocumentEvent e) {
+						if(!checkFields())
+							btn.setEnabled(false);
+						else
+							btn.setEnabled(true);
+					}
+					@Override
+					public void removeUpdate(DocumentEvent e) {
+						if(!checkFields())
+							btn.setEnabled(false);
+						else
+							btn.setEnabled(true);
+					}
+					@Override
+					public void changedUpdate(DocumentEvent e) {
+						
+					}
+				};
+				
+				for(JComponent field: fields)
+				{
+					if(field instanceof JTextField)
+						((JTextField)field).getDocument().addDocumentListener(listener);
+					if(field instanceof JFormattedTextField)
+						((JFormattedTextField)field).getDocument().addDocumentListener(listener);
+				}
 			}
 			
 			private JTextField createTextField(String labelText)
