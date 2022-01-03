@@ -25,6 +25,8 @@ public class Profesor extends Osoba {
 	public Profesor(String[] arr)
 	{
 		super(arr);
+
+		predmeti = new ArrayList<Predmet>();
 		setAdresaKancelarije(new Adresa(arr[6]));
 		setLicnaKarta(Utility.parseInt(arr[7]));
 		setTitula(arr[8]);
@@ -145,5 +147,34 @@ public class Profesor extends Osoba {
 
 	public void setPredmeti(ArrayList<Predmet> predmeti) {
 		this.predmeti = predmeti;
+	}
+	
+	public void addPredmet(Predmet o)
+	{
+		if(predmeti == null) 
+		{
+			predmeti = new ArrayList<Predmet>();
+		}
+		this.predmeti.add(o);
+	}
+	
+	public ArrayList<String[]> predmetiArrayList()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		
+		for(Predmet predmet: this.predmeti)
+		{
+			String[] data = new String[4];
+			
+			data[0] = predmet.getSifra();
+			data[1] = predmet.naziv;
+			data[2] = Integer.toString(predmet.getGodinaStudija());
+			data[3] = predmet.semestar.toString();
+			
+			
+			dataArray.add(data);
+		}
+		
+		return dataArray;
 	}
 }

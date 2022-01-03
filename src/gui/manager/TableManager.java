@@ -55,6 +55,16 @@ public class TableManager {
 		return table;
 	}
 	
+	public static Table createProfesorPredmetiTable(ArrayList<String[]> dataArray)
+	{
+		Table table = new Table(new String[] {"Šifra", "Naziv", "Godina studija", "Semestar"});
+		for(String[] data: dataArray)
+		{
+			table.addRow(data);
+		}
+		return table;
+	}
+	
 	public static Table createNepolozeniTable(ArrayList<String[]> dataArray)
 	{
 		Table table = new Table(new String[] {"Šifra predmeta", "Naziv predmeta", "ESPB", "Godina studija", "Semestar"});

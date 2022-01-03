@@ -2,7 +2,9 @@ package gui.dialog.add;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ public class AddOcenaDialog extends OneTabDialog {
 	protected int studentTableRow;
 	protected int predmetTableRow;
 	JButton submit;
+	
 	public AddOcenaDialog(EditStudentDialog editDialog, int predmetIndex) {
 		super("Unos ocene", editDialog.entityType);
 		this.editDialog = editDialog;
@@ -41,7 +44,10 @@ public class AddOcenaDialog extends OneTabDialog {
 		this.addTextField("Šifra", ocenaData[0], false);
 		this.addTextField("Naziv", ocenaData[1], false);
 		this.addComboBox("Ocena", new String[] {"6", "7", "8", "9", "10"});
-		this.addDateField("Datum");
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
+		Date date = new Date();
+		this.addDateField("Datum", formatter.format(date));
 	}
 	
 	protected void setButtons()
