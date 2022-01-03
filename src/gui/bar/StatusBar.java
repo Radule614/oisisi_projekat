@@ -67,7 +67,7 @@ public class StatusBar extends JPanel {
 	
 	public void UpdateTimeAndDate(StatusBarTimeLabel lbl)
 	{
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");  
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");  
 		Date date = new Date();   
 		lbl.setText(formatter.format(date));
 	}

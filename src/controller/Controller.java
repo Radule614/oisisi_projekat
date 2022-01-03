@@ -33,6 +33,7 @@ public class Controller {
             }
         });
 
+        test();
         return app;
     }
 
@@ -45,19 +46,29 @@ public class Controller {
 
     public static void initData()
     {
+    	
         Data.student.create(new String[] {"Rade", 	"Stojanovic", 	"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA138/2019", "2019", 	"2", "0"}, null);
         Data.student.create(new String[] {"Damjan", "Dimitrijevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA115/2019", "2019" , 	"2", "0"}, null);
         Data.student.create(new String[] {"Uros", 	"Jokovic", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA119/2019", "2019" ,	"2", "0"}, null);
         Data.student.create(new String[] {"Luka", 	"Pikula", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA146/2019", "2019" , 	"2", "0"}, null);
 
         Data.profesor.create(new String[] {"Nebojsa", "Ralevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "u, 1, g, d", "0", "Doktor", "Redovni profesor", "0"}, null);
-
+        
         Data.predmet.create(new String[] {"1", 		"Matematicka Analiza 1", 	"0", "0", "9"}, null);
         Data.predmet.create(new String[] {"12", 	"Baze Podataka 1", 		    "0", "3", "8"}, null);
         Data.predmet.create(new String[] {"123", 	"Arhitektura Racunara", 	"0", "0", "9"}, null);
         Data.predmet.create(new String[] {"1234", 	"Operativni sistemi", 		"0", "0", "8"}, null);
         Data.predmet.create(new String[] {"alg", 	"Algebra", 					"0", "2", "5"}, null);
         Data.predmet.create(new String[] {"oi123", 	"oisisi", 					"0", "1", "6"}, null);
+        
+        
+    }
+    
+    public static void test()
+    {
+    	Data.profesor.getAll().get(0).addPredmet(Data.predmet.getAll().get(0));
+
+    	System.out.println("OVO RADI");
     }
 }
 	

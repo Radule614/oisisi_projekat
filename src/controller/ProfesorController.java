@@ -50,4 +50,5 @@ public class ProfesorController implements ControllerInterface{
         TableManager.remove(1, index);
         Data.profesor.delete(index);
     }
+    
 }
