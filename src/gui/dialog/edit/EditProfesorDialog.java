@@ -1,6 +1,5 @@
 package gui.dialog.edit;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -57,9 +56,7 @@ public class EditProfesorDialog extends MultiTabDialog {
 	
 	public void setPredmetiTable()
 	{
-		//ArrayList<String[]> dataArray = Controller.profesor.(profesorTableRow);
-		ArrayList<String[]> dataArray = new ArrayList<String[]>();
-		
+		ArrayList<String[]> dataArray = Controller.profesor.getPredmeti(profesorTableRow);
 		this.predmetiTable = TableManager.createProfesorPredmetiTable(dataArray);	
 	}
 	

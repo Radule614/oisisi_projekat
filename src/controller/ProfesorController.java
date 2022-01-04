@@ -51,4 +51,9 @@ public class ProfesorController implements ControllerInterface{
         Data.profesor.delete(index);
     }
     
+    public ArrayList<String[]> getPredmeti(int index)
+    {
+        return Data.profesor.getPredmeti(index);
+    }
+    
 }

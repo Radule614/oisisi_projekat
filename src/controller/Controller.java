@@ -32,8 +32,6 @@ public class Controller {
                 Data.saveData();
             }
         });
-
-        test();
         return app;
     }
 
@@ -64,12 +62,6 @@ public class Controller {
         
     }
     
-    public static void test()
-    {
-    	Data.profesor.getAll().get(0).addPredmet(Data.predmet.getAll().get(0));
-
-    	System.out.println("OVO RADI");
-    }
 }
 	
 	
