@@ -77,6 +77,11 @@ public class ProfesorData implements DataInterface<Profesor, Integer> {
         }
         return false;
     }
+    
+    public ArrayList<String[]> getPredmeti(int index)
+    {
+        return profesori.get(index).predmetiToArrayList();
+    }
 }
 
 

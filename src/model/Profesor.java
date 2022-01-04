@@ -158,21 +158,23 @@ public class Profesor extends Osoba {
 		this.predmeti.add(o);
 	}
 	
-	public ArrayList<String[]> predmetiArrayList()
+	public ArrayList<String[]> predmetiToArrayList()
 	{
 		ArrayList<String[]> dataArray = new ArrayList<String[]>();
-		
-		for(Predmet predmet: this.predmeti)
+		if(predmeti != null) 
 		{
-			String[] data = new String[4];
-			
-			data[0] = predmet.getSifra();
-			data[1] = predmet.naziv;
-			data[2] = Integer.toString(predmet.getGodinaStudija());
-			data[3] = predmet.semestar.toString();
-			
-			
-			dataArray.add(data);
+			for(Predmet predmet: this.predmeti)
+			{
+				String[] data = new String[4];
+				
+				data[0] = predmet.getSifra();
+				data[1] = predmet.naziv;
+				data[2] = Integer.toString(predmet.getGodinaStudija());
+				data[3] = predmet.semestar.toString();
+				
+				
+				dataArray.add(data);
+			}
 		}
 		
 		return dataArray;
