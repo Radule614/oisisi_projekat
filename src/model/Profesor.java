@@ -158,6 +158,18 @@ public class Profesor extends Osoba {
 		this.predmeti.add(o);
 	}
 	
+	public void removePredmet(Predmet o)
+	{
+		if(predmeti == null) 
+		{
+			predmeti = new ArrayList<Predmet>();
+		}
+		else 
+		{
+			this.predmeti.remove(o);
+		}
+	}
+	
 	public ArrayList<String[]> predmetiToArrayList()
 	{
 		ArrayList<String[]> dataArray = new ArrayList<String[]>();

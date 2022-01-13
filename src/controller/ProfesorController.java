@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import gui.manager.TableManager;
+import model.Predmet;
 import model.Profesor;
 import model.data.Data;
 
@@ -54,6 +55,24 @@ public class ProfesorController implements ControllerInterface{
     public ArrayList<String[]> getPredmeti(int index)
     {
         return Data.profesor.getPredmeti(index);
+    }
+    
+    public void addToPredmeti(int profesorIndex, int predmetIndex)
+    {
+        Profesor st = Data.profesor.getAll().get(profesorIndex);
+        Predmet pr = Data.predmet.getAll().get(predmetIndex);
+        st.addPredmet(pr);
+    }
+    
+    public void removePredmetFromProfesor(int profesorIndex, int predmetIndex)
+    {
+
+    	if(predmetIndex != -1 && profesorIndex != -1) 
+        {
+            Profesor prof = Data.profesor.getAll().get(profesorIndex);
+            Predmet pr = prof.getPredmeti().get(predmetIndex);
+            prof.removePredmet(pr);
+        }
     }
     
 }

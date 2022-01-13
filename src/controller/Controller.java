@@ -15,7 +15,7 @@ public class Controller {
 
     public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
 
-
+    public static HashMap<Integer, String> 	getEligiblePredmetiForProfesor		(int profesorIndex) {return Data.getEligiblePredmetiForProfesor(profesorIndex);}
     ///////////////////////////////////////////////////////////////////////
 
     public static MainWindow initApp()
@@ -58,8 +58,6 @@ public class Controller {
         Data.predmet.create(new String[] {"1234", 	"Operativni sistemi", 		"0", "0", "8"}, null);
         Data.predmet.create(new String[] {"alg", 	"Algebra", 					"0", "2", "5"}, null);
         Data.predmet.create(new String[] {"oi123", 	"oisisi", 					"0", "1", "6"}, null);
-        
-        
     }
     
 }
