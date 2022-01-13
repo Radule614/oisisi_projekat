@@ -47,6 +47,30 @@ public class Data {
 		return data;
 	}
 	
+	public static HashMap<Integer, String> getEligiblePredmetiForProfesor(int profesorIndex)
+	{
+		HashMap<Integer, String> data = new HashMap<Integer, String>();
+		
+		Profesor s = profesor.getAll().get(profesorIndex);	
+		
+		ArrayList<Predmet> predaje = s.getPredmeti();
+		ArrayList<Predmet> predmeti = predmet.getAll();
+		for(int i = 0; i < predmeti.size(); ++i)
+		{
+			for(int j = 0; j < predaje.size(); ++j) 
+			{
+				if(!predmeti.contains(predaje.get(j))) 
+				{
+						Predmet pr = predmeti.get(i);
+						String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
+						data.put(i, predmetString);
+				}
+			}
+		}
+		
+		return data;
+	}
+	
 	public static boolean saveData()
     {
         try(FileOutputStream fs = new FileOutputStream("data/data.ser", false);

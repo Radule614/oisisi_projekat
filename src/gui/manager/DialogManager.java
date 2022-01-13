@@ -8,6 +8,7 @@ import gui.dialog.*;
 import gui.dialog.add.AddDialog;
 import gui.dialog.add.AddIspitDialog;
 import gui.dialog.add.AddOcenaDialog;
+import gui.dialog.add.AddPredmetProfesoruDialog;
 import gui.dialog.edit.EditPredmetDialog;
 import gui.dialog.edit.EditProfesorDialog;
 import gui.dialog.edit.EditStudentDialog;
@@ -252,6 +253,27 @@ public class DialogManager {
 		d.open();
 	}
 	
+	public static void createDodajPredmetProfesoruDialog(EditProfesorDialog editDialog)
+	{
+		AddPredmetProfesoruDialog d = new AddPredmetProfesoruDialog(editDialog);
+		d.open();
+	}
+	
+	public static void createRemovePredmetProfesoruDialog(EditProfesorDialog editDialog, int predmetIndex)
+	{
+		
+		ConfirmDialog d = new ConfirmDialog("Uklanjanje predmeta");
+		ActionListener listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Controller.profesor.removePredmetFromProfesor(editDialog.getProfesorIndex(), predmetIndex);
+				editDialog.getPredmetiTable().removeRow(predmetIndex);	
+				d.close();
+			}
+		};
+		d.setListener(listener);
+		d.open();
+	}
 	
 }
 

@@ -60,7 +60,10 @@ public class Table extends JTable {
 	
 	public void removeRow(int tableRow)
 	{
-		this.model.removeRow(tableRow);
+		if(tableRow != -1) 
+		{
+			this.model.removeRow(tableRow);
+		}
 	}
 	
 	protected class TableRenderer extends DefaultTableCellRenderer {

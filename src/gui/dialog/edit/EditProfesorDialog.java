@@ -1,5 +1,6 @@
 package gui.dialog.edit;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -10,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import gui.dialog.Dialog;
 import gui.dialog.MultiTabDialog;
-import gui.dialog.Dialog.TablePanel;
 import gui.manager.DialogManager;
 import gui.manager.TableManager;
 import gui.table.Table;
@@ -72,8 +72,43 @@ public class EditProfesorDialog extends MultiTabDialog {
 		this.predmetiTablePanel.addButton(btnDodaj);
 		this.predmetiTablePanel.addButton(btnObrisi);
 		
+		EditProfesorDialog dialog = this;
+		btnDodaj.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DialogManager.createDodajPredmetProfesoruDialog(dialog);
+			}
+		});
+		
+		btnObrisi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int predmetRow = predmetiTable.getSelectedRow();
+				if(predmetRow != -1) 
+				{
+					DialogManager.createRemovePredmetProfesoruDialog(dialog, predmetRow);
+				}
+			}
+		});
 		//DODAJ LISTENERE
 
+	}
+	
+	public int getProfesorIndex()
+	{
+		return this.profesorTableRow;
+	}
+	
+	public void updatePredmetiKojePredajeTable()
+	{
+		this.setPredmetiTable();
+		this.predmetiTablePanel.updateTable(this.predmetiTable);
+		this.predmetiTablePanel.revalidate();
+	}
+	
+	public Table getPredmetiTable()
+	{
+		return this.predmetiTable;
 	}
 }
 
