@@ -60,8 +60,11 @@ public class Data {
             if(!predaje.contains(predmeti.get(i))) 
             {
                     Predmet pr = predmeti.get(i);
-                    String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
-                    data.put(i, predmetString);
+                    if(pr.getPredmetniProfesor() == null) 
+                    {
+                    	String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
+                    	data.put(i, predmetString);
+                    }
             }
         }
 		

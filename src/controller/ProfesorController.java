@@ -61,6 +61,7 @@ public class ProfesorController implements ControllerInterface{
     {
         Profesor st = Data.profesor.getAll().get(profesorIndex);
         Predmet pr = Data.predmet.getAll().get(predmetIndex);
+        pr.setPredmetniProfesor(st);
         st.addPredmet(pr);
     }
     
@@ -71,6 +72,7 @@ public class ProfesorController implements ControllerInterface{
         {
             Profesor prof = Data.profesor.getAll().get(profesorIndex);
             Predmet pr = prof.getPredmeti().get(predmetIndex);
+            pr.setPredmetniProfesor(null);
             prof.removePredmet(pr);
         }
     }
