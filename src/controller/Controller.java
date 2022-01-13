@@ -15,7 +15,7 @@ public class Controller {
 
     public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
 
-    public static HashMap<Integer, String> 	getEligiblePredmetiForProfesor		(int studentIndex) {return Data.getEligiblePredmetiForProfesor(studentIndex);}
+    public static HashMap<Integer, String> 	getEligiblePredmetiForProfesor		(int profesorIndex) {return Data.getEligiblePredmetiForProfesor(profesorIndex);}
     ///////////////////////////////////////////////////////////////////////
 
     public static MainWindow initApp()

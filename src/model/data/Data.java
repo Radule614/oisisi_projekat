@@ -56,17 +56,14 @@ public class Data {
 		ArrayList<Predmet> predaje = s.getPredmeti();
 		ArrayList<Predmet> predmeti = predmet.getAll();
 		for(int i = 0; i < predmeti.size(); ++i)
-		{
-			for(int j = 0; j < predaje.size(); ++j) 
-			{
-				if(!predmeti.contains(predaje.get(j))) 
-				{
-						Predmet pr = predmeti.get(i);
-						String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
-						data.put(i, predmetString);
-				}
-			}
-		}
+        {
+            if(!predaje.contains(predmeti.get(i))) 
+            {
+                    Predmet pr = predmeti.get(i);
+                    String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
+                    data.put(i, predmetString);
+            }
+        }
 		
 		return data;
 	}

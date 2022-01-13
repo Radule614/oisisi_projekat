@@ -67,14 +67,11 @@ public class ProfesorController implements ControllerInterface{
     public void removePredmetFromProfesor(int profesorIndex, int predmetIndex)
     {
 
-	    if(predmetIndex != -1 && profesorIndex != -1) 
-	    {
-	    	
-	    	Profesor st = Data.profesor.getAll().get(profesorIndex);
-	        Predmet pr = Data.predmet.getAll().get(predmetIndex);
-	        st.removePredmet(pr);
-	        
-	        System.out.print(pr.getNaziv() + " " + pr.getSifra() + " " + pr.getGodinaStudija());
+    	if(predmetIndex != -1 && profesorIndex != -1) 
+        {
+            Profesor prof = Data.profesor.getAll().get(profesorIndex);
+            Predmet pr = prof.getPredmeti().get(predmetIndex);
+            prof.removePredmet(pr);
         }
     }
     

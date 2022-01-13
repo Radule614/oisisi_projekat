@@ -83,7 +83,7 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.profesor.addToPredmeti(profesorTableRow, predmetRow);
+				Controller.profesor.addToPredmeti(profesorTableRow, predmetiDataIndexes.get(predmetRow));
 				predmetiTable.removeRow(predmetRow);
 				editDialog.updatePredmetiKojePredajeTable();
 				predmetiDataIndexes.remove(predmetRow);
