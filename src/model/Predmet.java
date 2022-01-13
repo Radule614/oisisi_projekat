@@ -14,7 +14,7 @@ public class Predmet implements Serializable {
 	protected String naziv;
 	protected VrstaSemestra semestar;
 	protected int godinaStudija;
-	protected Profesor predmetniProfesor;
+	protected Profesor predmetniProfesor = null;
 	protected int ESPB;
 	
 	protected ArrayList<Student> studentiPolozeno;
@@ -124,6 +124,11 @@ public class Predmet implements Serializable {
 
 	public void setPredmetniProfesor(Profesor predmetniProfesor) {
 		this.predmetniProfesor = predmetniProfesor;
+	}
+	
+	public void removePredmetniProfesor()
+	{
+		this.predmetniProfesor = null;
 	}
 
 
