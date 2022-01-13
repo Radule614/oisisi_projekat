@@ -95,22 +95,5 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 		d.open();
 	}
 	
-	protected void removeFromPredaje(int predmetRow)
-	{
-		ConfirmDialog d = new ConfirmDialog("Dodavanje predmeta");
-		ActionListener listener = new ActionListener() 
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Controller.profesor.removePredmetFromProfesor(profesorTableRow, predmetRow);
-				editDialog.updatePredmetiKojePredajeTable();
-				setTable();
-				d.close();
-			}
-		};
-		
-		d.setListener(listener);
-		d.open();
-	}
 	
 }

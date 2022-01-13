@@ -249,6 +249,8 @@ public class DialogManager {
 			else if	(i==3)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"}, Integer.parseInt(data[i]));
 			else 			d.addTextField(temp, data[i]);
 		}
+		
+		
 		d.setSubmitEnabledEvents();
 		d.open();
 	}
