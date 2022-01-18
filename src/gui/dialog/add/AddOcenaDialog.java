@@ -79,7 +79,7 @@ public class AddOcenaDialog extends OneTabDialog {
 		JPanel panel = this.mainTab.panels.get(1);
 		panel.setBorder(new CompoundBorder(panel.getBorder(), new EmptyBorder(10, 0, 0, 0)));
 		submit = super.setButtons(0, 1, null, listener);
-		//submit.setEnabled(false);
+		submit.setEnabled(false);
 	}
 	
 	public void setSubmitEnabledEvents()

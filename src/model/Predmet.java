@@ -40,7 +40,7 @@ public class Predmet implements Serializable {
 	
 	public String[] toStringArray()
 	{
-		String[] data = new String[5];
+		String[] data = new String[11];
 		
 		data[0] = getSifra();
 		data[1] = getNaziv();

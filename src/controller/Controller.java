@@ -2,14 +2,11 @@ package controller;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import gui.MainWindow;
 import gui.manager.TableManager;
-import model.Profesor;
 import model.data.Data;
-import model.reader.Reader;
 
 public class Controller {
 	public static StudentController student = StudentController.getInstance();
@@ -25,21 +22,16 @@ public class Controller {
     {
         MainWindow app = MainWindow.getInstance();
 
-        
-        Data.getSavedData();
-        
+        if(!Data.getSavedData())
+            initData();
+
+        initTables();
         app.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 Data.saveData();
             }
         });
-        
-        
-        //initData();
-        
-        initTables();
-        
         return app;
     }
 
@@ -52,21 +44,20 @@ public class Controller {
 
     public static void initData()
     {
-    	ArrayList<Integer> sefovi = new ArrayList<Integer>();
+    	
+        Data.student.create(new String[] {"Rade", 	"Stojanovic", 	"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA138/2019", "2019", 	"2", "0"}, null);
+        Data.student.create(new String[] {"Damjan", "Dimitrijevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA115/2019", "2019" , 	"2", "0"}, null);
+        Data.student.create(new String[] {"Uros", 	"Jokovic", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA119/2019", "2019" ,	"2", "0"}, null);
+        Data.student.create(new String[] {"Luka", 	"Pikula", 		"01-01-2000", "u, 1, g, d", "0", "email@email.com", "RA146/2019", "2019" , 	"2", "0"}, null);
+
+        Data.profesor.create(new String[] {"Nebojsa", "Ralevic", "01-01-2000", "u, 1, g, d", "0", "email@email.com", "u, 1, g, d", "0", "Doktor", "Redovni profesor", "0"}, null);
         
-        Reader.readAdrese();
-        Reader.readKatedre(sefovi);
-        Reader.readStudenti();
-        Reader.readProfesori();
-        Reader.readPredmeti();
-        Reader.readNepolozeni();
-        Reader.readPolozeni();
-        
-		for(int i = 0; i < sefovi.size(); i++) {
-			Profesor pr = Data.profesor.getAll().get(sefovi.get(i));
-			
-			Data.katedre.get(i).setSef(pr);
-		}
+        Data.predmet.create(new String[] {"1", 		"Matematicka Analiza 1", 	"0", "0", "9"}, null);
+        Data.predmet.create(new String[] {"12", 	"Baze Podataka 1", 		    "0", "3", "8"}, null);
+        Data.predmet.create(new String[] {"123", 	"Arhitektura Racunara", 	"0", "0", "9"}, null);
+        Data.predmet.create(new String[] {"1234", 	"Operativni sistemi", 		"0", "0", "8"}, null);
+        Data.predmet.create(new String[] {"alg", 	"Algebra", 					"0", "2", "5"}, null);
+        Data.predmet.create(new String[] {"oi123", 	"oisisi", 					"0", "1", "6"}, null);
     }
     
 }

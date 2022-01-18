@@ -21,7 +21,6 @@ public class EditProfesorDialog extends MultiTabDialog {
 	JButton submit;
 	protected int profesorTableRow;
 	protected Table predmetiTable;
-	
 	protected TablePanel predmetiTablePanel;
 	
 	public EditProfesorDialog(String title, EntityType entityType, int tableRow, String[] tabLabels) {
@@ -42,7 +41,6 @@ public class EditProfesorDialog extends MultiTabDialog {
 		this.tabPanels.get(1).createPanel();
 
 	}
-	
 	
 	public void setEditButtons()
 	{
@@ -85,7 +83,7 @@ public class EditProfesorDialog extends MultiTabDialog {
 		btnObrisi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int predmetRow = predmetiTable.getSelectedRowFromModel();
+				int predmetRow = predmetiTable.getSelectedRow();
 				if(predmetRow != -1) 
 				{
 					DialogManager.createRemovePredmetProfesoruDialog(dialog, predmetRow);

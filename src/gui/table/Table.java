@@ -3,119 +3,28 @@ package gui.table;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public class Table extends JTable {
 	private static final long serialVersionUID = -2108154469027694188L;
 	protected DefaultTableModel model;
 	
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		
-		String name = this.getColumnName(columnIndex);
-		Class<?> returnValue;
-		
-		if(name == "Broj ESPB bodova" )
-		{
-			returnValue = Integer.class;
-		}
-		else if(name == "Prosek")
-		{
-			returnValue = Integer.class;
-		}
-		else
-		{
-			returnValue = Object.class;
-		}
-		
-		return returnValue;
-	}
-	
 	public Table(int colNumber)
 	{
-		super(new DefaultTableModel(0, colNumber)
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public Class<?> getColumnClass(int columnIndex) {
-				String name = this.getColumnName(columnIndex);
-				Class<?> returnValue;
-				
-				if(name == "Broj ESPB bodova" )
-				{
-				
-					returnValue = Integer.class;
-				}
-				else if(name == "Prosek")
-				{
-					returnValue = Integer.class;
-				}
-				else
-				{
-					returnValue = Object.class;
-				}
-				
-				return returnValue;
-			}
-		});
+		super(new DefaultTableModel(0, colNumber));
 		init();
 	}
 	
 	public Table(String[] columnLabels)
 	{ 
-		super(new DefaultTableModel(columnLabels, 0)
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public Class<?> getColumnClass(int columnIndex) {
-				String name = this.getColumnName(columnIndex);
-				Class<?> returnValue;
-				
-				if(name == "Broj ESPB bodova" )
-				{
-					returnValue = Integer.class;
-				}
-				else if(name == "Prosek")
-				{
-					returnValue = Integer.class;
-				}
-				else
-				{
-					returnValue = Object.class;
-				}
-				
-				return returnValue;
-			}
-		});
+		super(new DefaultTableModel(columnLabels, 0));
 		
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(this.getModel());
-		this.setRowSorter(sorter);
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
-		
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-		sorter.setSortKeys(sortKeys);
-	
 		init();
 	}
-	
-	
-	
 	
 	private void init()
 	{
@@ -165,12 +74,6 @@ public class Table extends JTable {
 			this.setBorder(new EmptyBorder(0, 5, 0, 5));
 			return this;
 		}
-	}
-	
-	public int getSelectedRowFromModel(){
-		if(this.getSelectedRow() == -1)
-			return -1;
-		return this.convertRowIndexToModel(this.getSelectedRow());
 	}
 }
 
