@@ -87,7 +87,7 @@ public class EditStudentDialog extends MultiTabDialog {
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int gradeRow = polozeniTable.getSelectedRow();
+				int gradeRow = polozeniTable.getSelectedRowFromModel();
 				if(gradeRow != -1) DialogManager.createRemoveOcenaDialog(dialog, gradeRow);
 			}
 		});
@@ -118,7 +118,7 @@ public class EditStudentDialog extends MultiTabDialog {
 		btnObrisi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int predmetRow = nepolozeniTable.getSelectedRow();
+				int predmetRow = nepolozeniTable.getSelectedRowFromModel();
 				if(predmetRow != -1) DialogManager.createRemovePredmetDialog(dialog, predmetRow);
 			}
 		});
@@ -126,7 +126,7 @@ public class EditStudentDialog extends MultiTabDialog {
 		btnPolaganje.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int predmetRow = nepolozeniTable.getSelectedRow();
+				int predmetRow = nepolozeniTable.getSelectedRowFromModel();
 				if(predmetRow != -1) DialogManager.createAddOcenaDialog(dialog, predmetRow);
 			}
 		});

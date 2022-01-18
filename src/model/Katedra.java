@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Katedra implements Serializable {
 	private static final long serialVersionUID = -4767123478567952277L;
 	
-	protected int sifra;
+	protected String sifra;
 	protected String naziv;
 	protected Profesor sef;
 	protected ArrayList<Profesor> spisakProfesora;
@@ -16,14 +16,21 @@ public class Katedra implements Serializable {
 	{
 		spisakProfesora = new ArrayList<Profesor>();
 	}
+	
+	public Katedra(String sifra, String naziv){
+		spisakProfesora = new ArrayList<Profesor>();
+		this.sifra = sifra;
+		this.naziv = naziv;
+		
+	}
 
 
-	public int getSifra() {
+	public String getSifra() {
 		return sifra;
 	}
 
 
-	public void setSifra(int sifra) {
+	public void setSifra(String sifra) {
 		this.sifra = sifra;
 	}
 
