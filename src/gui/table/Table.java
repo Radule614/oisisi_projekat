@@ -12,8 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import gui.bar.ToolBar;
+
 public class Table extends JTable {
 	private static final long serialVersionUID = -2108154469027694188L;
+	public TableRowSorter<TableModel> sorter;
 	protected DefaultTableModel model;
 	
 	@Override
@@ -40,71 +43,17 @@ public class Table extends JTable {
 	
 	public Table(int colNumber)
 	{
-		super(new DefaultTableModel(0, colNumber)
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public Class<?> getColumnClass(int columnIndex) {
-				String name = this.getColumnName(columnIndex);
-				Class<?> returnValue;
-				
-				if(name == "Broj ESPB bodova" )
-				{
-				
-					returnValue = Integer.class;
-				}
-				else if(name == "Prosek")
-				{
-					returnValue = Integer.class;
-				}
-				else
-				{
-					returnValue = Object.class;
-				}
-				
-				return returnValue;
-			}
-		});
+		super(new DefaultTableModel(0, colNumber));
 		init();
 	}
 	
 	public Table(String[] columnLabels)
 	{ 
-		super(new DefaultTableModel(columnLabels, 0)
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public Class<?> getColumnClass(int columnIndex) {
-				String name = this.getColumnName(columnIndex);
-				Class<?> returnValue;
-				
-				if(name == "Broj ESPB bodova" )
-				{
-					returnValue = Integer.class;
-				}
-				else if(name == "Prosek")
-				{
-					returnValue = Integer.class;
-				}
-				else
-				{
-					returnValue = Object.class;
-				}
-				
-				return returnValue;
-			}
-		});
+		super(new DefaultTableModel(columnLabels, 0));
 		
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(this.getModel());
+		sorter = new TableRowSorter<TableModel>(this.getModel());
 		this.setRowSorter(sorter);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
 		
 		List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
 		
