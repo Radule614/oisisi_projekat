@@ -151,13 +151,32 @@ public class Student extends Osoba {
 	
 	public void addPolozeniIspit(Ocena o)
 	{
-		this.polozeniIspiti.add(o);
-		this.calculateProsek();
+		boolean exists = false;
+		for(Ocena temp: this.polozeniIspiti) {
+			if(temp.predmet.equals(o.getPredmet())) {
+				exists = true;
+				break;
+			}
+		}
+		
+		if(!exists){
+			this.polozeniIspiti.add(o);
+			this.calculateProsek();
+		}
 	}
 
 	public void addNepolozeniIspit(Ocena o)
 	{
-		this.nepolozeniIspiti.add(o);
+		boolean exists = false;
+		for(Ocena temp: this.nepolozeniIspiti) {
+			if(temp.predmet.equals(o.getPredmet())) {
+				exists = true;
+				break;
+			}
+		}
+		
+		if(!exists)
+			this.nepolozeniIspiti.add(o);
 	}
 	
 	public String getBrojIndeksa() {

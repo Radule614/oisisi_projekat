@@ -65,7 +65,7 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				int predmetRow = predmetiTable.getSelectedRow();
+				int predmetRow = predmetiTable.getSelectedRowFromModel();
 				if(predmetRow != -1) 
 				{
 					d.addToPredaje(predmetRow);
