@@ -37,7 +37,7 @@ public class TableManager {
 	
 	public static int getSelectedTableRow(int tableIndex)
 	{
-		return TableManager.tables[tableIndex].getSelectedRow();
+		return TableManager.tables[tableIndex].getSelectedRowFromModel();
 	}
 	
 	public static Table[] getTables()
