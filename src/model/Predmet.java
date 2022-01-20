@@ -40,7 +40,7 @@ public class Predmet implements Serializable {
 	
 	public String[] toStringArray()
 	{
-		String[] data = new String[5];
+		String[] data = new String[6];
 		
 		data[0] = getSifra();
 		data[1] = getNaziv();
@@ -48,6 +48,14 @@ public class Predmet implements Serializable {
 		else if	(getSemestar() == VrstaSemestra.Z) data[2] = "1";
 		data[3] = Integer.toString(getGodinaStudija()-1);
 		data[4] = Integer.toString(getESPB());
+		if(getPredmetniProfesor() != null) 
+		{
+			data[5] = getPredmetniProfesor().ime + " "+ getPredmetniProfesor().prezime;
+		}
+		else
+		{
+			data[5] = "";
+		}
 		
 		return data;
 	}

@@ -179,6 +179,7 @@ public abstract class Dialog extends JDialog {
 		{
 			this.panels.get(panelIndex).addTextField(labelText);
 		}
+		
 		public void addTextField(int panelIndex, String labelText, String value)
 		{
 			this.panels.get(panelIndex).addTextField(labelText, value);
@@ -242,6 +243,20 @@ public abstract class Dialog extends JDialog {
 			protected void addTextField(String labelText)
 			{
 				this.createTextField(labelText);
+			}
+			protected void addTextField(String labelText, String value, int enabled)
+			{
+				
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
+				if(enabled == 1)
+				{
+					textField.setEnabled(true);
+				}
+				else
+				{
+					textField.setEnabled(false);
+				}
 			}
 			protected void addTextField(String labelText, String value)
 			{

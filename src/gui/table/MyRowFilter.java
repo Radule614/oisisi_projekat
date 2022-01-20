@@ -46,7 +46,6 @@ public class MyRowFilter extends RowFilter {
 		
 				prezime = prezime.toLowerCase();
 				ime = ime.toLowerCase();
-				System.out.println("0 |" + prezime + "| |" + ime +"|");
 				if(vrstaTabele == 0) 
 				{
 					return entry.getStringValue(2).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(1).toLowerCase().indexOf(ime) >= 0;

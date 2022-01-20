@@ -18,7 +18,7 @@ import gui.dialog.utility.InvalidInputDialog;
 public class DialogManager {
 	static protected String[] studentiFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Broj indeksa", "Godina upisa", "Trenutna godina studija", "Način finansiranja"};
 	static protected String[] profesoriFieldLabels = {"Ime", "Prezime", "Datum rođenja", "Adresa stanonovanja", "Broj telefona", "E-mail adresa", "Adresa kancelarije", "Broj lične karte", "Titula", "Zvanje", "Godine staža"};
-	static protected String[] predmetiFieldLabels = {"Sifra predmeta", "Naziv predmeta", "Semestar", "Godina studija", "Broj ESPB bodova"};
+	static protected String[] predmetiFieldLabels = {"Sifra predmeta", "Naziv predmeta", "Semestar", "Godina studija", "Broj ESPB bodova", "Profesor"};
 	
 	public static void createAddDialog(int activeTab)
 	{
@@ -168,7 +168,8 @@ public class DialogManager {
 			if		(i==2) 	d.addDateField(temp);
 			else if	(i==8)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"});
 			else if	(i==9) 	d.addComboBox(temp, new String[] {"Budžet", "Samofinansiranje"});
-			else 			d.addTextField(temp);
+			else d.addTextField(temp);
+			
 		}
 		d.setSubmitEnabledEvents();
 		d.open();
@@ -216,7 +217,7 @@ public class DialogManager {
 			if		(i==2) 	d.tabPanels.get(0).addDateField(0, temp, data[i]);
 			else if	(i==8)	d.tabPanels.get(0).addComboBox(0, temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"}, Integer.parseInt(data[i]));
 			else if	(i==9) d.tabPanels.get(0).addComboBox(0, temp, new String[] {"Budžet", "Samofinansiranje"}, Integer.parseInt(data[i]));
-			else 			d.tabPanels.get(0).addTextField(0, temp, data[i]);
+			else 			d.tabPanels.get(0).addTextField(0, temp, data[i]); 
 		}
 		d.setSubmitEnabledEvents();
 		d.open();
@@ -247,7 +248,12 @@ public class DialogManager {
 			String temp = labels[i] + "*";
 			if		(i==2) 	d.addComboBox(temp, new String[] {"Letnji", "Zimski"}, Integer.parseInt(data[i]));
 			else if	(i==3)	d.addComboBox(temp, new String[] {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"}, Integer.parseInt(data[i]));
-			else 			d.addTextField(temp, data[i]);
+			else if (i==4)			d.addTextField(temp, data[i]);
+			else if(i ==5)
+				{
+					d.addTextField(temp, data[i], 0);
+					
+				}
 		}
 		
 		
