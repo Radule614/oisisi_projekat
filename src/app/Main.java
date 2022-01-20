@@ -10,7 +10,6 @@ public class Main {
 	
 	static MainWindow app;
 	
-	private ResourceBundle resourceBundle;
 	
 	public static void main(String[] args) 
 	{
@@ -19,9 +18,5 @@ public class Main {
 		app.setVisible(true);
 	}
 	
-	public void ChangeLanguage()
-	{
-		resourceBundle = ResourceBundle.getBundle("gui.localization.MessageResources", Locale.getDefault());
-		
-	}
+	
 }

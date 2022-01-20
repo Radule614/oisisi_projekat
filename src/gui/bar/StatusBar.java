@@ -1,6 +1,10 @@
 package gui.bar;
 
 import javax.swing.*;
+
+import app.Main;
+import gui.MainWindow;
+
 import java.awt.*;
 import java.text.SimpleDateFormat;  
 import java.util.Date;     
@@ -12,6 +16,8 @@ public class StatusBar extends JPanel {
 	
 	JPanel leftPanel;
 	JPanel rightPanel;
+	
+	public MainWindow mainWindow;
 		
 	static StatusBar instance;
 	public StatusBarLabel stsBarLabel;
@@ -34,6 +40,7 @@ public class StatusBar extends JPanel {
         this.add(leftPanel);
         this.add(rightPanel);
         
+        mainWindow = MainWindow.getInstance();
         RefreshStatusBar(0);
 	}
 	
@@ -52,15 +59,15 @@ public class StatusBar extends JPanel {
 	{
 		if(activePanel == 0) 
 		{
-			stsBarLabel.setText("Studentska služba - Studenti" );
+			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarStudent").toString());
 		}
 		else if (activePanel == 1)
 		{
-			stsBarLabel.setText("Studentska služba - Profesori");
+			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarProfesor").toString());
 		}
 		else if (activePanel == 2)
 		{
-			stsBarLabel.setText("Studentska služba - Predmeti");
+			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarPredmet").toString());
 		}
 		
 	}

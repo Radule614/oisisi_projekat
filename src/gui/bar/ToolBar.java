@@ -2,6 +2,7 @@ package gui.bar;
 
 import javax.swing.*;
 
+import app.Main;
 import gui.MainWindow;
 import gui.manager.DialogManager;
 import gui.manager.TableManager;
