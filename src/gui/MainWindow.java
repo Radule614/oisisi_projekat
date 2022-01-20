@@ -62,6 +62,11 @@ public class MainWindow extends JFrame {
 		return instance;
 	}
 	
+	public void setActivePane(int index)
+	{
+		this.content.setActivePane(index);
+	}
+	
 	public int getActivePane()
 	{
 		return this.content.getActivePane();

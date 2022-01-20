@@ -65,7 +65,7 @@ public class Reader {
 			sc.useDelimiter(",");
 			sc.nextLine();
 			while(sc.hasNext()) {
-				String[] data = new String[11];
+				String[] data = new String[10];
 				String[] array = sc.nextLine().split(",");
 				
 				data[7] = array[1].replace(" ", "");
@@ -77,9 +77,8 @@ public class Reader {
 				data[4] = array[6];
 				data[5] = array[7];
 				data[6] = Data.adrese.get(Utility.parseInt(array[8])-1).toString();
-				data[10] = array[9];
-				data[9] = array[10];
-				data[8] = "Titula";
+				data[9] = array[9];
+				data[8] = array[10];
 				
 				ArrayList<String> messages = new ArrayList<String>();
 				Profesor prof = Data.profesor.create(data, messages);

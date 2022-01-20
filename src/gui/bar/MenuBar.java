@@ -122,6 +122,18 @@ public class MenuBar extends JMenuBar {
 				{
 					System.exit(0);
 				}
+				else if(temp.equals("Students")){
+					main.setActivePane(0);
+				}
+				else if(temp.equals("Professors")){
+					main.setActivePane(1);
+				}
+				else if(temp.equals("Subjects")){
+					main.setActivePane(2);
+				}
+				else if(temp.equals("Departments")){
+					//create departments dialog
+				}
 			}
 		}
 	}

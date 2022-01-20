@@ -136,13 +136,17 @@ public class EditStudentDialog extends MultiTabDialog {
 	public void setPolozeniTable()
 	{
 		ArrayList<String[]> dataArray = Controller.student.getPolozeniIspiti(studentTableRow);
-		this.polozeniTable = TableManager.createPolozeniTable(dataArray);	
+		this.polozeniTable = TableManager.createPolozeniTable(dataArray);
+		this.polozeniTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+		this.polozeniTable.getColumnModel().getColumn(1).setPreferredWidth(220);
 	}
 	
 	public void setNepolozeniTable()
 	{
 		ArrayList<String[]> dataArray = Controller.student.getNepolozeniIspiti(studentTableRow);
 		this.nepolozeniTable = TableManager.createNepolozeniTable(dataArray);
+		this.nepolozeniTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+		this.nepolozeniTable.getColumnModel().getColumn(1).setPreferredWidth(220);
 	}
 	
 	public void updatePolozeniTable()

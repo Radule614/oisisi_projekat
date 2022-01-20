@@ -52,6 +52,11 @@ public class Content extends JPanel {
 		return Content.instance;
 	}
 	
+	public void setActivePane(int index)
+	{
+		this.tabbedPane.setSelectedIndex(index);
+	}
+	
 	public int getActivePane()
 	{
 		return this.tabbedPane.getSelectedIndex();

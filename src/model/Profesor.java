@@ -29,9 +29,8 @@ public class Profesor extends Osoba {
 		predmeti = new ArrayList<Predmet>();
 		setAdresaKancelarije(new Adresa(arr[6]));
 		setLicnaKarta(Utility.parseInt(arr[7]));
-		setTitula(arr[8]);
-		setZvanje(arr[9]);
-		setGodineStaza(Utility.parseInt(arr[10]));
+		setZvanje(arr[8]);
+		setGodineStaza(Utility.parseInt(arr[9]));
 	}
 	
 	public String[] toStringArray()
@@ -40,9 +39,8 @@ public class Profesor extends Osoba {
 		super.toStringArray(data);
 		data[6] = getAdresaKancelarije().toString();
 		data[7] = Integer.toString(getLicnaKarta());
-		data[8] = getTitula();
-		data[9] = getZvanje();
-		data[10] = Integer.toString(getGodineStaza());
+		data[8] = getZvanje();
+		data[9] = Integer.toString(getGodineStaza());
 		
 		return data;
 	}
@@ -63,14 +61,9 @@ public class Profesor extends Osoba {
 		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[8]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Titula: mora da sadrži jednu ili više reči bez brojeva");
-		}
-		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[9]))
-		{
-			isValid = false;
 			if(messages != null) messages.add("Zvanje: mora da sadrži jednu ili više reči bez brojeva");
 		}
-		if(!Utility.isInInterval(Utility.parseInt(arr[10]), 0, 50))
+		if(!Utility.isInInterval(Utility.parseInt(arr[9]), 0, 50))
 		{
 			isValid = false;
 			if(messages != null) messages.add("Godine staža: mora biti u intervalu [0, 50]");
@@ -84,7 +77,7 @@ public class Profesor extends Osoba {
 		String[] data = new String[4];
 		data[0] = this.ime;
 		data[1] = this.prezime;
-		data[2] = this.titula;
+		data[2] = this.email;
 		data[3] = this.zvanje;
 		return data;
 	}
