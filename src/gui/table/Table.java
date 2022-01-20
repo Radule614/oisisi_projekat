@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import gui.bar.ToolBar;
 
 public class Table extends JTable {
 	private static final long serialVersionUID = -2108154469027694188L;

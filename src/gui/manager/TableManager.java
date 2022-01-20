@@ -10,7 +10,7 @@ public class TableManager {
 	
 	
 	private static final String[] studentiLabels = { main.GetLocalization("lblBrojIndeka"), main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"),  main.GetLocalization("lblTrenutnaGodinaStudija"),  main.GetLocalization("lblNacinFinansiranja"), main.GetLocalization("lblAverageGrade")};
-	private static final String[] profesoriLabels = { main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblTitula"), main.GetLocalization("lblZvanje")};
+	private static final String[] profesoriLabels = { main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblEmail"), main.GetLocalization("lblZvanje")};
 	private static final String[] predmetiLabels = { main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), main.GetLocalization("lblBrojEPSBBodova"), main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblSemestar")};
 	
 	public static Table studentiTable = new Table(studentiLabels);

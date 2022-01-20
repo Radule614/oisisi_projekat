@@ -148,6 +148,11 @@ public class Profesor extends Osoba {
 		{
 			predmeti = new ArrayList<Predmet>();
 		}
+		for(Predmet pr : this.predmeti)
+		{
+			if(pr.getSifra().equals(o.getSifra()))
+				return;
+		}
 		this.predmeti.add(o);
 	}
 	

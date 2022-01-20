@@ -3,7 +3,6 @@ package gui.dialog.edit;
 import javax.swing.JButton;
 
 import gui.dialog.OneTabDialog;
-import gui.dialog.Dialog.TablePanel;
 
 public class EditPredmetDialog extends OneTabDialog{
 	private static final long serialVersionUID = -268052684667075413L;
