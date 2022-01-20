@@ -7,6 +7,8 @@ import gui.bar.StatusBar;
 import gui.bar.ToolBar;
 
 import java.awt.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 2740437090361841747L;
@@ -20,10 +22,11 @@ public class MainWindow extends JFrame {
 	protected Content content;
 	protected StatusBar statusBar;
 
+	private ResourceBundle resourceBundle;
 	private MainWindow()
 	{
 		super();
-		
+		instance = this;
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
 		height = 3 * screenSize.height / 4;
@@ -34,7 +37,7 @@ public class MainWindow extends JFrame {
 		setLocationRelativeTo(null);
 		
 		this.setFont(new Font("Monaco", Font.PLAIN, 15));
-		
+		Locale.setDefault(new Locale("en", "US"));
 		menuBar = MenuBar.getInstance();
 		toolBar = ToolBar.getInstance();
         content = Content.getInstance();
@@ -44,12 +47,19 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(BorderLayout.NORTH, toolBar);
         this.getContentPane().add(BorderLayout.CENTER, content);
         this.getContentPane().add(BorderLayout.SOUTH, statusBar);
+        
+        resourceBundle = ResourceBundle.getBundle("gui.localization.MessageResources", Locale.getDefault());
+        
 	}
 	
 	public static MainWindow getInstance()
 	{
-		if(MainWindow.instance == null) MainWindow.instance = new MainWindow();
-		return MainWindow.instance;
+		if(instance == null) 
+		{
+			instance = new MainWindow();
+		}
+		
+		return instance;
 	}
 	
 	public int getActivePane()
@@ -61,6 +71,18 @@ public class MainWindow extends JFrame {
 	{
 		statusBar.RefreshStatusBar(activePane);
 	}
+	
+	public ResourceBundle GetResourceBundle()
+	{
+		resourceBundle = ResourceBundle.getBundle("gui.localization.MessageResources", Locale.getDefault());
+		return resourceBundle;
+	}
+	
+	public String GetLocalization(String name)
+	{
+		return GetResourceBundle().getObject(name).toString();
+	}
+	
 }
 
 

@@ -2,6 +2,7 @@ package gui.bar;
 
 import javax.swing.*;
 
+import app.Main;
 import gui.MainWindow;
 import gui.manager.DialogManager;
 import gui.manager.TableManager;
@@ -28,19 +29,19 @@ public class ToolBar extends JToolBar {
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
         
-        btnNew = new ToolBarButton("img/icon_new.png", "New", "Add new user");
+        btnNew = new ToolBarButton("img/icon_new.png", "New", MainWindow.getInstance().GetLocalization("btnDodaj"));
         left.add(btnNew);
         
-        btnEdit = new ToolBarButton("img/icon_edit.png","Edit", "Edit user");
+        btnEdit = new ToolBarButton("img/icon_edit.png","Edit", MainWindow.getInstance().GetLocalization("menuBarIzmeni"));
         left.add(btnEdit);
         
-        btnDelete = new ToolBarButton("img/icon_delete.png", "Delete", "Delete user");
+        btnDelete = new ToolBarButton("img/icon_delete.png", "Delete", MainWindow.getInstance().GetLocalization("menuBarObrisi"));
         left.add(btnDelete);
         
         searchTextField = new ToolBarTextField();
         right.add(searchTextField);        
         
-        btnSearch = new ToolBarButton("img/icon_search.png","Search", "Search user");
+        btnSearch = new ToolBarButton("img/icon_search.png","Search", MainWindow.getInstance().GetLocalization("menuBarPretrazi"));
         right.add(btnSearch);
         
 		this.add(left);
@@ -114,15 +115,15 @@ public class ToolBar extends JToolBar {
 				{
 					String search = ToolBar.getInstance().searchTextField.getText();
 
-				    if(StatusBar.getInstance().stsBarLabel.getText() =="Studentska služba - Studenti")
+				    if(StatusBar.getInstance().stsBarLabel.getText() == MainWindow.getInstance().GetResourceBundle().getObject("stsBarStudent").toString())
 				    {
 				    	TableManager.studentiTable.sorter.setRowFilter(new MyRowFilter(search, 0));
 				    }
-				    else if(StatusBar.getInstance().stsBarLabel.getText() =="Studentska služba - Profesori")
+				    else if(StatusBar.getInstance().stsBarLabel.getText() == MainWindow.getInstance().GetResourceBundle().getObject("stsBarProfesor").toString())
 				    {
 				    	TableManager.profesoriTable.sorter.setRowFilter(new MyRowFilter(search, 1));
 				    }
-				    else if(StatusBar.getInstance().stsBarLabel.getText() =="Studentska služba - Predmeti")
+				    else if(StatusBar.getInstance().stsBarLabel.getText() == MainWindow.getInstance().GetResourceBundle().getObject("stsBarPredmet").toString())
 				    {
 				    	TableManager.predmetiTable.sorter.setRowFilter(new MyRowFilter(search, 2));
 				    }

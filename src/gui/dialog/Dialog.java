@@ -115,8 +115,8 @@ public abstract class Dialog extends JDialog {
 		}
 		else
 		{
-			submit = new JButton("Potvrdi");
-			cancel = new JButton("Odustani");
+			submit = new JButton(MainWindow.getInstance().GetResourceBundle().getObject("btnPotvrdi").toString());
+			cancel = new JButton(MainWindow.getInstance().GetResourceBundle().getObject("btnOdustani").toString());
 		}
 		
 		JPanel leftPanel = new JPanel(leftPanelLayout);
@@ -179,6 +179,7 @@ public abstract class Dialog extends JDialog {
 		{
 			this.panels.get(panelIndex).addTextField(labelText);
 		}
+		
 		public void addTextField(int panelIndex, String labelText, String value)
 		{
 			this.panels.get(panelIndex).addTextField(labelText, value);
@@ -242,6 +243,25 @@ public abstract class Dialog extends JDialog {
 			protected void addTextField(String labelText)
 			{
 				this.createTextField(labelText);
+			}
+			protected void addTextField(String labelText, String value, int enabled)
+			{
+				
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
+				if(enabled == 1)
+				{
+					textField.setEnabled(true);
+				}
+				else
+				{
+					textField.setEnabled(false);
+				}
+			}
+			protected void addButton(String labelText, String value)
+			{
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
 			}
 			protected void addTextField(String labelText, String value)
 			{
@@ -399,6 +419,7 @@ public abstract class Dialog extends JDialog {
 				
 				return textField;
 			}
+			
 			
 			private JFormattedTextField createDataField(String labelText)
 			{

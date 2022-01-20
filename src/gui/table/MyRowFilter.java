@@ -38,47 +38,64 @@ public class MyRowFilter extends RowFilter {
 	public boolean include(Entry entry) {
 		
 		if(tipPretrage == 0)
-		{
-			prezime = searchText.substring(0, indeksPrvogPojavljivanja);
-			ime = searchText.substring(indeksPrvogPojavljivanja+2);
-			
-			prezime = prezime.toLowerCase();
-			ime = ime.toLowerCase();
-			System.out.println("0 |" + prezime + "| |" + ime +"|");
-			
-			if(vrstaTabele == 0) 
+		{			
+			try 
 			{
-				return entry.getStringValue(2).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(1).toLowerCase().indexOf(ime) >= 0;
+				prezime = searchText.substring(0, indeksPrvogPojavljivanja);
+				ime = searchText.substring(indeksPrvogPojavljivanja+2);
+		
+				prezime = prezime.toLowerCase();
+				ime = ime.toLowerCase();
+				if(vrstaTabele == 0) 
+				{
+					return entry.getStringValue(2).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(1).toLowerCase().indexOf(ime) >= 0;
+				}
+				else
+				{
+					return entry.getStringValue(1).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(0).toLowerCase().indexOf(ime) >= 0;
+				}
 			}
-			else
+			catch(Exception e) 
 			{
-				return entry.getStringValue(1).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(0).toLowerCase().indexOf(ime) >= 0;
+				  //  Block of code to handle errors
 			}
+			
+			
 		
 		}
 		else if(tipPretrage == 1)
 		{
-			
-			if(vrstaTabele == 0) 
-			{
-				return entry.getStringValue(2).toLowerCase().indexOf(searchText) >= 0;
+			try {
+				if(vrstaTabele == 0) 
+				{
+					return entry.getStringValue(2).toLowerCase().indexOf(searchText) >= 0;
+				}
+				else
+				{
+					return entry.getStringValue(1).toLowerCase().indexOf(searchText) >= 0;
+				}
 			}
-			else
-			{
-				return entry.getStringValue(1).toLowerCase().indexOf(searchText) >= 0;
-			}
+			catch(Exception e)
+			{}
 			
 		}
 		else if(tipPretrage == 2 && vrstaTabele == 0)
 		{
-			prezime = searchText.substring(0, indeksPrvogPojavljivanja);
-			prezime =prezime.toLowerCase();
-			ime = searchText.substring(indeksPrvogPojavljivanja+2, indeksPoslednjegPojavljivanja);
-			ime = ime.toLowerCase();
-			index = searchText.substring(indeksPoslednjegPojavljivanja+2);
-			index = index.toLowerCase();
-			System.out.println("2 |" + prezime + "| |" + ime + "| |" + index+"|");
-			return entry.getStringValue(2).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(1).toLowerCase().indexOf(ime) >= 0 && entry.getStringValue(0).toLowerCase().indexOf(index) >= 0;
+			
+			try 
+			{
+				prezime = searchText.substring(0, indeksPrvogPojavljivanja);
+				prezime =prezime.toLowerCase();
+				ime = searchText.substring(indeksPrvogPojavljivanja+2, indeksPoslednjegPojavljivanja);
+				ime = ime.toLowerCase();
+				index = searchText.substring(indeksPoslednjegPojavljivanja+2);
+				index = index.toLowerCase();
+				return entry.getStringValue(2).toLowerCase().indexOf(prezime) >= 0 && entry.getStringValue(1).toLowerCase().indexOf(ime) >= 0 && entry.getStringValue(0).toLowerCase().indexOf(index) >= 0;
+			}
+			catch(Exception e) 
+			{
+				
+			}
 		}
 		
 		return false;

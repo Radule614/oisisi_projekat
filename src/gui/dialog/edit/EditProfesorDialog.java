@@ -9,6 +9,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import gui.MainWindow;
 import gui.dialog.Dialog;
 import gui.dialog.MultiTabDialog;
 import gui.manager.DialogManager;
@@ -65,8 +66,8 @@ public class EditProfesorDialog extends MultiTabDialog {
 	
 	protected void setPredmetButtons()
 	{
-		JButton btnDodaj 		= new JButton("Dodaj predmet");
-		JButton btnObrisi 		= new JButton("Ukloni predmet");
+		JButton btnDodaj 		= new JButton(MainWindow.getInstance().GetLocalization("titleAddPredmet"));
+		JButton btnObrisi 		= new JButton(MainWindow.getInstance().GetLocalization("titleRemovePredmet"));
 		
 		Dialog.setButtonHover(btnDodaj, "#95bcf2");
 		Dialog.setButtonHover(btnObrisi, "#9b5377");

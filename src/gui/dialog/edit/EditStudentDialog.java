@@ -15,6 +15,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import gui.MainWindow;
 import gui.dialog.Dialog;
 import gui.dialog.MultiTabDialog;
 import gui.manager.DialogManager;
@@ -79,7 +80,7 @@ public class EditStudentDialog extends MultiTabDialog {
 	
 	protected void setRemoveOcenaButton()
 	{
-		JButton btn = new JButton("Poništi ocenu");
+		JButton btn = new JButton(MainWindow.getInstance().GetLocalization("btnPonistiOcenu"));
 		Dialog.setButtonHover(btn, "#95bcf2");
 		this.polozeniTablePanel.addButton(btn);
 		
@@ -95,9 +96,9 @@ public class EditStudentDialog extends MultiTabDialog {
 	
 	protected void setNepolozeniButtons()
 	{
-		JButton btnDodaj 		= new JButton("Dodaj");
-		JButton btnObrisi 		= new JButton("Obrisi");
-		JButton btnPolaganje 	= new JButton("Polaganje");
+		JButton btnDodaj 		= new JButton(MainWindow.getInstance().GetLocalization("btnDodaj"));
+		JButton btnObrisi 		= new JButton(MainWindow.getInstance().GetLocalization("btnObrisi"));
+		JButton btnPolaganje 	= new JButton(MainWindow.getInstance().GetLocalization("btnPolaganje"));
 		
 		Dialog.setButtonHover(btnDodaj, "#95bcf2");
 		Dialog.setButtonHover(btnObrisi, "#9b5377");
@@ -164,8 +165,8 @@ public class EditStudentDialog extends MultiTabDialog {
 		int ESPB = Controller.student.getTotalESPB(studentTableRow);
 		
 		String[] data = new String[2];
-		data[0] = new String("Prosečna ocena: " + avg);
-		data[1] = new String("Ukupno ESPB: " + ESPB);
+		data[0] = new String(MainWindow.getInstance().GetLocalization("lblAverageGrade")+ " " + avg);
+		data[1] = new String("ESPB: " + ESPB);
 		JPanel panel = this.tabPanels.get(1).panels.get(1);
 		panel.removeAll();
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
