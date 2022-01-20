@@ -13,10 +13,10 @@ import gui.manager.TableManager;
 
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
-	
-	final String[] fileNames = {"New", "Save", "Open", "Close"};
-	final String[] editNames = {"Edit", "Delete"};
-	final String[] helpNames = {"Help", "About"};
+	MainWindow main = MainWindow.getInstance();
+	final String[] fileNames = {main.GetLocalization("menuBarNovi"), main.GetLocalization("menuBarSacuvaj"), main.GetLocalization("menuBarOtvori"), main.GetLocalization("menuBarZatvori")};
+	final String[] editNames = {main.GetLocalization("menuBarIzmeni"), main.GetLocalization("menuBarObrisi")};
+	final String[] helpNames = {main.GetLocalization("menuBarPomoc"), main.GetLocalization("menuBarOAplikaciji")};
 	
 	static MenuBar instance;
 	
@@ -24,29 +24,29 @@ public class MenuBar extends JMenuBar {
 	{
 		super();
 		
-		JMenu file = new JMenu("File");
-		JMenu edit = new JMenu("Edit");
-		JMenu help = new JMenu("Help");
+		JMenu file = new JMenu(main.GetLocalization("menuBarFile"));
+		JMenu edit = new JMenu(main.GetLocalization("menuBarIzmeni"));
+		JMenu help = new JMenu(main.GetLocalization("menuBarPomoc"));
 		
 		file.setMnemonic('F');
 		edit.setMnemonic('E');
 		help.setMnemonic('H');
 		
-		file.add(new MenuItem("New", 'N'));
-		file.add(new MenuItem("Save", 'S'));
+		file.add(new MenuItem(main.GetLocalization("menuBarNovi"), 'N'));
+		file.add(new MenuItem(main.GetLocalization("menuBarSacuvaj"), 'S'));
 		
 		JMenu submenu = new JMenu("Open");
 		submenu.setMnemonic('O');
 		submenu.setPreferredSize(new Dimension(180, 32));
 		submenu.setIcon(new ImageIcon("img/icon_open.png"));
-		submenu.add(new MenuItem("Studenti", 'T', "img/icon_student.png"));
-        submenu.add(new MenuItem("Profesori", 'P', "img/icon_profesor.png"));
-        submenu.add(new MenuItem("Predmeti", 'R', "img/icon_predmet.png"));
-        submenu.add(new MenuItem("Katedra", 'K', "img/icon_katedra.png"));
+		submenu.add(new MenuItem(main.GetLocalization("lblStudenti"), 'T', "img/icon_student.png"));
+        submenu.add(new MenuItem(main.GetLocalization("lblProfesori"), 'P', "img/icon_profesor.png"));
+        submenu.add(new MenuItem(main.GetLocalization("lblPredmeti"), 'R', "img/icon_predmet.png"));
+        submenu.add(new MenuItem(main.GetLocalization("lblKatedre"), 'K', "img/icon_katedra.png"));
 		
 		file.add(submenu);
 		file.addSeparator();
-		file.add(new MenuItem("Close", 'C'));
+		file.add(new MenuItem(main.GetLocalization("menuBarZatvori"), 'C'));
 		
 		for(String s: editNames)
 		{
@@ -102,23 +102,23 @@ public class MenuBar extends JMenuBar {
 				MenuItem btn = (MenuItem)ae.getSource();
 				String temp = btn.getText();
 				MainWindow window = MainWindow.getInstance();
-				if(temp == "New")
+				if(temp == main.GetLocalization("menuBarNovi"))
 				{
 					DialogManager.createAddDialog(window.getActivePane());
 				}
-				else if(temp == "Edit")
+				else if(temp == main.GetLocalization("menuBarIzmeni"))
 				{
 					int active = window.getActivePane();
 					int row = TableManager.getSelectedTableRow(active);
 					if(row != -1) DialogManager.createEditDialog(active, row);
 				}
-				else if(temp == "Delete")
+				else if(temp == main.GetLocalization("menuBarObrisi"))
 				{
 					int active = window.getActivePane();
 					int row = TableManager.getSelectedTableRow(active);
 					if(row != -1) DialogManager.createDeleteDialog(active , row);
 				}
-				else if(temp == "Close")
+				else if(temp == main.GetLocalization("menuBarZatvori"))
 				{
 					System.exit(0);
 				}

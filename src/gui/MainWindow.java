@@ -77,6 +77,12 @@ public class MainWindow extends JFrame {
 		resourceBundle = ResourceBundle.getBundle("gui.localization.MessageResources", Locale.getDefault());
 		return resourceBundle;
 	}
+	
+	public String GetLocalization(String name)
+	{
+		return GetResourceBundle().getObject(name).toString();
+	}
+	
 }
 
 

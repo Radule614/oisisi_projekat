@@ -19,27 +19,7 @@ public class Table extends JTable {
 	public TableRowSorter<TableModel> sorter;
 	protected DefaultTableModel model;
 	
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		
-		String name = this.getColumnName(columnIndex);
-		Class<?> returnValue;
-		
-		if(name == "Broj ESPB bodova" )
-		{
-			returnValue = Integer.class;
-		}
-		else if(name == "Prosek")
-		{
-			returnValue = Integer.class;
-		}
-		else
-		{
-			returnValue = Object.class;
-		}
-		
-		return returnValue;
-	}
+	
 	
 	public Table(int colNumber)
 	{

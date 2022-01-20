@@ -9,8 +9,7 @@ public class EditPredmetDialog extends OneTabDialog{
 	private static final long serialVersionUID = -268052684667075413L;
 	protected int tableRow;
 	JButton submit;
-	public JButton add;
-	public JButton remove;
+	
 	protected TablePanel editPredmetPanel;
 	
 	public EditPredmetDialog(String title, int tableRow, EntityType entityType) {
@@ -20,10 +19,7 @@ public class EditPredmetDialog extends OneTabDialog{
 		this.mainTab.createPanel();	//drugi panel
 		
 		
-		add = new JButton();
-		remove = new JButton();
-		add.setText("+");
-		remove.setText("-");
+		
 		
 		
 		this.setEditButtons();

@@ -2,12 +2,16 @@ package gui.manager;
 
 import java.util.ArrayList;
 
+import gui.MainWindow;
 import gui.table.Table;
 
 public class TableManager {		
-	private static final String[] studentiLabels = { "Indeks", "Ime", "Prezime", "Godina studija", "Status", "Prosek" };
-	private static final String[] profesoriLabels = { "Ime", "Prezime", "Titula", "Zvanje"};
-	private static final String[] predmetiLabels = { "Šifra predmeta", "Naziv predmeta", "Broj ESPB bodova", "Godina izvodjenja", "Semestar izvodjenja"};
+	public static MainWindow main = MainWindow.getInstance();
+	
+	
+	private static final String[] studentiLabels = { main.GetLocalization("lblBrojIndeka"), main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"),  main.GetLocalization("lblTrenutnaGodinaStudija"),  main.GetLocalization("lblNacinFinansiranja"), main.GetLocalization("lblAverageGrade")};
+	private static final String[] profesoriLabels = { main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblTitula"), main.GetLocalization("lblZvanje")};
+	private static final String[] predmetiLabels = { main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), main.GetLocalization("lblBrojEPSBBodova"), main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblSemestar")};
 	
 	public static Table studentiTable = new Table(studentiLabels);
 	public static Table profesoriTable = new Table(profesoriLabels);
@@ -47,7 +51,7 @@ public class TableManager {
 	
 	public static Table createPolozeniTable(ArrayList<String[]> dataArray)
 	{
-		Table table = new Table(new String[] {"Šifra predmeta", "Naziv predmeta", "ESPB", "Ocena", "Datum"});
+		Table table = new Table(new String[] {main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), "ESPB", main.GetLocalization("lblOcena"), main.GetLocalization("lblDatum")});
 		for(String[] data: dataArray)
 		{
 			table.addRow(data);
@@ -57,7 +61,7 @@ public class TableManager {
 	
 	public static Table createProfesorPredmetiTable(ArrayList<String[]> dataArray)
 	{
-		Table table = new Table(new String[] {"Šifra", "Naziv", "Godina studija", "Semestar"});
+		Table table = new Table(new String[] {main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblSemestar")});
 		for(String[] data: dataArray)
 		{
 			table.addRow(data);
@@ -67,7 +71,7 @@ public class TableManager {
 	
 	public static Table createNepolozeniTable(ArrayList<String[]> dataArray)
 	{
-		Table table = new Table(new String[] {"Šifra predmeta", "Naziv predmeta", "ESPB", "Godina studija", "Semestar"});
+		Table table = new Table(new String[] {main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), "ESPB", main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblSemestar")});
 		for(String[] data: dataArray)
 		{
 			table.addRow(data);

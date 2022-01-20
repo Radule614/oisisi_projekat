@@ -12,6 +12,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import gui.MainWindow;
 import gui.dialog.OneTabDialog;
 import gui.dialog.edit.EditStudentDialog;
 import gui.manager.DialogManager;
@@ -24,7 +25,7 @@ public class AddOcenaDialog extends OneTabDialog {
 	JButton submit;
 	
 	public AddOcenaDialog(EditStudentDialog editDialog, int predmetIndex) {
-		super("Unos ocene", editDialog.entityType);
+		super(MainWindow.getInstance().GetLocalization("lblUnosOcene"), editDialog.entityType);
 		this.editDialog = editDialog;
 		this.studentTableRow = editDialog.getStudentIndex();
 		this.predmetTableRow = predmetIndex;
@@ -41,13 +42,13 @@ public class AddOcenaDialog extends OneTabDialog {
 		String[] ocenaData = data.get(predmetTableRow);
 		this.mainTab.panels.get(0).textFieldLength = 12;
 		
-		this.addTextField("Šifra", ocenaData[0], false);
-		this.addTextField("Naziv", ocenaData[1], false);
-		this.addComboBox("Ocena", new String[] {"6", "7", "8", "9", "10"});
+		this.addTextField(MainWindow.getInstance().GetLocalization("lblSifraPredmeta"), ocenaData[0], false);
+		this.addTextField(MainWindow.getInstance().GetLocalization("lblNazivPredmeta"), ocenaData[1], false);
+		this.addComboBox(MainWindow.getInstance().GetLocalization("lblOcena"), new String[] {"6", "7", "8", "9", "10"});
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
 		Date date = new Date();
-		this.addDateField("Datum", formatter.format(date));
+		this.addDateField(MainWindow.getInstance().GetLocalization("lblDatum"), formatter.format(date));
 	}
 	
 	protected void setButtons()

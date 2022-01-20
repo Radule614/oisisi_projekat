@@ -3,6 +3,7 @@ package gui.dialog.utility;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
+import gui.MainWindow;
 import gui.dialog.OneTabDialog;
 
 public class ConfirmDialog extends OneTabDialog {
@@ -33,12 +34,12 @@ public class ConfirmDialog extends OneTabDialog {
 		this.setMinimumSize(new Dimension(200, 0));
 		this.mainTab.createPanel();
 		this.mainTab.createPanel();
-		this.addLabel("Da li ste sigurni?");
+		this.addLabel(MainWindow.getInstance().GetLocalization("titleDaLiSteSigurni"));
 	}
 	
 	public void setListener(ActionListener actionListener)
 	{
-		this.setButtons(0, 1, new String[] {"Da", "Ne"}, actionListener);
+		this.setButtons(0, 1, new String[] {MainWindow.getInstance().GetLocalization("titleDa"), MainWindow.getInstance().GetLocalization("titleNe")}, actionListener);
 		this.pack();
 	}
 	

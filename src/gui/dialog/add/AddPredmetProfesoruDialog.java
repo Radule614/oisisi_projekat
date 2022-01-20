@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
+import gui.MainWindow;
 import gui.dialog.Dialog;
 import gui.dialog.OneTabDialog;
 import gui.dialog.edit.EditProfesorDialog;
@@ -27,7 +28,7 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 	
 	
 	public AddPredmetProfesoruDialog(EditProfesorDialog editDialog) {
-		super("Dodavanje predmeta", Dialog.EntityType.PREDMET);
+		super(MainWindow.getInstance().GetLocalization("titleAddPredmet"), Dialog.EntityType.PREDMET);
 		this.editDialog = editDialog;
 		this.profesorTableRow = editDialog.getProfesorIndex();
 		this.predmetiDataIndexes = new ArrayList<Integer>();
@@ -78,7 +79,7 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 	
 	protected void addToPredaje(int predmetRow)
 	{
-		ConfirmDialog d = new ConfirmDialog("Dodavanje predmeta");
+		ConfirmDialog d = new ConfirmDialog(MainWindow.getInstance().GetLocalization("titleAddPredmet"));
 		ActionListener listener = new ActionListener() 
 		{
 			@Override
