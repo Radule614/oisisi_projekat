@@ -7,60 +7,97 @@ import java.awt.event.InputEvent;
 
 import javax.swing.*;
 
+import controller.Controller;
 import gui.MainWindow;
+import gui.dialog.InfoDialog;
 import gui.manager.DialogManager;
 import gui.manager.TableManager;
 
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 5187148993070894847L;
+	MainWindow main = MainWindow.getInstance();
+	final String[] fileNames = {main.GetLocalization("menuBarNovi"), main.GetLocalization("menuBarSacuvaj"), main.GetLocalization("menuBarOtvori"), main.GetLocalization("menuBarZatvori")};
+	final String[] editNames = {main.GetLocalization("menuBarIzmeni"), main.GetLocalization("menuBarObrisi")};
+	final String[] helpNames = {main.GetLocalization("menuBarPomoc"), main.GetLocalization("menuBarOAplikaciji")};
+	final String[] languageNames = {main.GetLocalization("menuBarEngleski"),main.GetLocalization("menuBarSrpski")};
 	
-	final String[] fileNames = {"New", "Save", "Open", "Close"};
-	final String[] editNames = {"Edit", "Delete"};
-	final String[] helpNames = {"Help", "About"};
-	
+	JMenu file = new JMenu(main.GetLocalization("menuBarFile"));
+	JMenu edit = new JMenu(main.GetLocalization("menuBarIzmeni"));
+	JMenu help = new JMenu(main.GetLocalization("menuBarPomoc"));
+	JMenu language = new JMenu(main.GetLocalization("lblJezik"));
+	JMenu submenu = new JMenu(main.GetLocalization("menuBarOtvori"));
 	static MenuBar instance;
 	
 	private MenuBar()
 	{
 		super();
 		
-		JMenu file = new JMenu("File");
-		JMenu edit = new JMenu("Edit");
-		JMenu help = new JMenu("Help");
+		
 		
 		file.setMnemonic('F');
 		edit.setMnemonic('E');
 		help.setMnemonic('H');
+		language.setMnemonic('L');
 		
-		file.add(new MenuItem("New", 'N'));
-		file.add(new MenuItem("Save", 'S'));
+		file.add(new MenuItem(main.GetLocalization("menuBarNovi"), 'N'));
+		file.add(new MenuItem(main.GetLocalization("menuBarSacuvaj"), 'S'));
 		
-		JMenu submenu = new JMenu("Open");
+		 
 		submenu.setMnemonic('O');
 		submenu.setPreferredSize(new Dimension(180, 32));
 		submenu.setIcon(new ImageIcon("img/icon_open.png"));
-		submenu.add(new MenuItem("Studenti", 'T', "img/icon_student.png"));
-        submenu.add(new MenuItem("Profesori", 'P', "img/icon_profesor.png"));
-        submenu.add(new MenuItem("Predmeti", 'R', "img/icon_predmet.png"));
-        submenu.add(new MenuItem("Katedra", 'K', "img/icon_katedra.png"));
+		submenu.add(new MenuItem(main.GetLocalization("lblStudenti"), 'T', "img/icon_student.png"));
+        submenu.add(new MenuItem(main.GetLocalization("lblProfesori"), 'P', "img/icon_profesor.png"));
+        submenu.add(new MenuItem(main.GetLocalization("lblPredmeti"), 'R', "img/icon_predmet.png"));
+        submenu.add(new MenuItem(main.GetLocalization("lblKatedre"), 'K', "img/icon_katedra.png"));
 		
 		file.add(submenu);
 		file.addSeparator();
-		file.add(new MenuItem("Close", 'C'));
+		file.add(new MenuItem(main.GetLocalization("menuBarZatvori"), 'C'));
 		
 		for(String s: editNames)
 		{
 			edit.add(new MenuItem(s, s.charAt(0)));
 		}
 		
-		for(String s: helpNames)
-		{
-			help.add(new MenuItem(s, s.charAt(0)));
-		}
+		help.add(new MenuItem(helpNames[0], helpNames[0].toUpperCase().charAt(0)));
+		help.add(new MenuItem(helpNames[1], helpNames[1].toUpperCase().charAt(1)));
+		
+		
+		language.add(new MenuItem(languageNames[0], languageNames[0].toUpperCase().charAt(2)));
+		language.add(new MenuItem(languageNames[1], languageNames[1].toUpperCase().charAt(4)));
 		
 		add(file);
 		add(edit);
 		add(help);
+		add(language);
+	}
+	
+	public void RefreshText()
+	{
+		file.setText(main.GetLocalization("menuBarFile"));
+		file.getItem(0).setText(main.GetLocalization("menuBarNovi"));
+		file.getItem(1).setText(main.GetLocalization("menuBarSacuvaj"));
+		file.getItem(2).setText(main.GetLocalization("menuBarOtvori"));
+		file.getItem(4).setText(main.GetLocalization("menuBarZatvori"));
+		
+		submenu.getItem(0).setText(main.GetLocalization("lblStudenti"));
+		submenu.getItem(1).setText(main.GetLocalization("lblProfesori"));
+		submenu.getItem(2).setText(main.GetLocalization("lblPredmeti"));
+		submenu.getItem(3).setText(main.GetLocalization("lblKatedre"));
+		
+		edit.setText(main.GetLocalization("menuBarIzmeni"));
+		edit.getItem(0).setText(main.GetLocalization("menuBarIzmeni"));
+		edit.getItem(1).setText(main.GetLocalization("menuBarObrisi"));
+		
+		help.setText(main.GetLocalization("menuBarPomoc"));
+		help.getItem(0).setText(main.GetLocalization("menuBarPomoc"));
+		help.getItem(1).setText(main.GetLocalization("menuBarOAplikaciji"));
+		
+		language.setText(main.GetLocalization("lblJezik"));
+		language.getItem(0).setText(main.GetLocalization("menuBarEngleski"));
+		language.getItem(1).setText(main.GetLocalization("menuBarSrpski"));
+		
 	}
 	
 	public static MenuBar getInstance()
@@ -102,25 +139,61 @@ public class MenuBar extends JMenuBar {
 				MenuItem btn = (MenuItem)ae.getSource();
 				String temp = btn.getText();
 				MainWindow window = MainWindow.getInstance();
-				if(temp == "New")
+				if(temp == main.GetLocalization("menuBarNovi"))
 				{
 					DialogManager.createAddDialog(window.getActivePane());
 				}
-				else if(temp == "Edit")
+				else if(temp == main.GetLocalization("menuBarSacuvaj"))
+				{
+					Controller.saveData();
+				}
+				else if(temp == main.GetLocalization("menuBarIzmeni"))
 				{
 					int active = window.getActivePane();
 					int row = TableManager.getSelectedTableRow(active);
 					if(row != -1) DialogManager.createEditDialog(active, row);
 				}
-				else if(temp == "Delete")
+				else if(temp == main.GetLocalization("menuBarObrisi"))
 				{
 					int active = window.getActivePane();
 					int row = TableManager.getSelectedTableRow(active);
 					if(row != -1) DialogManager.createDeleteDialog(active , row);
 				}
-				else if(temp == "Close")
+				else if(temp == main.GetLocalization("menuBarZatvori"))
 				{
 					System.exit(0);
+				}
+				else if(temp == main.GetLocalization("lblStudenti")){
+					main.setActivePane(0);
+				}
+				else if(temp == main.GetLocalization("lblProfesori")){
+					main.setActivePane(1);
+				}
+				else if(temp == main.GetLocalization("lblPredmeti")){
+					main.setActivePane(2);
+				}
+				else if(temp == main.GetLocalization("lblKatedre")){
+					//create departments dialog
+				}
+				else if(temp == main.GetLocalization("menuBarEngleski"))
+				{
+					main.SetLanguageToEnglish();
+				}
+				else if(temp == main.GetLocalization("menuBarSrpski"))
+				{
+					main.SetLanguageToSerbian();
+				}
+				else if(temp == main.GetLocalization("menuBarOAplikaciji")) {
+					
+					InfoDialog d = new InfoDialog(main.GetLocalization("menuBarOAplikaciji"));
+					d.addText("Rade Stojanovic RA138/2019");
+					d.addText("Luka Pikula RA146/2019");
+					d.open();
+				}
+				else if(temp == main.GetLocalization("menuBarPomoc")) {
+					InfoDialog d = new InfoDialog(main.GetLocalization("menuBarPomoc"));
+					d.addText("Help");
+					d.open();
 				}
 			}
 		}

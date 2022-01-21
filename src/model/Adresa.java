@@ -75,6 +75,5 @@ public class Adresa implements Serializable {
 	public String toString()
 	{
 		return new String(ulica + ", " + broj + ", "  + grad + ", " + drzava);
-		//return new String(ulica);
 	}
 }

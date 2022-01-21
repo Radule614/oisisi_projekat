@@ -5,8 +5,11 @@ import javax.swing.*;
 import gui.bar.MenuBar;
 import gui.bar.StatusBar;
 import gui.bar.ToolBar;
+import gui.manager.TableManager;
 
 import java.awt.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 2740437090361841747L;
@@ -20,10 +23,11 @@ public class MainWindow extends JFrame {
 	protected Content content;
 	protected StatusBar statusBar;
 
+	private ResourceBundle resourceBundle;
 	private MainWindow()
 	{
 		super();
-		
+		instance = this;
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
 		height = 3 * screenSize.height / 4;
@@ -44,12 +48,24 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(BorderLayout.NORTH, toolBar);
         this.getContentPane().add(BorderLayout.CENTER, content);
         this.getContentPane().add(BorderLayout.SOUTH, statusBar);
+        
+        resourceBundle = ResourceBundle.getBundle("gui.localization.MessageResources", Locale.getDefault());
+        
 	}
 	
 	public static MainWindow getInstance()
 	{
-		if(MainWindow.instance == null) MainWindow.instance = new MainWindow();
-		return MainWindow.instance;
+		if(instance == null) 
+		{
+			instance = new MainWindow();
+		}
+		
+		return instance;
+	}
+	
+	public void setActivePane(int index)
+	{
+		this.content.setActivePane(index);
 	}
 	
 	public int getActivePane()
@@ -61,6 +77,38 @@ public class MainWindow extends JFrame {
 	{
 		statusBar.RefreshStatusBar(activePane);
 	}
+	
+	public ResourceBundle GetResourceBundle()
+	{
+		resourceBundle = ResourceBundle.getBundle("gui.localization.MessageResources", Locale.getDefault());
+		return resourceBundle;
+	}
+	
+	public String GetLocalization(String name)
+	{
+		return GetResourceBundle().getObject(name).toString();
+	}
+	
+	public void SetLanguageToSerbian()
+	{
+		Locale.setDefault(new Locale("sr", "RS"));
+		menuBar.RefreshText();
+		statusBar.RefreshStatusBar(3);
+		Content.RefreshTabs();
+		TableManager.RefreshTables();
+	}
+	
+	public void SetLanguageToEnglish()
+	{
+		Locale.setDefault(new Locale("en", "US"));
+		menuBar.RefreshText();
+		statusBar.RefreshStatusBar(3);
+		TableManager.RefreshTables();
+		Content.RefreshTabs();
+	}
+	
+	
+	
 }
 
 

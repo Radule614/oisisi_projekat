@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import app.Settings;
 import app.Utility;
+import gui.MainWindow;
 
 public class Profesor extends Osoba {
 	private static final long serialVersionUID = -5074812364592294015L;
@@ -25,11 +26,12 @@ public class Profesor extends Osoba {
 	public Profesor(String[] arr)
 	{
 		super(arr);
+
+		predmeti = new ArrayList<Predmet>();
 		setAdresaKancelarije(new Adresa(arr[6]));
 		setLicnaKarta(Utility.parseInt(arr[7]));
-		setTitula(arr[8]);
-		setZvanje(arr[9]);
-		setGodineStaza(Utility.parseInt(arr[10]));
+		setZvanje(arr[8]);
+		setGodineStaza(Utility.parseInt(arr[9]));
 	}
 	
 	public String[] toStringArray()
@@ -38,9 +40,8 @@ public class Profesor extends Osoba {
 		super.toStringArray(data);
 		data[6] = getAdresaKancelarije().toString();
 		data[7] = Integer.toString(getLicnaKarta());
-		data[8] = getTitula();
-		data[9] = getZvanje();
-		data[10] = Integer.toString(getGodineStaza());
+		data[8] = getZvanje();
+		data[9] = Integer.toString(getGodineStaza());
 		
 		return data;
 	}
@@ -51,27 +52,22 @@ public class Profesor extends Osoba {
 		if(!Utility.doesMatch(Settings.addressPattern, arr[6]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Adresa kancelarije: mora biti u obliku: ulica, broj, grad, drzava");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnAdressOfOffice"));
 		}
 		if(!Utility.doesMatch(Settings.idCardPattern, arr[7]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Broj lične karte mora imati 9 brojeva");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnIdCard"));
 		}
 		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[8]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Titula: mora da sadrži jednu ili više reči bez brojeva");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnRank"));
 		}
-		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[9]))
+		if(!Utility.isInInterval(Utility.parseInt(arr[9]), 0, 50))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Zvanje: mora da sadrži jednu ili više reči bez brojeva");
-		}
-		if(!Utility.isInInterval(Utility.parseInt(arr[10]), 0, 50))
-		{
-			isValid = false;
-			if(messages != null) messages.add("Godine staža: mora biti u intervalu [0, 50]");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnYearsOfService"));
 		}
 		
 		return isValid;
@@ -82,7 +78,7 @@ public class Profesor extends Osoba {
 		String[] data = new String[4];
 		data[0] = this.ime;
 		data[1] = this.prezime;
-		data[2] = this.titula;
+		data[2] = this.email;
 		data[3] = this.zvanje;
 		return data;
 	}
@@ -145,5 +141,53 @@ public class Profesor extends Osoba {
 
 	public void setPredmeti(ArrayList<Predmet> predmeti) {
 		this.predmeti = predmeti;
+	}
+	
+	public void addPredmet(Predmet o)
+	{
+		if(predmeti == null) 
+		{
+			predmeti = new ArrayList<Predmet>();
+		}
+		for(Predmet pr : this.predmeti)
+		{
+			if(pr.getSifra().equals(o.getSifra()))
+				return;
+		}
+		this.predmeti.add(o);
+	}
+	
+	public void removePredmet(Predmet o)
+	{
+		if(predmeti == null) 
+		{
+			predmeti = new ArrayList<Predmet>();
+		}
+		else 
+		{
+			this.predmeti.remove(o);
+		}
+	}
+	
+	public ArrayList<String[]> predmetiToArrayList()
+	{
+		ArrayList<String[]> dataArray = new ArrayList<String[]>();
+		if(predmeti != null) 
+		{
+			for(Predmet predmet: this.predmeti)
+			{
+				String[] data = new String[4];
+				
+				data[0] = predmet.getSifra();
+				data[1] = predmet.naziv;
+				data[2] = Integer.toString(predmet.getGodinaStudija());
+				data[3] = predmet.semestar.toString();
+				
+				
+				dataArray.add(data);
+			}
+		}
+		
+		return dataArray;
 	}
 }

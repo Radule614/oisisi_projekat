@@ -3,15 +3,22 @@ package gui.table;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 
 public class Table extends JTable {
 	private static final long serialVersionUID = -2108154469027694188L;
+	public TableRowSorter<TableModel> sorter;
 	protected DefaultTableModel model;
+	
+	
 	
 	public Table(int colNumber)
 	{
@@ -23,8 +30,20 @@ public class Table extends JTable {
 	{ 
 		super(new DefaultTableModel(columnLabels, 0));
 		
+		sorter = new TableRowSorter<TableModel>(this.getModel());
+		this.setRowSorter(sorter);
+		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+		
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+		sorter.setSortKeys(sortKeys);
+	
 		init();
 	}
+	
+	
+	
 	
 	private void init()
 	{
@@ -60,7 +79,10 @@ public class Table extends JTable {
 	
 	public void removeRow(int tableRow)
 	{
-		this.model.removeRow(tableRow);
+		if(tableRow != -1) 
+		{
+			this.model.removeRow(tableRow);
+		}
 	}
 	
 	protected class TableRenderer extends DefaultTableCellRenderer {
@@ -71,6 +93,12 @@ public class Table extends JTable {
 			this.setBorder(new EmptyBorder(0, 5, 0, 5));
 			return this;
 		}
+	}
+	
+	public int getSelectedRowFromModel(){
+		if(this.getSelectedRow() == -1)
+			return -1;
+		return this.convertRowIndexToModel(this.getSelectedRow());
 	}
 }
 

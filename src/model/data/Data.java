@@ -7,13 +7,33 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import controller.Controller;
 import model.*;
 
 public class Data {
 	public static final StudentData student = StudentData.getInstance();
     public static final ProfesorData profesor = ProfesorData.getInstance();
     public static final PredmetData predmet = PredmetData.getInstance();
+	public static ArrayList<Adresa> adrese = new ArrayList<Adresa>();
+	public static ArrayList<Katedra> katedre = new ArrayList<Katedra>();
 	
+	public static void removeProfesorFromPredmet(int predmetIndex)
+	{
+		Predmet p = predmet.getAll().get(predmetIndex);
+		Profesor prof = p.getPredmetniProfesor();
+		prof.removePredmet(p);
+		p.removePredmetniProfesor();
+	}
+	
+	public static Profesor getProfesorFromPredmet(int predmetIndex)
+	{
+		Profesor p = null;
+		
+		p = predmet.getAll().get(predmetIndex).getPredmetniProfesor();
+		
+		return p;
+	}
 	
 	public static HashMap<Integer, String> getEligiblePredmeti(int studentIndex)
 	{
@@ -47,6 +67,30 @@ public class Data {
 		return data;
 	}
 	
+	public static HashMap<Integer, String> getEligiblePredmetiForProfesor(int profesorIndex)
+	{
+		HashMap<Integer, String> data = new HashMap<Integer, String>();
+		
+		Profesor s = profesor.getAll().get(profesorIndex);	
+		
+		ArrayList<Predmet> predaje = s.getPredmeti();
+		ArrayList<Predmet> predmeti = predmet.getAll();
+		for(int i = 0; i < predmeti.size(); ++i)
+        {
+            if(!predaje.contains(predmeti.get(i))) 
+            {
+                    Predmet pr = predmeti.get(i);
+                    if(pr.getPredmetniProfesor() == null) 
+                    {
+                    	String predmetString = new String(pr.getSifra() + " - " + pr.getNaziv());
+                    	data.put(i, predmetString);
+                    }
+            }
+        }
+		
+		return data;
+	}
+	
 	public static boolean saveData()
     {
         try(FileOutputStream fs = new FileOutputStream("data/data.ser", false);
@@ -55,6 +99,8 @@ public class Data {
             os.writeObject(student.getAll());
             os.writeObject(profesor.getAll());
             os.writeObject(predmet.getAll());
+            os.writeObject(adrese);
+            os.writeObject(katedre);
             return true;
         }
         catch (IOException e)
@@ -73,6 +119,8 @@ public class Data {
             student.setAll((ArrayList<Student>) os.readObject());
             profesor.setAll((ArrayList<Profesor>) os.readObject());
             predmet.setAll((ArrayList<Predmet>) os.readObject());
+            adrese = (ArrayList<Adresa>) os.readObject();
+            katedre = (ArrayList<Katedra>) os.readObject();
             return true;
         }
         catch (IOException | ClassNotFoundException e)
@@ -81,6 +129,82 @@ public class Data {
             return false;
         }
     }
+    
+    public static void updatePredmetReferences(Predmet oldPr, Predmet newPr)
+    {
+    	int t = 0;
+    	for(Student st: student.getAll()){
+    		Ocena o = null;
+    		for(Ocena temp: st.getNepolozeniIspiti()){
+    			if(oldPr.equals(temp.getPredmet())){
+    				o = temp;
+    				break;
+    			}
+    		}
+    		if(o != null){
+    			if(newPr == null){
+    				st.getNepolozeniIspiti().remove(o);
+    			}
+    			else{
+    				o.setPredmet(newPr);
+    			}
+    			o = null;
+    		}
+    		
+    		for(Ocena temp: st.getPolozeniIspiti()){
+    			if(oldPr.equals(temp.getPredmet())){
+    				o = temp;
+    				break;
+    			}
+    		}
+    		if(o != null){
+    			if(newPr == null){
+    				st.getPolozeniIspiti().remove(o);
+    				st.calculateProsek();
+    				Controller.student.updateStudentInTable(t);
+    			}
+    			else{
+    				o.setPredmet(newPr);
+    			}
+    			o = null;
+    		}
+    		t++;
+    	}
+    	
+    	for(Profesor prof: profesor.getAll()) {
+    		if(newPr == null){
+    			prof.getPredmeti().remove(oldPr);
+    		}else {
+    			int i = 0;
+    			for(Predmet temp: prof.getPredmeti()) {
+        			if(temp.equals(oldPr))
+        			{
+        				prof.getPredmeti().add(i, newPr);
+        				prof.getPredmeti().remove(i+1);
+        				break;
+        			}
+        			i++;
+        		}
+    		}
+    	}
+    	
+    }
+
+	public static HashMap<Integer, String> getEligibleProfesoriForPredmet() {
+			
+		HashMap<Integer, String> data = new HashMap<Integer, String>();
+		
+		
+		ArrayList<Profesor> profesori = profesor.getAll();
+		for(int i = 0; i < profesori.size(); ++i)
+        {
+			String profesorString = new String(profesori.get(i).getIme() + " - " + profesori.get(i).getPrezime());
+			data.put(i, profesorString);
+        }
+		
+		return data;
+	}
+    
 }
 
 

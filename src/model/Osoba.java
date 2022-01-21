@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import app.Settings;
 import app.Utility;
+import gui.MainWindow;
 
 public abstract class Osoba implements Serializable {
 	private static final long serialVersionUID = 1435561261890824899L;
@@ -50,32 +51,32 @@ public abstract class Osoba implements Serializable {
 		if(!Utility.doesMatch(Settings.namePattern, arr[0]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Ime: dužina 3 ili više karaktera");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnIme"));
 		}
 		if(!Utility.doesMatch(Settings.namePattern, arr[1]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Prezime: dužina 3 ili više karaktera");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnPrezime"));
 		}
 		if(!Utility.isInInterval(Utility.parseInt(arr[2].substring(6)), 1900, Settings.trenutnaGodina))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Godina rođenja: mora biti u intervalu [1900, " + Settings.trenutnaGodina +"]");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnYearOfBirth") + Settings.trenutnaGodina +"]");
 		}
 		if(!Utility.doesMatch(Settings.addressPattern, arr[3]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Adresa stanovanja: mora biti u obliku: ulica, broj, grad, drzava");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnAdress"));
 		}
 		if(!Utility.doesMatch(Settings.phonePattern, arr[4]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Broj telefona mora biti u formatu: nnn/nnn-nnn");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnPhoneNumber"));
 		}
 		if(!Utility.doesMatch(Settings.emailPattern, arr[5]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Email: nije validan");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnEmail"));
 		}
 		
 		return isValid;

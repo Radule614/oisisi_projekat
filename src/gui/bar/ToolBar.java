@@ -2,9 +2,11 @@ package gui.bar;
 
 import javax.swing.*;
 
+
 import gui.MainWindow;
 import gui.manager.DialogManager;
 import gui.manager.TableManager;
+import gui.table.MyRowFilter;
 
 import java.awt.*;
 import java.awt.Dimension;
@@ -14,7 +16,8 @@ import java.awt.event.ActionListener;
 public class ToolBar extends JToolBar {
 	private static final long serialVersionUID = -6297787221312734786L;
 
-	ToolBarButton btnNew, btnEdit, btnDelete;
+	ToolBarButton btnNew, btnEdit, btnDelete, btnSearch;
+	public ToolBarTextField searchTextField;
 	static ToolBar instance;
 	
 	private ToolBar()
@@ -25,17 +28,20 @@ public class ToolBar extends JToolBar {
         JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
         
-        btnNew = new ToolBarButton("img/icon_new.png", "New", "Add new user");
+        btnNew = new ToolBarButton("img/icon_new.png", "New", MainWindow.getInstance().GetLocalization("btnDodaj"));
         left.add(btnNew);
         
-        btnEdit = new ToolBarButton("img/icon_edit.png","Edit", "Edit user");
+        btnEdit = new ToolBarButton("img/icon_edit.png","Edit", MainWindow.getInstance().GetLocalization("menuBarIzmeni"));
         left.add(btnEdit);
         
-        btnDelete = new ToolBarButton("img/icon_delete.png", "Delete", "Delete user");
+        btnDelete = new ToolBarButton("img/icon_delete.png", "Delete", MainWindow.getInstance().GetLocalization("menuBarObrisi"));
         left.add(btnDelete);
-
-        right.add(new ToolBarTextField());        
-        right.add(new ToolBarButton("img/icon_search.png","Search", "Search user"));
+        
+        searchTextField = new ToolBarTextField();
+        right.add(searchTextField);        
+        
+        btnSearch = new ToolBarButton("img/icon_search.png","Search", MainWindow.getInstance().GetLocalization("menuBarPretrazi"));
+        right.add(btnSearch);
         
 		this.add(left);
 		this.add(right);
@@ -104,12 +110,29 @@ public class ToolBar extends JToolBar {
 				{
 					System.exit(0);
 				}
+				else if(temp == "Search")
+				{
+					String search = ToolBar.getInstance().searchTextField.getText();
+
+				    if(StatusBar.getInstance().stsBarLabel.getText() == MainWindow.getInstance().GetResourceBundle().getObject("stsBarStudent").toString())
+				    {
+				    	TableManager.studentiTable.sorter.setRowFilter(new MyRowFilter(search, 0));
+				    }
+				    else if(StatusBar.getInstance().stsBarLabel.getText() == MainWindow.getInstance().GetResourceBundle().getObject("stsBarProfesor").toString())
+				    {
+				    	TableManager.profesoriTable.sorter.setRowFilter(new MyRowFilter(search, 1));
+				    }
+				    else if(StatusBar.getInstance().stsBarLabel.getText() == MainWindow.getInstance().GetResourceBundle().getObject("stsBarPredmet").toString())
+				    {
+				    	TableManager.predmetiTable.sorter.setRowFilter(new MyRowFilter(search, 2));
+				    }
+				}
 			}
 		}
 	
 	}
 
-	class ToolBarTextField extends JTextField
+	public class ToolBarTextField extends JTextField
 	{
 
 		private static final long serialVersionUID = -9107600755725276369L;
@@ -121,6 +144,8 @@ public class ToolBar extends JToolBar {
 			this.setPreferredSize(new Dimension(150, 25));
 		}
 	}
+	
+	
 	
 	
 	

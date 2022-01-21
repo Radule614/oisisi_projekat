@@ -93,6 +93,82 @@ public abstract class Dialog extends JDialog {
         this.setVisible(false);
 	}
 	
+	protected JButton setButtons(int tabIndex, int panelIndex, String[] labels, ActionListener listener, JButton plus, JButton minus, JTextField profesorText)
+	{
+		DialogTab tab = tabPanels.get(tabIndex);
+		DialogPanel buttonPanel = tab.panels.get(1);
+		JPanel panel = Dialog.createRowPanel(2);
+		JPanel panel2 = Dialog.createRowPanel(2);
+		buttonPanel.add(panel2);
+		buttonPanel.add(panel);
+		
+		
+		FlowLayout leftPanelLayout = new FlowLayout(FlowLayout.RIGHT);
+		leftPanelLayout.setHgap(0);
+		FlowLayout rightPanelLayout = new FlowLayout(FlowLayout.LEFT);
+		rightPanelLayout.setHgap(0);
+		
+		FlowLayout leftPanelLayout2 = new FlowLayout(FlowLayout.RIGHT);
+		leftPanelLayout2.setHgap(0);
+		FlowLayout rightPanelLayout2 = new FlowLayout(FlowLayout.LEFT);
+		rightPanelLayout2.setHgap(0);
+		
+		
+		JButton submit = null;
+		JButton cancel = null;
+		JLabel profesorlbl = new JLabel();
+		if(labels != null && labels.length == 2)
+		{
+			submit = new JButton(labels[0]);
+			cancel = new JButton(labels[1]);
+		}
+		else
+		{
+			submit = new JButton(MainWindow.getInstance().GetResourceBundle().getObject("btnPotvrdi").toString());
+			cancel = new JButton(MainWindow.getInstance().GetResourceBundle().getObject("btnOdustani").toString());
+		}
+		
+		JPanel leftPanel = new JPanel(leftPanelLayout);
+		JPanel rightPanel = new JPanel(rightPanelLayout);
+		
+		JPanel leftPanel2 = new JPanel(leftPanelLayout2);
+		JPanel rightPanel2 = new JPanel(rightPanelLayout2);
+		
+		Dialog.setButtonHover(submit, "#95bcf2");
+		Dialog.setButtonHover(cancel, "#9b5377");
+		profesorlbl.setText(MainWindow.getInstance().GetResourceBundle().getObject("lblProfesor").toString()+"* ");
+		profesorlbl.setBorder(new CompoundBorder(profesorlbl.getBorder(), new EmptyBorder(4, 2, 4, 4)));
+		
+		leftPanel2.add(profesorlbl);
+		leftPanel2.add(profesorText);
+		leftPanel2.add(plus);
+		rightPanel2.add(minus);
+		
+		leftPanel.add(submit);
+		rightPanel.add(cancel);
+		
+		
+		Dialog dialog = this;
+		submit.addActionListener(listener);
+		
+		cancel.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				dialog.close();
+			}
+		});
+		
+		panel2.add(leftPanel2);
+		panel2.add(rightPanel2);
+		
+		panel.add(leftPanel);
+		panel.add(rightPanel);
+		
+		return submit;
+	}
+	
 	protected JButton setButtons(int tabIndex, int panelIndex, String[] labels, ActionListener listener)
 	{
 		DialogTab tab = tabPanels.get(tabIndex);
@@ -115,8 +191,8 @@ public abstract class Dialog extends JDialog {
 		}
 		else
 		{
-			submit = new JButton("Potvrdi");
-			cancel = new JButton("Odustani");
+			submit = new JButton(MainWindow.getInstance().GetResourceBundle().getObject("btnPotvrdi").toString());
+			cancel = new JButton(MainWindow.getInstance().GetResourceBundle().getObject("btnOdustani").toString());
 		}
 		
 		JPanel leftPanel = new JPanel(leftPanelLayout);
@@ -179,6 +255,7 @@ public abstract class Dialog extends JDialog {
 		{
 			this.panels.get(panelIndex).addTextField(labelText);
 		}
+		
 		public void addTextField(int panelIndex, String labelText, String value)
 		{
 			this.panels.get(panelIndex).addTextField(labelText, value);
@@ -242,6 +319,25 @@ public abstract class Dialog extends JDialog {
 			protected void addTextField(String labelText)
 			{
 				this.createTextField(labelText);
+			}
+			protected void addTextField(String labelText, String value, int enabled)
+			{
+				
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
+				if(enabled == 1)
+				{
+					textField.setEnabled(true);
+				}
+				else
+				{
+					textField.setEnabled(false);
+				}
+			}
+			protected void addButton(String labelText, String value)
+			{
+				JTextField textField = this.createTextField(labelText);
+				textField.setText(value);
 			}
 			protected void addTextField(String labelText, String value)
 			{
@@ -399,6 +495,7 @@ public abstract class Dialog extends JDialog {
 				
 				return textField;
 			}
+			
 			
 			private JFormattedTextField createDataField(String labelText)
 			{

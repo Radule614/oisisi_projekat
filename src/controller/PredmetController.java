@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import gui.manager.TableManager;
 import model.Predmet;
+import model.Profesor;
 import model.data.Data;
 
 public class PredmetController implements ControllerInterface {
@@ -38,6 +39,8 @@ public class PredmetController implements ControllerInterface {
 
         pr.setStudentiPolozeno(oldPredmet.getStudentiPolozeno());
         pr.setStudentiNepolozeno(oldPredmet.getStudentiNepolozeno());
+        Data.updatePredmetReferences(oldPredmet, pr);
+        
 
         TableManager.remove(2, index);
         TableManager.insertRow(2, pr.getTableData(), index);
@@ -47,7 +50,30 @@ public class PredmetController implements ControllerInterface {
 
     public void delete(int index)
     {
+    	Predmet pr = Data.predmet.getAll().get(index);
+    	
+    	Data.updatePredmetReferences(pr, null);
+    	
         TableManager.remove(2, index);
-        Data.predmet.delete(index);
+        Data.predmet.delete(index);  
     }
+    
+    public void addProfesorToPredmet(int profesorIndex, int predmetIndex)
+    {
+        Profesor st = Data.profesor.getAll().get(profesorIndex);
+        Predmet pr = Data.predmet.getAll().get(predmetIndex);
+        pr.setPredmetniProfesor(st);
+        st.addPredmet(pr);
+    }
+    
+    
 }
+
+
+
+
+
+
+
+
+

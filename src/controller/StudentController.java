@@ -130,6 +130,12 @@ public class StudentController implements ControllerInterface {
         TableManager.insertRow(0, st.getTableData(), studentIndex);
         return true;
     }
+    
+    public void updateStudentInTable(int studentIndex) {
+    	Student st = Data.student.getAll().get(studentIndex);
+    	TableManager.remove(0, studentIndex);
+        TableManager.insertRow(0, st.getTableData(), studentIndex);
+    }
 }
 
 

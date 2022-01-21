@@ -12,24 +12,25 @@ import controller.Controller;
 import gui.MainWindow;
 import gui.dialog.Dialog;
 import gui.dialog.OneTabDialog;
-import gui.dialog.edit.EditStudentDialog;
+import gui.dialog.edit.EditProfesorDialog;
 import gui.dialog.utility.ConfirmDialog;
 import gui.manager.TableManager;
 import gui.table.Table;
 
-public class AddIspitDialog extends OneTabDialog {
-	private static final long serialVersionUID = 904193011924022021L;
-	EditStudentDialog editDialog;
-	protected int studentTableRow;
+public class AddPredmetProfesoruDialog extends OneTabDialog{
+	private static final long serialVersionUID = 1L;
+	EditProfesorDialog editDialog;
+	protected int profesorTableRow;
 	
 	ArrayList<Integer> predmetiDataIndexes;  
 	protected Table predmetiTable;
 	protected TablePanel predmetiTablePanel;
 	
-	public AddIspitDialog(EditStudentDialog editDialog) {
-		super(MainWindow.getInstance().GetLocalization("titleAddPredmet"), Dialog.EntityType.STUDENT);
+	
+	public AddPredmetProfesoruDialog(EditProfesorDialog editDialog) {
+		super(MainWindow.getInstance().GetLocalization("titleAddPredmet"), Dialog.EntityType.PREDMET);
 		this.editDialog = editDialog;
-		this.studentTableRow = editDialog.getStudentIndex();
+		this.profesorTableRow = editDialog.getProfesorIndex();
 		this.predmetiDataIndexes = new ArrayList<Integer>();
 		this.mainTab.createPanel();
 		this.mainTab.createPanel();
@@ -41,7 +42,7 @@ public class AddIspitDialog extends OneTabDialog {
 	
 	protected void setTable()
 	{
-		HashMap<Integer, String> data = Controller.getEligiblePredmeti(this.studentTableRow);
+		HashMap<Integer, String> data = Controller.getEligiblePredmetiForProfesor(this.profesorTableRow);
 		ArrayList<String[]> tableData = new ArrayList<String[]>();
 		for (HashMap.Entry<Integer, String> set : data.entrySet()) 
 		{
@@ -59,43 +60,45 @@ public class AddIspitDialog extends OneTabDialog {
 
 	protected void setButtons()
 	{
-		AddIspitDialog d = this;
+		AddPredmetProfesoruDialog d = this;
 		ActionListener listener = new ActionListener() 
 		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				int predmetRow = predmetiTable.getSelectedRowFromModel();
-				if(predmetRow != -1) d.addToNepolozeni(predmetRow);
+				System.out.println("ID JE "+predmetRow);
+				if(predmetRow != -1) 
+				{
+					d.addToPredaje(predmetRow);
+				}
+				
 			}
 		};
 		super.setButtons(0, 1, null, listener);
 	}
 	
-	protected void addToNepolozeni(int predmetRow)
+	protected void addToPredaje(int predmetRow)
 	{
+		System.out.println("ID JE "+predmetRow);
 		ConfirmDialog d = new ConfirmDialog(MainWindow.getInstance().GetLocalization("titleAddPredmet"));
 		ActionListener listener = new ActionListener() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.student.addToNepolozeni(studentTableRow, predmetiDataIndexes.get(predmetRow));
+				Controller.profesor.addToPredmeti(profesorTableRow, predmetiDataIndexes.get(predmetRow));
 				predmetiTable.removeRow(predmetRow);
-				editDialog.updateNepolozeniTable();
+				editDialog.updatePredmetiKojePredajeTable();
 				predmetiDataIndexes.remove(predmetRow);
 				d.close();
 			}
 		};
+		
 		d.setListener(listener);
 		d.open();
 	}
+	
+	
+	
+	
 }
-
-
-
-
-
-
-
-
-
-

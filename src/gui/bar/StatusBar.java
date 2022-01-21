@@ -1,6 +1,9 @@
 package gui.bar;
 
 import javax.swing.*;
+
+import gui.MainWindow;
+
 import java.awt.*;
 import java.text.SimpleDateFormat;  
 import java.util.Date;     
@@ -12,7 +15,9 @@ public class StatusBar extends JPanel {
 	
 	JPanel leftPanel;
 	JPanel rightPanel;
-		
+	
+	public MainWindow mainWindow;
+	private int currentPanel= 0;
 	static StatusBar instance;
 	public StatusBarLabel stsBarLabel;
 	public StatusBarTimeLabel stsBarTimer;
@@ -34,6 +39,7 @@ public class StatusBar extends JPanel {
         this.add(leftPanel);
         this.add(rightPanel);
         
+        mainWindow = MainWindow.getInstance();
         RefreshStatusBar(0);
 	}
 	
@@ -52,22 +58,29 @@ public class StatusBar extends JPanel {
 	{
 		if(activePanel == 0) 
 		{
-			stsBarLabel.setText("Studentska služba - Studenti" );
+			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarStudent").toString());
+			currentPanel = 0;
 		}
 		else if (activePanel == 1)
 		{
-			stsBarLabel.setText("Studentska služba - Profesori");
+			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarProfesor").toString());
+			currentPanel = 1;
 		}
 		else if (activePanel == 2)
 		{
-			stsBarLabel.setText("Studentska služba - Predmeti");
+			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarPredmet").toString());
+			currentPanel = 2;
+		}
+		else //Prosledi 3 da ostane isti panel
+		{
+			RefreshStatusBar(currentPanel);
 		}
 		
 	}
 	
 	public void UpdateTimeAndDate(StatusBarTimeLabel lbl)
 	{
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");  
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");  
 		Date date = new Date();   
 		lbl.setText(formatter.format(date));
 	}

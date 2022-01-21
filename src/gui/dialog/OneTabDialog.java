@@ -22,6 +22,10 @@ public class OneTabDialog extends Dialog{
 	{
 		this.mainTab.panels.get(0).addTextField(labelText);
 	}
+	public void addTextField(String labelText, String value, int enabled)
+	{
+		this.mainTab.panels.get(0).addTextField(labelText, value, enabled);
+	}
 	public void addTextField(String labelText, String value)
 	{
 		this.mainTab.panels.get(0).addTextField(labelText, value);

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import app.Utility;
+import gui.MainWindow;
 
 public class Predmet implements Serializable {
 	private static final long serialVersionUID = 4083629115519439919L;
@@ -14,7 +15,7 @@ public class Predmet implements Serializable {
 	protected String naziv;
 	protected VrstaSemestra semestar;
 	protected int godinaStudija;
-	protected Profesor predmetniProfesor;
+	protected Profesor predmetniProfesor = null;
 	protected int ESPB;
 	
 	protected ArrayList<Student> studentiPolozeno;
@@ -40,7 +41,7 @@ public class Predmet implements Serializable {
 	
 	public String[] toStringArray()
 	{
-		String[] data = new String[11];
+		String[] data = new String[6];
 		
 		data[0] = getSifra();
 		data[1] = getNaziv();
@@ -48,6 +49,14 @@ public class Predmet implements Serializable {
 		else if	(getSemestar() == VrstaSemestra.Z) data[2] = "1";
 		data[3] = Integer.toString(getGodinaStudija()-1);
 		data[4] = Integer.toString(getESPB());
+		if(getPredmetniProfesor() != null) 
+		{
+			data[5] = getPredmetniProfesor().ime + " "+ getPredmetniProfesor().prezime;
+		}
+		else
+		{
+			data[5] = "";
+		}
 		
 		return data;
 	}
@@ -64,9 +73,9 @@ public class Predmet implements Serializable {
 	public String[] getTableData()
 	{
 		String sem;
-		if(this.semestar == VrstaSemestra.L) 	sem = "Letnji";
-		else									sem = "Zimski";
-		String[] godine = {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"};
+		if(this.semestar == VrstaSemestra.L) 	sem = MainWindow.getInstance().GetLocalization("lblLetnji");
+		else									sem = MainWindow.getInstance().GetLocalization("lblZimski");
+		String[] godine = {MainWindow.getInstance().GetLocalization("lblPrva"), MainWindow.getInstance().GetLocalization("lblDruga"), MainWindow.getInstance().GetLocalization("lblTreca"), MainWindow.getInstance().GetLocalization("lblCetvrta")};
 		String[] data = new String[5];
 		data[0] = this.sifra;
 		data[1] = this.naziv;
@@ -124,6 +133,11 @@ public class Predmet implements Serializable {
 
 	public void setPredmetniProfesor(Profesor predmetniProfesor) {
 		this.predmetniProfesor = predmetniProfesor;
+	}
+	
+	public void removePredmetniProfesor()
+	{
+		this.predmetniProfesor = null;
 	}
 
 

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class Content extends JPanel {
 	private static final long serialVersionUID = -6293741523398644702L;
-	
-	protected final String[] tabLabels = {"Studenti", "Profesori", "Predmeti"};
+	public static MainWindow main = MainWindow.getInstance();
+	protected final String[] tabLabels = {main.GetLocalization("lblStudenti"), main.GetLocalization("lblProfesori"), main.GetLocalization("lblPredmeti")};
 	
 	static Content instance;
 	
@@ -52,9 +52,21 @@ public class Content extends JPanel {
 		return Content.instance;
 	}
 	
+	public void setActivePane(int index)
+	{
+		this.tabbedPane.setSelectedIndex(index);
+	}
+	
 	public int getActivePane()
 	{
 		return this.tabbedPane.getSelectedIndex();
+	}
+	
+	public static void RefreshTabs()
+	{
+		instance.tabbedPane.setTitleAt(0, main.GetLocalization("lblStudenti"));
+		instance.tabbedPane.setTitleAt(1, main.GetLocalization("lblProfesori"));
+		instance.tabbedPane.setTitleAt(2, main.GetLocalization("lblPredmeti"));
 	}
 	
 	protected void setTabbedPane()
