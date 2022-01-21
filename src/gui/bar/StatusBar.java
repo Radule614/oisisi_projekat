@@ -2,7 +2,6 @@ package gui.bar;
 
 import javax.swing.*;
 
-import app.Main;
 import gui.MainWindow;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ public class StatusBar extends JPanel {
 	JPanel rightPanel;
 	
 	public MainWindow mainWindow;
-		
+	private int currentPanel= 0;
 	static StatusBar instance;
 	public StatusBarLabel stsBarLabel;
 	public StatusBarTimeLabel stsBarTimer;
@@ -60,14 +59,21 @@ public class StatusBar extends JPanel {
 		if(activePanel == 0) 
 		{
 			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarStudent").toString());
+			currentPanel = 0;
 		}
 		else if (activePanel == 1)
 		{
 			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarProfesor").toString());
+			currentPanel = 1;
 		}
 		else if (activePanel == 2)
 		{
 			stsBarLabel.setText(mainWindow.GetResourceBundle().getObject("stsBarPredmet").toString());
+			currentPanel = 2;
+		}
+		else //Prosledi 3 da ostane isti panel
+		{
+			RefreshStatusBar(currentPanel);
 		}
 		
 	}

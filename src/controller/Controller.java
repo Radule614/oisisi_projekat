@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import gui.MainWindow;
 import gui.manager.TableManager;
+import model.Predmet;
 import model.Profesor;
 import model.data.Data;
 import model.reader.Reader;
@@ -19,6 +20,12 @@ public class Controller {
     public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
 
     public static HashMap<Integer, String> 	getEligiblePredmetiForProfesor		(int profesorIndex) {return Data.getEligiblePredmetiForProfesor(profesorIndex);}
+    
+    public static HashMap<Integer, String> 	getEligibleProfesoriForPredmet	() {return Data.getEligibleProfesoriForPredmet();}
+    
+    public static Profesor 	getProfesorFromPredmet	(int predmetIndex) {return Data.getProfesorFromPredmet(predmetIndex);}
+    
+    public static void removeProfesorFromPredmet(int predmetIndex) {Data.removeProfesorFromPredmet(predmetIndex);}
     ///////////////////////////////////////////////////////////////////////
 
     public static MainWindow initApp()
@@ -67,6 +74,15 @@ public class Controller {
 			
 			Data.katedre.get(i).setSef(pr);
 		}
+		
+		for(Profesor prof: Data.profesor.getAll()) {
+            for(Predmet pr: Data.predmet.getAll()) {
+                Profesor temp = pr.getPredmetniProfesor();
+                if(temp != null && prof.getLicnaKarta() == temp.getLicnaKarta()) {
+                    prof.addPredmet(pr);
+                }
+            }
+        }
     }
     
 }

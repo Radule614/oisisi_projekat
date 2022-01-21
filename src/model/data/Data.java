@@ -16,6 +16,23 @@ public class Data {
 	public static ArrayList<Adresa> adrese = new ArrayList<Adresa>();
 	public static ArrayList<Katedra> katedre = new ArrayList<Katedra>();
 	
+	public static void removeProfesorFromPredmet(int predmetIndex)
+	{
+		Predmet p = predmet.getAll().get(predmetIndex);
+		Profesor prof = p.getPredmetniProfesor();
+		prof.removePredmet(p);
+		p.removePredmetniProfesor();
+	}
+	
+	public static Profesor getProfesorFromPredmet(int predmetIndex)
+	{
+		Profesor p = null;
+		
+		p = predmet.getAll().get(predmetIndex).getPredmetniProfesor();
+		
+		return p;
+	}
+	
 	public static HashMap<Integer, String> getEligiblePredmeti(int studentIndex)
 	{
 		HashMap<Integer, String> data = new HashMap<Integer, String>();
@@ -166,6 +183,21 @@ public class Data {
     	}
     	
     }
+
+	public static HashMap<Integer, String> getEligibleProfesoriForPredmet() {
+			
+		HashMap<Integer, String> data = new HashMap<Integer, String>();
+		
+		
+		ArrayList<Profesor> profesori = profesor.getAll();
+		for(int i = 0; i < profesori.size(); ++i)
+        {
+			String profesorString = new String(profesori.get(i).getIme() + " - " + profesori.get(i).getPrezime());
+			data.put(i, profesorString);
+        }
+		
+		return data;
+	}
     
 }
 

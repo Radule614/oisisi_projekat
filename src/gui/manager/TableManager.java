@@ -8,9 +8,9 @@ import gui.table.Table;
 public class TableManager {		
 	public static MainWindow main = MainWindow.getInstance();
 	
-	
+	public static TableManager instance;
 	private static final String[] studentiLabels = { main.GetLocalization("lblBrojIndeka"), main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"),  main.GetLocalization("lblTrenutnaGodinaStudija"),  main.GetLocalization("lblNacinFinansiranja"), main.GetLocalization("lblAverageGrade")};
-	private static final String[] profesoriLabels = { main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblTitula"), main.GetLocalization("lblZvanje")};
+	private static final String[] profesoriLabels = { main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblEmail"), main.GetLocalization("lblZvanje")};
 	private static final String[] predmetiLabels = { main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), main.GetLocalization("lblBrojEPSBBodova"), main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblSemestar")};
 	
 	public static Table studentiTable = new Table(studentiLabels);
@@ -18,6 +18,31 @@ public class TableManager {
 	public static Table predmetiTable = new Table(predmetiLabels);
 	
 	public static Table[] tables = {studentiTable, profesoriTable, predmetiTable};
+	
+	
+	public static void RefreshTables()
+	{
+		
+		studentiTable.getColumnModel().getColumn(0).setHeaderValue(main.GetLocalization("lblBrojIndeka"));
+		studentiTable.getColumnModel().getColumn(1).setHeaderValue(main.GetLocalization("lblIme"));
+		studentiTable.getColumnModel().getColumn(2).setHeaderValue(main.GetLocalization("lblPrezime"));
+		studentiTable.getColumnModel().getColumn(3).setHeaderValue(main.GetLocalization("lblTrenutnaGodinaStudija"));
+		studentiTable.getColumnModel().getColumn(4).setHeaderValue(main.GetLocalization("lblNacinFinansiranja"));
+		studentiTable.getColumnModel().getColumn(5).setHeaderValue(main.GetLocalization("lblAverageGrade"));
+		
+		profesoriTable.getColumnModel().getColumn(0).setHeaderValue(main.GetLocalization("lblIme"));
+		profesoriTable.getColumnModel().getColumn(1).setHeaderValue(main.GetLocalization("lblPrezime"));
+		profesoriTable.getColumnModel().getColumn(2).setHeaderValue(main.GetLocalization("lblEmail"));
+		profesoriTable.getColumnModel().getColumn(3).setHeaderValue(main.GetLocalization("lblZvanje"));
+		
+		predmetiTable.getColumnModel().getColumn(0).setHeaderValue(main.GetLocalization("lblSifraPredmeta"));
+		predmetiTable.getColumnModel().getColumn(1).setHeaderValue(main.GetLocalization("lblNazivPredmeta"));
+		predmetiTable.getColumnModel().getColumn(2).setHeaderValue(main.GetLocalization("lblBrojEPSBBodova"));
+		predmetiTable.getColumnModel().getColumn(3).setHeaderValue(main.GetLocalization("lblGodinaStudija"));
+		predmetiTable.getColumnModel().getColumn(4).setHeaderValue(main.GetLocalization("lblSemestar"));
+		
+		
+	}
 	
 	public static void addRow(int tableIndex, String[] data)
 	{

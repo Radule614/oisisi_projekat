@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import app.Settings;
 import app.Utility;
+import gui.MainWindow;
 import model.Predmet.VrstaSemestra;
 
 public class Student extends Osoba {
@@ -57,12 +58,12 @@ public class Student extends Osoba {
 		if(!Utility.doesMatch(Settings.indexPattern, arr[6]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Indeks: nije validan");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnIndex"));
 		}
 		if(!Utility.isInInterval(Utility.parseInt(arr[7]), 1950, 2021))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Godina upisa: mora biti u intervalu [1950, 2021]");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnYear"));
 		}
 		
 		return isValid;
@@ -71,9 +72,9 @@ public class Student extends Osoba {
 	public String[] getTableData()
 	{
 		String status;
-		if(this.status == VrstaFinansiranja.B) 	status = "Budžet";
-		else									status = "Samofinansiranje";
-		String[] godine = {"I (prva)", "II (druga)", "III (treća)", "IV (četvrta)"};
+		if(this.status == VrstaFinansiranja.B) 	status = MainWindow.getInstance().GetLocalization("lblBudzet");
+		else									status = MainWindow.getInstance().GetLocalization("lblSamofinansiranje");
+		String[] godine = {MainWindow.getInstance().GetLocalization("lblPrva"), MainWindow.getInstance().GetLocalization("lblDruga"), MainWindow.getInstance().GetLocalization("lblTreca"), MainWindow.getInstance().GetLocalization("lblCetvrta")};
 		String[] data = new String[6];
 		data[0] = this.brojIndeksa;
 		data[1] = this.ime;
@@ -121,8 +122,8 @@ public class Student extends Osoba {
 			data[3] = Integer.toString(predmet.getGodinaStudija());
 			
 			String sem;
-			if(predmet.getSemestar() == VrstaSemestra.L) 	sem = "Letnji";
-			else											sem = "Zimski";
+			if(predmet.getSemestar() == VrstaSemestra.L) 	sem = MainWindow.getInstance().GetLocalization("lblLetnji");
+			else											sem = MainWindow.getInstance().GetLocalization("lblZimski");
 			data[4] = sem;
 			
 			dataArray.add(data);

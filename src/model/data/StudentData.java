@@ -3,6 +3,7 @@ package model.data;
 import java.util.ArrayList;
 
 import app.Utility;
+import gui.MainWindow;
 import model.Student;
 
 public class StudentData implements DataInterface<Student, String> {
@@ -32,7 +33,7 @@ public class StudentData implements DataInterface<Student, String> {
         if(!Student.isValidData(arr, messages)) return null;
         if(messages != null && exists(arr[6], index))
         {
-            messages.add("Student sa indeksom " + arr[6] + " već postoji.");
+            messages.add(MainWindow.getInstance().GetLocalization("warnStudentExists") + " " + arr[6] + " " + MainWindow.getInstance().GetLocalization("warnExists"));
             return null;
         }
         Student st = new Student(arr);

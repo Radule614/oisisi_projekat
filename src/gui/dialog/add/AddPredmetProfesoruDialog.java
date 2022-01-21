@@ -67,6 +67,7 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 			public void actionPerformed(ActionEvent e) 
 			{
 				int predmetRow = predmetiTable.getSelectedRowFromModel();
+				System.out.println("ID JE "+predmetRow);
 				if(predmetRow != -1) 
 				{
 					d.addToPredaje(predmetRow);
@@ -79,6 +80,7 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 	
 	protected void addToPredaje(int predmetRow)
 	{
+		System.out.println("ID JE "+predmetRow);
 		ConfirmDialog d = new ConfirmDialog(MainWindow.getInstance().GetLocalization("titleAddPredmet"));
 		ActionListener listener = new ActionListener() 
 		{
@@ -95,6 +97,8 @@ public class AddPredmetProfesoruDialog extends OneTabDialog{
 		d.setListener(listener);
 		d.open();
 	}
+	
+	
 	
 	
 }

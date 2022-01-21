@@ -5,6 +5,7 @@ import javax.swing.*;
 import gui.bar.MenuBar;
 import gui.bar.StatusBar;
 import gui.bar.ToolBar;
+import gui.manager.TableManager;
 
 import java.awt.*;
 import java.util.Locale;
@@ -37,7 +38,7 @@ public class MainWindow extends JFrame {
 		setLocationRelativeTo(null);
 		
 		this.setFont(new Font("Monaco", Font.PLAIN, 15));
-		Locale.setDefault(new Locale("en", "US"));
+		
 		menuBar = MenuBar.getInstance();
 		toolBar = ToolBar.getInstance();
         content = Content.getInstance();
@@ -87,6 +88,26 @@ public class MainWindow extends JFrame {
 	{
 		return GetResourceBundle().getObject(name).toString();
 	}
+	
+	public void SetLanguageToSerbian()
+	{
+		Locale.setDefault(new Locale("sr", "RS"));
+		menuBar.RefreshText();
+		statusBar.RefreshStatusBar(3);
+		Content.RefreshTabs();
+		TableManager.RefreshTables();
+	}
+	
+	public void SetLanguageToEnglish()
+	{
+		Locale.setDefault(new Locale("en", "US"));
+		menuBar.RefreshText();
+		statusBar.RefreshStatusBar(3);
+		TableManager.RefreshTables();
+		Content.RefreshTabs();
+	}
+	
+	
 	
 }
 

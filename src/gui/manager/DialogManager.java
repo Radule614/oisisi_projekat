@@ -2,7 +2,7 @@ package gui.manager;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +13,7 @@ import gui.dialog.add.AddDialog;
 import gui.dialog.add.AddIspitDialog;
 import gui.dialog.add.AddOcenaDialog;
 import gui.dialog.add.AddPredmetProfesoruDialog;
+import gui.dialog.add.AddProfesorPredmetuDialog;
 import gui.dialog.edit.EditPredmetDialog;
 import gui.dialog.edit.EditProfesorDialog;
 import gui.dialog.edit.EditStudentDialog;
@@ -24,7 +25,7 @@ public class DialogManager {
 	public static MainWindow main = MainWindow.getInstance();
 	static protected String[] studentiFieldLabels = {main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblDatumRodjenja"), main.GetLocalization("lblAdresaStanovanja"), main.GetLocalization("lblBrojTelefona"), main.GetLocalization("lblEmail"), main.GetLocalization("lblBrojIndeka"), main.GetLocalization("lblGodinaUpisa"), main.GetLocalization("lblTrenutnaGodinaStudija"), main.GetLocalization("lblNacinFinansiranja")};
 	static protected String[] profesoriFieldLabels = {main.GetLocalization("lblIme"), main.GetLocalization("lblPrezime"), main.GetLocalization("lblDatumRodjenja"),  main.GetLocalization("lblAdresaStanovanja"), main.GetLocalization("lblBrojTelefona"), main.GetLocalization("lblEmail"), main.GetLocalization("lblAdresaKancelarije"), main.GetLocalization("lblBrojLicneKarte"), main.GetLocalization("lblZvanje"), main.GetLocalization("lblGodineStaza")};
-	static protected String[] predmetiFieldLabels = {main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), main.GetLocalization("lblSemestar"), main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblBrojEPSBBodova"), main.GetLocalization("lblProfesor")};
+	static protected String[] predmetiFieldLabels = {main.GetLocalization("lblSifraPredmeta"), main.GetLocalization("lblNazivPredmeta"), main.GetLocalization("lblSemestar"), main.GetLocalization("lblGodinaStudija"), main.GetLocalization("lblBrojEPSBBodova")};
 	
 	public static void createAddDialog(int activeTab)
 	{
@@ -176,6 +177,8 @@ public class DialogManager {
 			else if	(i==9) 	d.addComboBox(temp, new String[] {main.GetLocalization("lblBudzet"), main.GetLocalization("lblSamofinansiranje")});
 			else d.addTextField(temp);
 			
+			
+			
 		}
 		d.setSubmitEnabledEvents();
 		d.open();
@@ -255,7 +258,6 @@ public class DialogManager {
 			if		(i==2) 	d.addComboBox(temp, new String[] {MainWindow.getInstance().GetResourceBundle().getObject("lblLetnji").toString(), MainWindow.getInstance().GetResourceBundle().getObject("lblZimski").toString()}, Integer.parseInt(data[i]));
 			else if	(i==3)	d.addComboBox(temp, new String[] {main.GetLocalization("lblPrva"), main.GetLocalization("lblDruga"), main.GetLocalization("lblTreca"), main.GetLocalization("lblCetvrta")}, Integer.parseInt(data[i]));
 			else if (i==4)			d.addTextField(temp, data[i]);
-			else if(i ==5)  d.addTextField(temp, data[i], 0);
 			else
 			{
 				d.addTextField(temp, data[i]);
@@ -270,6 +272,12 @@ public class DialogManager {
 	public static void createDodajPredmetProfesoruDialog(EditProfesorDialog editDialog)
 	{
 		AddPredmetProfesoruDialog d = new AddPredmetProfesoruDialog(editDialog);
+		d.open();
+	}
+	
+	public static void createDodajProfesoraNaPredmetDialog(EditPredmetDialog editDialog)
+	{
+		AddProfesorPredmetuDialog d = new AddProfesorPredmetuDialog(editDialog);
 		d.open();
 	}
 	
