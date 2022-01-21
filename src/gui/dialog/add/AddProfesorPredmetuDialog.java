@@ -74,7 +74,6 @@ public class AddProfesorPredmetuDialog extends OneTabDialog{
 			{
 				
 				int profesorRow = profesoriTable.getSelectedRowFromModel();
-				System.out.println("ONO " + profesorRow);
 				if(profesorRow != -1) 
 				{
 					d.addToPredaje(profesorRow);
