@@ -296,7 +296,6 @@ public class DialogManager {
 		d.setListener(listener);
 		d.open();
 	}
-	
 }
 
 

@@ -7,7 +7,9 @@ import java.awt.event.InputEvent;
 
 import javax.swing.*;
 
+import controller.Controller;
 import gui.MainWindow;
+import gui.dialog.InfoDialog;
 import gui.manager.DialogManager;
 import gui.manager.TableManager;
 
@@ -58,15 +60,12 @@ public class MenuBar extends JMenuBar {
 			edit.add(new MenuItem(s, s.charAt(0)));
 		}
 		
-		for(String s: helpNames)
-		{
-			help.add(new MenuItem(s, s.charAt(0)));
-		}
+		help.add(new MenuItem(helpNames[0], helpNames[0].toUpperCase().charAt(0)));
+		help.add(new MenuItem(helpNames[1], helpNames[1].toUpperCase().charAt(1)));
 		
-		for(String s: languageNames)
-		{
-			language.add(new MenuItem(s));
-		}
+		
+		language.add(new MenuItem(languageNames[0], languageNames[0].toUpperCase().charAt(2)));
+		language.add(new MenuItem(languageNames[1], languageNames[1].toUpperCase().charAt(4)));
 		
 		add(file);
 		add(edit);
@@ -144,6 +143,10 @@ public class MenuBar extends JMenuBar {
 				{
 					DialogManager.createAddDialog(window.getActivePane());
 				}
+				else if(temp == main.GetLocalization("menuBarSacuvaj"))
+				{
+					Controller.saveData();
+				}
 				else if(temp == main.GetLocalization("menuBarIzmeni"))
 				{
 					int active = window.getActivePane();
@@ -179,6 +182,18 @@ public class MenuBar extends JMenuBar {
 				else if(temp == main.GetLocalization("menuBarSrpski"))
 				{
 					main.SetLanguageToSerbian();
+				}
+				else if(temp == main.GetLocalization("menuBarOAplikaciji")) {
+					
+					InfoDialog d = new InfoDialog(main.GetLocalization("menuBarOAplikaciji"));
+					d.addText("Rade Stojanovic RA138/2019");
+					d.addText("Luka Pikula RA146/2019");
+					d.open();
+				}
+				else if(temp == main.GetLocalization("menuBarPomoc")) {
+					InfoDialog d = new InfoDialog(main.GetLocalization("menuBarPomoc"));
+					d.addText("Help");
+					d.open();
 				}
 			}
 		}

@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import controller.Controller;
 import model.*;
 
 public class Data {
@@ -130,6 +132,7 @@ public class Data {
     
     public static void updatePredmetReferences(Predmet oldPr, Predmet newPr)
     {
+    	int t = 0;
     	for(Student st: student.getAll()){
     		Ocena o = null;
     		for(Ocena temp: st.getNepolozeniIspiti()){
@@ -157,12 +160,15 @@ public class Data {
     		if(o != null){
     			if(newPr == null){
     				st.getPolozeniIspiti().remove(o);
+    				st.calculateProsek();
+    				Controller.student.updateStudentInTable(t);
     			}
     			else{
     				o.setPredmet(newPr);
     			}
     			o = null;
     		}
+    		t++;
     	}
     	
     	for(Profesor prof: profesor.getAll()) {

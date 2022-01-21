@@ -85,6 +85,11 @@ public class Controller {
         }
     }
     
+    public static boolean saveData()
+    {
+    	return Data.saveData();
+    }
+    
 }
 	
 	
