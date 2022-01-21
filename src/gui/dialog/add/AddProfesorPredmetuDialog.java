@@ -23,6 +23,7 @@ public class AddProfesorPredmetuDialog extends OneTabDialog{
 	
 
 	private static final long serialVersionUID = 1L;
+	public static AddProfesorPredmetuDialog instance;
 	EditPredmetDialog editDialog;
 	protected int predmetTableRow;
 	
@@ -42,6 +43,7 @@ public class AddProfesorPredmetuDialog extends OneTabDialog{
 		this.setButtons();
 		this.setMinimumSize(new Dimension(450, 450));
 		this.pack();
+		instance = this;
 	}
 	
 	protected void setTable()
@@ -70,7 +72,9 @@ public class AddProfesorPredmetuDialog extends OneTabDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				
 				int profesorRow = profesoriTable.getSelectedRowFromModel();
+				System.out.println("ONO " + profesorRow);
 				if(profesorRow != -1) 
 				{
 					d.addToPredaje(profesorRow);
@@ -90,15 +94,19 @@ public class AddProfesorPredmetuDialog extends OneTabDialog{
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Controller.predmet.addProfesorToPredmet(predmetTableRow, profesoriDataIndexes.get(profesorRow));
+				Controller.predmet.addProfesorToPredmet(profesoriDataIndexes.get(profesorRow), predmetTableRow);
 				profesoriTable.removeRow(profesorRow);
+				editDialog.close();
 				profesoriDataIndexes.remove(profesorRow);
 				d.close();
+				instance.close();
 			}
 		};
 		
 		d.setListener(listener);
 		d.open();
+		
+		
 	}
 
 }

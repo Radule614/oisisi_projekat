@@ -2,6 +2,7 @@ package gui.dialog.edit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -13,6 +14,7 @@ import gui.dialog.OneTabDialog;
 import gui.dialog.Dialog.TablePanel;
 import gui.dialog.utility.ConfirmDialog;
 import gui.manager.DialogManager;
+import gui.manager.TableManager;
 import gui.table.Table;
 import model.Profesor;
 
@@ -135,6 +137,14 @@ public class EditPredmetDialog extends OneTabDialog{
 		
 		//DODAJ LISTENERE
 	}
+	
+	public void updateProfesoriTable()
+	{
+		this.editPredmetPanel.updateTable(this.predmetiTable);
+		this.editPredmetPanel.revalidate();
+	}
+	
+	
 }
 
 

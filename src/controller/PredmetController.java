@@ -60,6 +60,7 @@ public class PredmetController implements ControllerInterface {
     
     public void addProfesorToPredmet(int profesorIndex, int predmetIndex)
     {
+    	System.out.println("PROFESOR INDEX " + profesorIndex);
         Profesor st = Data.profesor.getAll().get(profesorIndex);
         Predmet pr = Data.predmet.getAll().get(predmetIndex);
         pr.setPredmetniProfesor(st);
