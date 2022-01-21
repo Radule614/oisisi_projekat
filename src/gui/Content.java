@@ -62,6 +62,13 @@ public class Content extends JPanel {
 		return this.tabbedPane.getSelectedIndex();
 	}
 	
+	public static void RefreshTabs()
+	{
+		instance.tabbedPane.setTitleAt(0, main.GetLocalization("lblStudenti"));
+		instance.tabbedPane.setTitleAt(1, main.GetLocalization("lblProfesori"));
+		instance.tabbedPane.setTitleAt(2, main.GetLocalization("lblPredmeti"));
+	}
+	
 	protected void setTabbedPane()
 	{
 		int i = 0;

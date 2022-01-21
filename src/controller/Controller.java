@@ -20,6 +20,12 @@ public class Controller {
     public static HashMap<Integer, String> 	getEligiblePredmeti		(int studentIndex) {return Data.getEligiblePredmeti(studentIndex);}
 
     public static HashMap<Integer, String> 	getEligiblePredmetiForProfesor		(int profesorIndex) {return Data.getEligiblePredmetiForProfesor(profesorIndex);}
+    
+    public static HashMap<Integer, String> 	getEligibleProfesoriForPredmet	() {return Data.getEligibleProfesoriForPredmet();}
+    
+    public static Profesor 	getProfesorFromPredmet	(int predmetIndex) {return Data.getProfesorFromPredmet(predmetIndex);}
+    
+    public static void removeProfesorFromPredmet(int predmetIndex) {Data.removeProfesorFromPredmet(predmetIndex);}
     ///////////////////////////////////////////////////////////////////////
 
     public static MainWindow initApp()

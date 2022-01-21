@@ -5,6 +5,7 @@ import javax.swing.*;
 import gui.bar.MenuBar;
 import gui.bar.StatusBar;
 import gui.bar.ToolBar;
+import gui.manager.TableManager;
 
 import java.awt.*;
 import java.util.Locale;
@@ -93,7 +94,8 @@ public class MainWindow extends JFrame {
 		Locale.setDefault(new Locale("sr", "RS"));
 		menuBar.RefreshText();
 		statusBar.RefreshStatusBar(3);
-		
+		Content.RefreshTabs();
+		TableManager.RefreshTables();
 	}
 	
 	public void SetLanguageToEnglish()
@@ -101,6 +103,8 @@ public class MainWindow extends JFrame {
 		Locale.setDefault(new Locale("en", "US"));
 		menuBar.RefreshText();
 		statusBar.RefreshStatusBar(3);
+		TableManager.RefreshTables();
+		Content.RefreshTabs();
 	}
 	
 	
