@@ -11,6 +11,7 @@ import gui.MainWindow;
 import gui.dialog.Dialog;
 import gui.dialog.OneTabDialog;
 import gui.dialog.Dialog.TablePanel;
+import gui.dialog.utility.ConfirmDialog;
 import gui.manager.DialogManager;
 import gui.table.Table;
 import model.Profesor;
@@ -54,10 +55,22 @@ public class EditPredmetDialog extends OneTabDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Controller.removeProfesorFromPredmet(tableRow);
-				plus.setEnabled(true);
-				minus.setEnabled(false);
-				updateTextField();
+				ConfirmDialog d = new ConfirmDialog(MainWindow.getInstance().GetLocalization("titleAddPredmet"));
+				ActionListener listener = new ActionListener() 
+				{
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						Controller.removeProfesorFromPredmet(tableRow);
+						plus.setEnabled(true);
+						minus.setEnabled(false);
+						updateTextField();
+						d.close();
+					}
+				};
+				
+				d.setListener(listener);
+				d.open();
+				
 			}
 		});
 		
