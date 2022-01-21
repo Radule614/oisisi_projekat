@@ -3,6 +3,7 @@ package model.data;
 import java.util.ArrayList;
 
 import app.Utility;
+import gui.MainWindow;
 import model.Profesor;
 
 public class ProfesorData implements DataInterface<Profesor, Integer> {
@@ -31,7 +32,7 @@ public class ProfesorData implements DataInterface<Profesor, Integer> {
         if(!Profesor.isValidData(arr, messages)) return null;
         if(messages != null && exists(Utility.parseInt(arr[7]), index))
         {
-            messages.add("Profesor sa brojem lične karte " + arr[7] + " već postoji.");
+            messages.add(MainWindow.getInstance().GetLocalization("warnProffesorExist")+ " " + arr[7] + " " + MainWindow.getInstance().GetLocalization("warnExists"));
             return null;
         }
         Profesor pf = new Profesor(arr);

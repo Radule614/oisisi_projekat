@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import app.Settings;
 import app.Utility;
+import gui.MainWindow;
 
 public class Profesor extends Osoba {
 	private static final long serialVersionUID = -5074812364592294015L;
@@ -51,22 +52,22 @@ public class Profesor extends Osoba {
 		if(!Utility.doesMatch(Settings.addressPattern, arr[6]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Adresa kancelarije: mora biti u obliku: ulica, broj, grad, drzava");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnAdressOfOffice"));
 		}
 		if(!Utility.doesMatch(Settings.idCardPattern, arr[7]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Broj lične karte mora imati 9 brojeva");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnIdCard"));
 		}
 		if(!Utility.doesMatch(Settings.multipleWordPattern, arr[8]))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Zvanje: mora da sadrži jednu ili više reči bez brojeva");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnRank"));
 		}
 		if(!Utility.isInInterval(Utility.parseInt(arr[9]), 0, 50))
 		{
 			isValid = false;
-			if(messages != null) messages.add("Godine staža: mora biti u intervalu [0, 50]");
+			if(messages != null) messages.add(MainWindow.getInstance().GetLocalization("warnYearsOfService"));
 		}
 		
 		return isValid;

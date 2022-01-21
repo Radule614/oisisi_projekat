@@ -3,6 +3,7 @@ package model.data;
 import java.util.ArrayList;
 
 import app.Utility;
+import gui.MainWindow;
 import model.Predmet;
 
 public class PredmetData implements DataInterface<Predmet, String> {
@@ -31,7 +32,7 @@ public class PredmetData implements DataInterface<Predmet, String> {
         if(!Predmet.isValidData(arr, messages)) return null;
         if(messages != null && exists(arr[0], index))
         {
-            messages.add("Predmet sa šifrom " + arr[0] + " već postoji.");
+            messages.add(MainWindow.getInstance().GetLocalization("warnSubjectExists") +  " " + arr[0] + MainWindow.getInstance().GetLocalization("warnExists"));
             return null;
         }
         Predmet pr = new Predmet(arr);
